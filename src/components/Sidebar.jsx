@@ -35,7 +35,7 @@ function Sidebar() {
             Buy Sell
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             to={"loc-co-phieu"}
             className={({ isActive, isPending }) => ` dark:hover:text-slate-500 
@@ -49,7 +49,7 @@ function Sidebar() {
           >
             Loc Co Phieu
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

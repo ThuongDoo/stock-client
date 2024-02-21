@@ -3,9 +3,60 @@ import api from "../utils/api";
 import { CATEGORIES } from "../constants/categories";
 import SideBarBD from "../components/SideBarBD";
 import StockBD from "../components/StockBD";
+import SearchBar from "../components/SearchBar";
 
 function BangDien() {
   const [data, setData] = useState([]);
+  const testData = [
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+    {
+      Ticker: "ABC",
+      Close: 23.5,
+      Volume: 182980,
+      profit: 2.5,
+    },
+  ];
   const [category, setCategory] = useState(CATEGORIES.NGAN_HANG);
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +72,8 @@ function BangDien() {
         })
         .catch((err) => console.log(err));
       console.log("reload");
+      // test
+      setData(testData);
     };
     fetchData();
     const intervalId = setInterval(fetchData, 10000);
@@ -33,9 +86,14 @@ function BangDien() {
     setCategory(value);
   };
   return (
-    <div className=" flex w-full">
+    <div className=" flex w-full h-full">
       <SideBarBD onClick={handleDataFromSideBar} />
-      <StockBD data={data} />
+      <div className=" flex flex-col flex-1 items-start">
+        <div className=" p-4">
+          <SearchBar />
+        </div>
+        <StockBD data={data} />
+      </div>
     </div>
   );
 }

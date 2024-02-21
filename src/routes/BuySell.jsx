@@ -1,9 +1,78 @@
 import React, { useEffect, useState } from "react";
 import api from "../utils/api";
+import SearchBar from "../components/SearchBar";
+import DateFilter from "../components/DateFilter";
 
 function BuySell() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const testData = [
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 1,
+    },
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 1,
+    },
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 1,
+    },
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 1,
+    },
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 0,
+    },
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 1,
+    },
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 0,
+    },
+    {
+      Ticker: "ABC",
+      date: "20/12/2002",
+      price: 25.6,
+      volume: 180973,
+      profit: 2.5,
+      signal: 1,
+    },
+  ];
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,40 +93,46 @@ function BuySell() {
   }, []);
 
   return (
-    <div className="">
-      {/* ticker, ngay, gia, volume, lai, vi the, buy/sell */}
-      <div className=" text-white flex justify-between">
-        <h1>Mã CP</h1>
-        <h1>Ngày</h1>
-        <h1>Giá khuyến nghị</h1>
-        <h1>Khối lượng</h1>
-        <h1>% Tạm tính</h1>
-        <h1>Tín hiệu</h1>
+    <div className=" flex flex-col px-4 py-4 gap-y-4">
+      <div className=" flex justify-between">
+        <SearchBar />
+        <DateFilter />
       </div>
-      {isLoading === false &&
-        data.map((stock, index) => (
-          <div
-            key={index}
-            className={` flex w-full ${
-              stock?.["Mua-Ban"] == 1
-                ? "bg-green-500"
-                : stock?.["Mua-Ban"] == 0
-                ? "bg-yellow-500"
-                : ""
-            } w-64 justify-between border`}
-          >
-            <p>{stock?.Ticker}</p>
-            <p>{stock?.Close}</p>
-            <p>{stock?.Volume}</p>
-            <p>
-              {stock?.["Mua-Ban"] == 1
-                ? "Buy"
-                : stock?.["Mua-Ban"] == 0
-                ? "Sell"
-                : ""}
-            </p>
-          </div>
-        ))}
+      <table className=" dark:text-white w-full">
+        <thead>
+          <tr>
+            <th>Mã CP</th>
+            <th>Ngày</th>
+            <th>Giá khuyến nghị</th>
+            <th>Khối lượng</th>
+            <th>% Tạm tính</th>
+            <th>Tín hiệu</th>
+          </tr>
+        </thead>
+        <tbody>
+          {testData?.map((stock, index) => (
+            <tr
+              key={index}
+              className={` ${
+                stock?.signal == 1
+                  ? "bg-green-500"
+                  : stock?.signal == 0
+                  ? "bg-yellow-500"
+                  : ""
+              }  border`}
+            >
+              <td>{stock?.Ticker}</td>
+              <td>{stock?.date}</td>
+              <td>{stock?.price}</td>
+              <td>{stock?.volume}</td>
+              <td>{stock?.profit}</td>
+              <td>
+                {stock?.signal == 1 ? "Buy" : stock?.signal == 0 ? "Sell" : ""}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

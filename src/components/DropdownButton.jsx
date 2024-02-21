@@ -20,6 +20,7 @@ export default function DropdownButton({ onMenuClick, username }) {
       <MenuButton>{username}</MenuButton>
       <Menu>
         <MenuItem onClick={() => handleMenuClick("settings")}>Cài đặt</MenuItem>
+        <MenuItem onClick={() => handleMenuClick("admin")}>Admin</MenuItem>
         <MenuItem onClick={() => handleMenuClick("logout")}>Đăng xuất</MenuItem>
       </Menu>
     </Dropdown>

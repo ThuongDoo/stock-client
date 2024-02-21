@@ -20,12 +20,13 @@ function PricingCard({ name, price, services, color }) {
           <h1 key={index}>{service}</h1>
         ))}
       </div>
-      <button
+      <a
+        href="#contact"
         style={{ color }}
         className={` font-extralight bg-white w-56 rounded-lg p-5 z-10 hover:bg-${color}`}
       >
         BUY NOW
-      </button>
+      </a>
     </div>
   );
 }

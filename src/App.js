@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { getTheme } from "./slices/themeSlice";
 import Settings from "./routes/Settings";
 import LocCoPhieu from "./routes/LocCoPhieu";
+import Admin from "./routes/Admin";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -33,6 +34,7 @@ function App() {
           <Route element={<BuySell />} path="buy-sell" />
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
         </Route>
+        <Route element={<Admin />} path="/admin" />
       </Route>
     )
   );

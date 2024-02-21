@@ -8,15 +8,8 @@ function Root() {
   const zaloLink = "https://zalo.me/0333817395";
 
   return (
-    <div className=" px-8 py-4 bg-black">
-      <Header />
+    <div className=" dark:text-white">
       <Outlet />
-      <Footer />
-      <div class="fixed bottom-0 right-0 mb-4 mr-4">
-        <a href={zaloLink} target="_blank" rel="noreferrer">
-          <img src={zaloIcon} alt="Zalo" className=" h-20 w-20" />
-        </a>
-      </div>
     </div>
   );
 }
