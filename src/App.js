@@ -17,6 +17,7 @@ import News from "./routes/News";
 import { useSelector } from "react-redux";
 import { getTheme } from "./slices/themeSlice";
 import Settings from "./routes/Settings";
+import LocCoPhieu from "./routes/LocCoPhieu";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -24,14 +25,13 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />} errorElement={<ErrorPage />}>
-        <Route element={<Home />} path="/home">
-          <Route element={<AboutUs />} path="about-us" />
-        </Route>
+        <Route element={<Home />} path="/home"></Route>
         <Route element={<Settings />} path="/settings" />
         <Route element={<News />} path="/tin-tuc" />
         <Route element={<Dashboard />} path="/dashboard">
-          <Route element={<BangDien />} index />
+          <Route element={<BangDien />} path="bang-dien" />
           <Route element={<BuySell />} path="buy-sell" />
+          <Route element={<LocCoPhieu />} path="loc-co-phieu" />
         </Route>
       </Route>
     )

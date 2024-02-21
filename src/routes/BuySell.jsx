@@ -24,18 +24,38 @@ function BuySell() {
   }, []);
 
   return (
-    <div>
+    <div className="">
+      {/* ticker, ngay, gia, volume, lai, vi the, buy/sell */}
+      <div className=" text-white flex justify-between">
+        <h1>Mã CP</h1>
+        <h1>Ngày</h1>
+        <h1>Giá khuyến nghị</h1>
+        <h1>Khối lượng</h1>
+        <h1>% Tạm tính</h1>
+        <h1>Tín hiệu</h1>
+      </div>
       {isLoading === false &&
         data.map((stock, index) => (
           <div
             key={index}
-            className=" flex bg-green-500 w-64 justify-between border"
+            className={` flex w-full ${
+              stock?.["Mua-Ban"] == 1
+                ? "bg-green-500"
+                : stock?.["Mua-Ban"] == 0
+                ? "bg-yellow-500"
+                : ""
+            } w-64 justify-between border`}
           >
-            <p>{stock.Ticker}</p>
-            <p>{stock.Close}</p>
-            <p>{stock.Volume}</p>
-            <p>{stock["Buy Signal"]}</p>
-            <p>{stock["Sell Signal"]}</p>
+            <p>{stock?.Ticker}</p>
+            <p>{stock?.Close}</p>
+            <p>{stock?.Volume}</p>
+            <p>
+              {stock?.["Mua-Ban"] == 1
+                ? "Buy"
+                : stock?.["Mua-Ban"] == 0
+                ? "Sell"
+                : ""}
+            </p>
           </div>
         ))}
     </div>

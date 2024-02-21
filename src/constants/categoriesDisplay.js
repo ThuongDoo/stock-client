@@ -19,7 +19,7 @@ export const CATEGORIES_DISPLAY = {
   DICH_VU: "Dịch vụ",
   DIEN_NANG_LUONG: "Điện năng lượng",
   DTPT: "DTPT",
-  DUONG_GO: "DUONG_GO",
+  DUONG_GO: "Đường - gỗ",
   HANG_KHONG_DU_LICH: "Hàng không du lịch",
   NUOC_NHUA: "Nước nhựa",
   SXKD: "SXKD",

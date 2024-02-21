@@ -12,8 +12,12 @@ function BangDien() {
       await api
         .get(`/board/bangdien/${category}`)
         .then((res) => {
-          setData(res.data);
-          console.log(res.data);
+          const newData = res.data.map((item) => ({
+            ...item,
+            profit: (((item.Close - item.Open) / item.Open) * 100).toFixed(2),
+          }));
+          console.log(newData);
+          setData(newData);
         })
         .catch((err) => console.log(err));
       console.log("reload");
@@ -29,7 +33,7 @@ function BangDien() {
     setCategory(value);
   };
   return (
-    <div className=" flex">
+    <div className=" flex w-full">
       <SideBarBD onClick={handleDataFromSideBar} />
       <StockBD data={data} />
     </div>
