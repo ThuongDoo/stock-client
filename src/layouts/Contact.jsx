@@ -1,9 +1,17 @@
 import React from "react";
-import ContactForm from "../components/ContactForm";
+import ContactForm from "../components/forms/ContactForm";
 import zaloIcon from "../images/icons8-zalo-48.png";
+import api from "../utils/api";
 
 function Contact() {
   const zaloLink = "https://zalo.me/0333817395";
+
+  const handleSubmit = async (values) => {
+    await api
+      .post("/auth/signup", values)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div
@@ -51,7 +59,7 @@ function Contact() {
         <div className=" w-1/2">
           <h1>LIÊN HỆ NGAY</h1>
           <div>
-            <ContactForm />
+            <ContactForm onSubmit={handleSubmit} />
           </div>
         </div>
       </div>

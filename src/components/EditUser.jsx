@@ -1,5 +1,5 @@
 import React from "react";
-import EditUserForm from "./EditUserForm";
+import EditUserForm from "./forms/EditUserForm";
 
 function EditUser({ userData }) {
   return (

@@ -21,6 +21,7 @@ function Header({ style = 1 }) {
   const handleMenuClick = (value) => {
     if (value === "logout") {
       dispatch(logout());
+      navigate("/home");
     } else if (value === "settings") {
       navigate("/settings");
     } else if (value === "admin") {

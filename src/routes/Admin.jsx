@@ -1,19 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import UserList from "../components/UserList";
 import RequestList from "../components/RequestList";
 import CreateUser from "../components/CreateUser";
 import CloseIcon from "@mui/icons-material/Close";
 import EditUser from "../components/EditUser";
+import api from "../utils/api";
 
 function Admin() {
   const [activeTab, setActiveTab] = useState("users");
   const [createUser, setCreateUser] = useState(null);
   const [editUser, setEditUser] = useState(null);
+  const [userRequest, setUserRequest] = useState([]);
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await api
+        .get("user/userRequest")
+        .then((res) => {
+          console.log(res.data);
+          setUserRequest(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
+
   const userList = [
     {
       name: "user1",
@@ -73,44 +89,6 @@ function Admin() {
     setEditUser(value);
   };
 
-  const requestList = [
-    {
-      phone: "0123456",
-      email: "dfa@gmail.com",
-      name: "nguyen van a",
-      content: "ghjkjdahgkhkfsdafs",
-    },
-    {
-      phone: "0123456",
-      email: "dfa@gmail.com",
-      name: "nguyen van a",
-      content: "ghjkjdahgkhkfsdafs",
-    },
-    {
-      phone: "0123456",
-      email: "dfa@gmail.com",
-      name: "nguyen van a",
-      content: "ghjkjdahgkhkfsdafs",
-    },
-    {
-      phone: "0123456",
-      email: "dfa@gmail.com",
-      name: "nguyen van a",
-      content: "ghjkjdahgkhkfsdafs",
-    },
-    {
-      phone: "0123456",
-      email: "dfa@gmail.com",
-      name: "nguyen van a",
-      content: "ghjkjdahgkhkfsdafs",
-    },
-    {
-      phone: "0123456",
-      email: "dfa@gmail.com",
-      name: "nguyen van a",
-      content: "ghjkjdahgkhkfsdafs",
-    },
-  ];
   return (
     <div className=" dark:bg-slate-900">
       <div className=" px-8">
@@ -137,7 +115,7 @@ function Admin() {
           )}
           {activeTab === "requests" && (
             <RequestList
-              requestList={requestList}
+              requestList={userRequest}
               onCreateUser={handleCreateUser}
             />
           )}

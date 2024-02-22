@@ -44,7 +44,7 @@ function StockBD({ data }) {
         {data.map((stock, index) => (
           <div
             key={index}
-            className={` flex-col border-black border justify-between  rounded-lg px-2 ${getColorClass(
+            className={` flex-col border-black border justify-between text-black  rounded-lg px-2 ${getColorClass(
               stock.profit
             )}`}
           >

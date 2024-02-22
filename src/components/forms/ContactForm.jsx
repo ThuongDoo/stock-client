@@ -17,11 +17,12 @@ const validationSchema = Yup.object({
   phone: Yup.string().required("*Vui lòng nhâp số điện thoại"),
 });
 
-const ContactForm = () => {
-  const handleSubmit = (values, { setSubmitting }) => {
+const ContactForm = ({ onSubmit }) => {
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
-    console.log(values);
+    onSubmit(values);
     setSubmitting(false);
+    resetForm();
   };
 
   return (
@@ -29,6 +30,7 @@ const ContactForm = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      enableReinitialize={true}
     >
       {({ isSubmitting }) => (
         <Form className=" flex flex-col h-full justify-between text-black gap-y-5">

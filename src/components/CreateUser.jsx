@@ -1,5 +1,5 @@
 import React from "react";
-import CreateUserForm from "./CreateUserForm";
+import CreateUserForm from "./forms/CreateUserForm";
 
 function CreateUser({ userData }) {
   return (
