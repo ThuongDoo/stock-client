@@ -5,6 +5,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import DropdownButton from "./DropdownButton";
 import { getUser, login, logout } from "../slices/userSlice";
+import api from "../utils/api";
 import {
   Link,
   NavLink,
@@ -18,9 +19,32 @@ function Header({ style = 1 }) {
   const navigate = useNavigate();
   const { isLoggedIn, username } = useSelector(getUser);
   const dispatch = useDispatch();
-  const handleMenuClick = (value) => {
+
+  const handleLogin = async () => {
+    await api
+      .post("/user/login", { phone: 1234, password: "123456" })
+      .then((res) => {
+        console.log(res.data);
+
+        dispatch(login());
+      })
+      .catch((err) => console.log(err));
+    // dispatch(login());
+  };
+  // delete
+  const handleProtected = async () => {
+    await api
+      .get("/user/protected")
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+  const handleMenuClick = async (value) => {
     if (value === "logout") {
       dispatch(logout());
+      await api
+        .get("/user/logout")
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log(err));
       navigate("/home");
     } else if (value === "settings") {
       navigate("/settings");
@@ -46,6 +70,7 @@ function Header({ style = 1 }) {
             <a href="#pricing">Bang gia</a>
             <a href="#payment">Thanh toan</a>
             <Link to={"/dashboard"}>Khuyen nghi</Link>
+            <button onClick={() => handleProtected()}>Protec</button>
           </>
         ) : (
           <div></div>
@@ -66,7 +91,7 @@ function Header({ style = 1 }) {
             <>
               <button
                 className=" dark:text-white dark:hover:text-slate-500"
-                onClick={() => dispatch(login())}
+                onClick={() => handleLogin()}
               >
                 Đăng nhập
               </button>

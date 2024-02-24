@@ -12,6 +12,8 @@ function Admin() {
   const [createUser, setCreateUser] = useState(null);
   const [editUser, setEditUser] = useState(null);
   const [userRequest, setUserRequest] = useState([]);
+  const [requestUpdateFlag, setRequestUpdateFlag] = useState(false);
+  const [userData, setUserData] = useState([]);
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
@@ -28,58 +30,17 @@ function Admin() {
         .catch((err) => console.log(err));
     };
     fetchData();
-  }, []);
+  }, [requestUpdateFlag]);
 
-  const userList = [
-    {
-      name: "user1",
-      password: "password1",
-      email: "user1@example.com",
-      phone: "1234567890",
-      expirationDate: "2024-12-31",
-      role: "Stock1",
-    },
-    {
-      name: "user2",
-      password: "password2",
-      email: "user2@example.com",
-      phone: "0987654321",
-      expirationDate: "2024-11-30",
-      role: "Stock2",
-    },
-    {
-      name: "user3",
-      password: "password2",
-      email: "user2@example.com",
-      phone: "0987654321",
-      expirationDate: "2024-11-30",
-      role: "Stock2",
-    },
-    {
-      name: "user4",
-      password: "password2",
-      email: "user2@example.com",
-      phone: "0987654321",
-      expirationDate: "2024-11-30",
-      role: "Stock2",
-    },
-    {
-      name: "user5",
-      password: "password2",
-      email: "user2@example.com",
-      phone: "0987654321",
-      expirationDate: "2024-11-30",
-      role: "Stock2",
-    },
-    {
-      name: "user6",
-      password: "password2",
-      email: "user2@example.com",
-      phone: "0987654321",
-      expirationDate: "2024-11-30",
-      role: "Stock2",
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      await api
+        .get("user")
+        .then((res) => setUserData(res.data))
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, [activeTab]);
 
   const handleCreateUser = (value) => {
     setCreateUser(value);
@@ -92,7 +53,7 @@ function Admin() {
   return (
     <div className=" dark:bg-slate-900">
       <div className=" px-8">
-        <Header />
+        <Header style={2} />
       </div>
       <div className=" flex">
         <div className=" flex flex-col w-1/12">
@@ -111,12 +72,13 @@ function Admin() {
         </div>
         <div className=" flex-1">
           {activeTab === "users" && (
-            <UserList userList={userList} onEdit={handleEditUser} />
+            <UserList userList={userData} onEdit={handleEditUser} />
           )}
           {activeTab === "requests" && (
             <RequestList
               requestList={userRequest}
               onCreateUser={handleCreateUser}
+              onChange={() => setRequestUpdateFlag(!requestUpdateFlag)}
             />
           )}
         </div>

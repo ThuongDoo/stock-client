@@ -4,9 +4,28 @@ import { CATEGORIES } from "../constants/categories";
 import SideBarBD from "../components/SideBarBD";
 import StockBD from "../components/StockBD";
 import SearchBar from "../components/SearchBar";
+import io from "socket.io-client";
+import { SOCKET_SERVER_URL } from "../constants/socket";
 
 function BangDien() {
   const [data, setData] = useState([]);
+  useEffect(() => {
+    const socket = io(SOCKET_SERVER_URL);
+
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+    socket.on("stock", (data) => {
+      console.log("Received data:", data);
+      // Xử lý dữ liệu được nhận tại đây
+      console.log(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   const testData = [
     {
       Ticker: "ABC",

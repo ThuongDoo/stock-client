@@ -2,10 +2,29 @@ import React, { useEffect, useState } from "react";
 import api from "../utils/api";
 import SearchBar from "../components/SearchBar";
 import DateFilter from "../components/DateFilter";
+import { SOCKET_SERVER_URL } from "../constants/socket";
+import { io } from "socket.io-client";
 
 function BuySell() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const socket = io(SOCKET_SERVER_URL);
+
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+    socket.on("buysell", (data) => {
+      console.log("Received data:", data);
+      // Xử lý dữ liệu được nhận tại đây
+      console.log(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const testData = [
     {

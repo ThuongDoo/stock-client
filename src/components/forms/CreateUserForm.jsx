@@ -17,7 +17,7 @@ const validationSchema = Yup.object({
   phone: Yup.string().required("*Vui lòng nhâp số điện thoại"),
 });
 
-const CreateUserForm = ({ userData }) => {
+const CreateUserForm = ({ userData, onSubmit }) => {
   console.log(userData);
   initialValues.email = userData.email;
   initialValues.name = userData.name;
@@ -25,6 +25,7 @@ const CreateUserForm = ({ userData }) => {
   const handleSubmit = (values, { setSubmitting }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
     console.log(values);
+    onSubmit(values);
     setSubmitting(false);
   };
 
@@ -78,14 +79,14 @@ const CreateUserForm = ({ userData }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
-            <Field as="select" id="selectedOption" name="selectedOption">
+            <Field as="select" id="role" name="role">
               <option value="">Role</option>
-              <option value="option1">Stock1</option>
-              <option value="option2">Stock2</option>
-              <option value="option3">Stock3</option>
+              <option value="Stock1">Stock1</option>
+              <option value="Stock2">Stock2</option>
+              <option value="Stock3">Stock3</option>
             </Field>
             <ErrorMessage
-              name="selectedOption"
+              name="role"
               component="div"
               className="text-red-500"
             />

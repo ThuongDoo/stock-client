@@ -12,7 +12,7 @@ function UserList({ userList, onEdit }) {
         <thead>
           <tr>
             <th>Username</th>
-            <th>Password</th>
+            {/* <th>Password</th> */}
             <th>Email</th>
             <th>Số điện thoại</th>
             <th>Role</th>
@@ -29,7 +29,7 @@ function UserList({ userList, onEdit }) {
             return (
               <tr key={index}>
                 <td>{user.name}</td>
-                <td>{user.password}</td>
+                {/* <td>{user.password}</td> */}
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>{user.role}</td>

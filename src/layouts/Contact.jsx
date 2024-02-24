@@ -8,7 +8,7 @@ function Contact() {
 
   const handleSubmit = async (values) => {
     await api
-      .post("/auth/signup", values)
+      .post("/user/userRequest", values)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };
