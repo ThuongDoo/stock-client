@@ -12,11 +12,11 @@ function SideBarBD({ onClick }) {
   };
   return (
     <nav className="dark:bg-slate-900 border-x border-slate-700">
-      <ul className=" flex-col">
+      <ul className=" flex-col  ">
         {categoriesArray.map((category, index) => (
           <li key={index} className="">
             <button
-              className={`px-4 w-full border border-slate-700 ${
+              className={`px-4 w-full flex items-start border border-slate-700 ${
                 activeTab === category
                   ? "bg-blue-500 text-white"
                   : " text-white"

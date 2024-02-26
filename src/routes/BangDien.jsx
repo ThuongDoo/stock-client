@@ -6,19 +6,41 @@ import StockBD from "../components/StockBD";
 import SearchBar from "../components/SearchBar";
 import io from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
+import BangDienHeader from "../components/BangDienHeader";
+import TabBar from "../components/TabBar";
+
+const formatSan = (data) => {};
+
+const getNganh = (data) => {
+  const uniqueNganh = new Set(data.map((item) => item.Nganh));
+  // const uniqueNganhArray = [...uniqueNganh];
+  return Array.from(uniqueNganh)
+    .filter((item) => item !== "" && item !== undefined)
+    .map((item) => ({
+      name: item,
+      displayName: item,
+    }));
+};
+
+const formatData = (category, data) => {
+  return data.filter((item) => item.Nganh === category);
+};
 
 function BangDien() {
   const [data, setData] = useState([]);
+  const [nganh, setNganh] = useState([]);
+  const [selectedData, setSelectedData] = useState([]);
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
 
     socket.on("connect", () => {
       console.log("Connected to server");
     });
-    socket.on("stock", (data) => {
-      console.log("Received data:", data);
+    socket.on("stock", (newData) => {
       // Xử lý dữ liệu được nhận tại đây
-      console.log(data);
+      setData(newData);
+      const newNganh = getNganh(newData);
+      setNganh(newNganh);
     });
 
     return () => {
@@ -26,92 +48,37 @@ function BangDien() {
     };
   }, []);
 
-  const testData = [
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-    {
-      Ticker: "ABC",
-      Close: 23.5,
-      Volume: 182980,
-      profit: 2.5,
-    },
-  ];
-  const [category, setCategory] = useState(CATEGORIES.NGAN_HANG);
   useEffect(() => {
     const fetchData = async () => {
       await api
-        .get(`/board/bangdien/${category}`)
+        .get("/stock")
         .then((res) => {
-          const newData = res.data.map((item) => ({
-            ...item,
-            profit: (((item.Close - item.Open) / item.Open) * 100).toFixed(2),
-          }));
-          console.log(newData);
-          setData(newData);
+          setData(res.data);
+          const newNganh = getNganh(res.data);
+          setNganh(newNganh);
         })
         .catch((err) => console.log(err));
-      console.log("reload");
-      // test
-      setData(testData);
     };
     fetchData();
-    const intervalId = setInterval(fetchData, 10000);
+  }, []);
 
-    // Xử lý khi component unmount, clear interval để ngăn không gọi fetchData nữa
-    return () => clearInterval(intervalId);
-  }, [category]);
-
-  const handleDataFromSideBar = (value) => {
-    setCategory(value);
+  const handleDataFromSideBar = (category) => {
+    const newData = formatData(category, data);
+    setSelectedData(newData);
   };
   return (
     <div className=" flex w-full h-full">
-      <SideBarBD onClick={handleDataFromSideBar} />
+      <div className=" w-2/12">
+        <TabBar tabs={nganh} style={1} onTabClick={handleDataFromSideBar} />
+      </div>
       <div className=" flex flex-col flex-1 items-start">
+        <div className=" w-full">
+          <BangDienHeader />
+        </div>
         <div className=" p-4">
           <SearchBar />
         </div>
-        <StockBD data={data} />
+        <StockBD data={selectedData} />
       </div>
     </div>
   );

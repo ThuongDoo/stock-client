@@ -121,10 +121,12 @@ function BuySell() {
         <thead>
           <tr>
             <th>Mã CP</th>
-            <th>Ngày</th>
-            <th>Giá khuyến nghị</th>
-            <th>Khối lượng</th>
-            <th>% Tạm tính</th>
+            <th>Thời gian KN</th>
+            <th>Giá mua</th>
+            <th>Lãi/lỗ tạm tính (%)</th>
+            <th>Trạng thái</th>
+            {/*  */}
+            {/* delete */}
             <th>Tín hiệu</th>
           </tr>
         </thead>

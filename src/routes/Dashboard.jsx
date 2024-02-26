@@ -10,7 +10,7 @@ function Dashboard() {
       <Header style={2} />
       <div className=" my-6 flex h-full dark:bg-black border border-slate-700 rounded-3xl drop-shadow-glow min-h-screen">
         <Navigate to="bang-dien" />
-        <div className=" w-2/12">
+        <div className=" w-1/12">
           <Sidebar />
         </div>
         <div className=" flex-1">

@@ -1,6 +1,21 @@
 import React from "react";
 
+function formatNumber(num) {
+  if (num >= 1e9) {
+    return (num / 1e9).toFixed(1) + " B";
+  }
+  if (num >= 1e6) {
+    return (num / 1e6).toFixed(1) + " M";
+  }
+  if (num >= 1e3) {
+    return (num / 1e3).toFixed(1) + " K";
+  }
+  return num;
+}
+
 function StockBD({ data }) {
+  console.log("stock");
+  console.log(data);
   const getColorClass = (value) => {
     if (value >= 6.7) {
       return "bg-purple-600";
@@ -41,20 +56,26 @@ function StockBD({ data }) {
   return (
     <div className=" container mx-auto">
       <div className="  grid grid-cols-4 ">
-        {data.map((stock, index) => (
+        {data?.map((stock, index) => (
           <div
             key={index}
             className={` flex-col border-black border justify-between text-black  rounded-lg px-2 ${getColorClass(
-              stock.profit
+              stock?.["Tang/Giam (%)"]
             )}`}
           >
             <div className=" flex justify-between">
-              <p>{stock.Ticker}</p>
-              <p>{stock.Close}</p>
-              <p>{stock.profit}%</p>
+              <p>{stock?.Ticker}</p>
+              <p>{stock?.Giahientai}</p>
+              <p>{formatNumber(stock?.Volume)}</p>
+              <p>{stock?.["Tang/Giam (%)"]}%</p>
             </div>
-            {/* <p>Value: {stock.Value}</p> */}
-            <p>Volume: {stock.Volume}</p>
+            <div className=" flex justify-between">
+              {/* <p>{stock?.["Tang/Giam"]}</p> */}
+              <div className=" flex justify-between w-full">
+                <p>Gia tri GD: </p>
+                <p>{formatNumber(stock?.GiatriGD)}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
