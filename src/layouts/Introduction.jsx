@@ -11,18 +11,18 @@ function Introduction() {
       />
       <div className=" flex flex-col gap-y-2 z-10">
         <div className=" flex flex-col gap-y-4">
-          <h1 className=" text-6xl font-bold">Mô phỏng & hiện thực hóa</h1>
-          <h1 className=" text-6xl font-bold">Mọi chiến thuật đầu tư</h1>
+          <h1 className=" text-6xl font-bold">Chiến lược - Công cụ</h1>
+          <h1 className=" text-6xl font-bold">Tối ưu hoá hiệu quả đầu tư</h1>
         </div>
         <p className=" text-2xl text-blue-500">
-          Nền tảng không thể thiếu của nhà đầu tư chứng khoán chuyên nghiệp
+          Nền tảng đầu tư theo các trường phái Mark Minervini, O'Neil,…
         </p>
       </div>
       <Link
         to={"/dashboard"}
         className=" bg-blue-500 rounded-full w-fit py-4 px-8 z-10"
       >
-        <button>GET STARTED</button>
+        <button>XYZ Products</button>
       </Link>
     </div>
   );

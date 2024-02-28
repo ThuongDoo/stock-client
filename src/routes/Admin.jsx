@@ -6,6 +6,8 @@ import CreateUser from "../components/CreateUser";
 import CloseIcon from "@mui/icons-material/Close";
 import EditUser from "../components/EditUser";
 import api from "../utils/api";
+import TabBar from "../components/TabBar";
+import ImportFile from "../components/ImportFile";
 
 function Admin() {
   const [activeTab, setActiveTab] = useState("users");
@@ -15,8 +17,14 @@ function Admin() {
   const [requestUpdateFlag, setRequestUpdateFlag] = useState(false);
   const [userData, setUserData] = useState([]);
 
+  const tabs = [
+    { name: "users", displayName: "Users" },
+    { name: "requests", displayName: "Requests" },
+    { name: "import", displayName: "Import" },
+  ];
+
   const handleTabChange = (tabName) => {
-    setActiveTab(tabName);
+    setActiveTab(tabName.name);
   };
 
   useEffect(() => {
@@ -56,20 +64,7 @@ function Admin() {
         <Header style={2} />
       </div>
       <div className=" flex">
-        <div className=" flex flex-col w-1/12">
-          <button
-            className={activeTab === "users" ? "active" : ""}
-            onClick={() => handleTabChange("users")}
-          >
-            Users
-          </button>
-          <button
-            className={activeTab === "requests" ? "active" : ""}
-            onClick={() => handleTabChange("requests")}
-          >
-            Request
-          </button>
-        </div>
+        <TabBar tabs={tabs} style={1} onTabClick={handleTabChange} />
         <div className=" flex-1">
           {activeTab === "users" && (
             <UserList userList={userData} onEdit={handleEditUser} />
@@ -81,6 +76,7 @@ function Admin() {
               onChange={() => setRequestUpdateFlag(!requestUpdateFlag)}
             />
           )}
+          {activeTab === "import" && <ImportFile />}
         </div>
       </div>
       {createUser && (

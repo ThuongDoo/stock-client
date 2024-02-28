@@ -27,9 +27,7 @@ function Contact() {
       <div className=" flex w-11/12 justify-between bg-blue-500 p-8">
         <div className=" w-1/2 flex flex-col">
           <div className=" flex flex-col items-start">
-            <h1 className=" text-yellow-500 font-bold">
-              CONG TY THNH ABCfadfdfadf
-            </h1>
+            <h1 className=" text-yellow-500 font-bold">ĐỘI NGŨ XYZ TEAM</h1>
             <h1>
               <span className=" font-bold">Dia chi: </span>dhfjkaga
             </h1>
@@ -44,7 +42,7 @@ function Contact() {
           <div className=" flex flex-col items-center justify-center flex-1">
             <h1 className=" font-extrabold">TƯ VẤN MIỄN PHÍ</h1>
             <h1 className=" bg-yellow-500 w-fit px-5 py-2 font-extrabold rounded-sm">
-              GỌI NGAY 012345678
+              HOTLINE 012345678
             </h1>
             <a
               href={zaloLink}

@@ -13,7 +13,8 @@ function formatNumber(num) {
   return num;
 }
 
-function StockBD({ data }) {
+function StockBD({ data, oldData }) {
+  console.log(data);
   console.log("stock");
   console.log(data);
   const getColorClass = (value) => {
