@@ -38,19 +38,19 @@ function SearchBar({ suggestionData, onSelect }) {
   };
 
   return (
-    <div className=" relative ">
+    <div className=" relative max-w-xs">
       <input
         type="text"
         value={searchTerm}
         onChange={handleChange}
         placeholder="Tìm kiếm CK"
-        className=" rounded-lg px-2 border dark:text-white dark:bg-slate-900 dark:border-slate-700"
+        className=" block rounded-md px-4 py-1.5 border dark:text-white dark:bg-slate-900 dark:border-slate-700 border-black w-48"
       />
       <ul
         ref={dropdownRef}
         className={`absolute w-full ${
           suggestions.length > 0 && searchTerm !== "" ? "block" : "hidden"
-        } bg-blue-500`}
+        } bg-gray-500 border rounded-md`}
       >
         {suggestions.map((suggestion, index) => (
           <li
@@ -58,7 +58,7 @@ function SearchBar({ suggestionData, onSelect }) {
             onClick={() => {
               handleSelectSuggestion(suggestion);
             }}
-            className=" dark:text-white cursor-pointer hover:bg-red-500"
+            className=" text-white cursor-pointer hover:bg-red-500"
           >
             {suggestion}
           </li>

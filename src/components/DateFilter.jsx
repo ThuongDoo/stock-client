@@ -13,17 +13,18 @@ function DateFilter({ onChange }) {
   };
 
   return (
-    <div className=" dark:bg-slate-900 dark:text-white">
-      <label htmlFor="date" className=" ">
+    <div className="  dark:text-white flex items-center gap-x-2">
+      {/* <label htmlFor="date" className=" ">
         Chọn ngày:
-      </label>
+      </label> */}
       <DatePicker
         id="date"
         selected={selectedDate}
         onChange={handleDateChange}
         dateFormat="dd/MM/yyyy" // Định dạng ngày tháng
-        className=" border rounded-lg px-2 dark:bg-slate-900 dark:border-slate-700 "
+        className=" border rounded-lg px-2 py-2 dark:bg-slate-900 dark:border-slate-700 border-black w-48"
         todayButton={today}
+        placeholderText="Chọn ngày"
       />
     </div>
   );

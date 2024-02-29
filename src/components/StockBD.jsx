@@ -19,48 +19,48 @@ function StockBD({ data, oldData }) {
   console.log(data);
   const getColorClass = (value) => {
     if (value >= 6.7) {
-      return "bg-purple-600";
+      return "bg-customeStock17";
     } else if (value >= 6 && value < 6.7) {
-      return "bg-purple-400";
+      return "bg-customeStock16";
     } else if (value >= 5 && value < 6) {
-      return "bg-green-600";
+      return "bg-customeStock15";
     } else if (value >= 4 && value < 5) {
-      return "bg-green-500";
+      return "bg-customeStock14";
     } else if (value >= 3 && value < 4) {
-      return "bg-green-400";
+      return "bg-customeStock13";
     } else if (value >= 2 && value < 3) {
-      return "bg-green-300";
+      return "bg-customeStock12";
     } else if (value >= 1 && value < 2) {
-      return "bg-green-200";
+      return "bg-customeStock11";
     } else if (value > 0 && value < 1) {
-      return "bg-green-100";
+      return "bg-customeStock10";
     } else if (value == 0) {
-      return "bg-yellow-100";
+      return "bg-customeStock9";
     } else if (value > -1 && value < 0) {
-      return "bg-red-100";
+      return "bg-customeStock8";
     } else if (value > -2 && value <= -1) {
-      return "bg-red-200";
+      return "bg-customeStock7";
     } else if (value > -3 && value <= -2) {
-      return "bg-red-300";
+      return "bg-customeStock6";
     } else if (value > -4 && value <= -3) {
-      return "bg-red-400";
+      return "bg-customeStock5";
     } else if (value > -5 && value <= -4) {
-      return "bg-red-500";
+      return "bg-customeStock4";
     } else if (value > -6 && value <= -5) {
-      return "bg-red-600";
+      return "bg-customeStock3";
     } else if (value > -6.7 && value <= -6) {
-      return "bg-sky-400";
+      return "bg-customeStock2";
     } else if (value <= -6.7) {
-      return "bg-sky-600";
+      return "bg-customeStock1";
     }
   };
   return (
-    <div className=" container mx-auto">
-      <div className="  grid grid-cols-4 ">
+    <div className=" container mx-auto h-full ">
+      <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[60rem] md:h-[39rem] overflow-scroll ">
         {data?.map((stock, index) => (
           <div
             key={index}
-            className={` flex-col border-black border justify-between text-black  rounded-lg px-2 ${getColorClass(
+            className={` flex-col m-2 justify-between text-black  rounded-lg px-2 ${getColorClass(
               stock?.["Tang/Giam (%)"]
             )}`}
           >
@@ -68,7 +68,15 @@ function StockBD({ data, oldData }) {
               <p>{stock?.Ticker}</p>
               <p>{stock?.Giahientai}</p>
               <p>{formatNumber(stock?.Volume)}</p>
-              <p>{stock?.["Tang/Giam (%)"]}%</p>
+              <p
+              // className={`${
+              //   stock?.["Tang/Giam (%)"] > 0
+              //     ? "text-green-900"
+              //     : "text-red-500"
+              // }`}
+              >
+                {stock?.["Tang/Giam (%)"]}%
+              </p>
             </div>
             <div className=" flex justify-between">
               {/* <p>{stock?.["Tang/Giam"]}</p> */}

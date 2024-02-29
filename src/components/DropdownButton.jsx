@@ -88,7 +88,7 @@ const MenuButton = React.forwardRef((props, ref) => {
     <BaseMenuButton
       ref={ref}
       className={clsx(
-        " cursor-pointer text-sm font-sans box-border font-semibold py-2 text-slate-900 dark:text-slate-200 ",
+        " cursor-pointer text-lg font-sans box-border font-semibold py-2 text-slate-900 dark:text-slate-200 ",
         className
       )}
       {...other}

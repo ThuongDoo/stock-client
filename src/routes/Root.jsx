@@ -8,7 +8,7 @@ function Root() {
   const zaloLink = "https://zalo.me/0333817395";
 
   return (
-    <div className=" dark:text-white">
+    <div className=" dark:text-white text-black">
       <Outlet />
     </div>
   );

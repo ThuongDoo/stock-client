@@ -90,19 +90,21 @@ function BuySell() {
   return (
     <div className=" flex flex-col px-4 py-4 gap-y-4">
       <div className=" flex justify-between">
-        <BuysellSearch onSubmit={handleSearch} />
-        <button onClick={() => setIsReset(!isReset)}>RESET</button>
+        <BuysellSearch
+          onSubmit={handleSearch}
+          onReset={() => setIsReset(!isReset)}
+        />
       </div>
-      <div className=" max-h-96 overflow-y-auto block ">
+      <div className=" max-h-[40rem]  overflow-y-auto block ">
         <table className=" dark:text-white table-auto overflow-scroll w-full ">
           <thead>
             <tr className="">
-              <th>STT</th>
-              <th>Mã CP</th>
-              <th>Thời gian KN</th>
-              <th>Giá mua</th>
-              <th>Lãi/lỗ tạm tính (%)</th>
-              <th>Trạng thái</th>
+              <th className=" px-4 py-2">STT</th>
+              <th className=" px-4 py-2">Mã CP</th>
+              <th className=" px-4 py-2">Thời gian KN</th>
+              <th className=" px-4 py-2">Giá mua</th>
+              <th className=" px-4 py-2">Lãi/lỗ tạm tính (%)</th>
+              <th className=" px-4 py-2">Trạng thái</th>
             </tr>
           </thead>
           <tbody className="  ">
@@ -110,12 +112,8 @@ function BuySell() {
               <tr
                 key={index}
                 className={` ${
-                  stock?.signal == 1
-                    ? "bg-green-500"
-                    : stock?.signal == 0
-                    ? "bg-yellow-500"
-                    : ""
-                }  border`}
+                  index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
+                }  border border-slate-700 `}
               >
                 <td>{index}</td>
                 <td>{stock?.ticker}</td>

@@ -5,7 +5,7 @@ import api from "../utils/api";
 import SearchIcon from "@mui/icons-material/Search";
 import moment from "moment";
 
-function BuysellSearch({ onSubmit }) {
+function BuysellSearch({ onSubmit, onReset }) {
   const [tickerName, setTickerName] = useState([]);
   const [selectedTicker, setSelectedTicker] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -38,13 +38,26 @@ function BuysellSearch({ onSubmit }) {
   };
 
   return (
-    <div className=" flex gap-x-3">
-      <SearchBar suggestionData={tickerName} onSelect={handleSearchBar} />
-      <DateFilter onChange={handleDateFilter} />
-      <button onClick={() => handleSubmit()}>
-        {/* <SearchIcon sx={{ color: "white", fontSize: 20 }} /> */}
-        Tìm kiếm
-      </button>
+    <div className=" flex flex-col gap-y-3 lg:flex-row gap-x-3">
+      <div className=" flex flex-col sm:flex-row gap-x-3 gap-y-3">
+        <SearchBar suggestionData={tickerName} onSelect={handleSearchBar} />
+        <DateFilter onChange={handleDateFilter} />
+      </div>
+      <div className=" flex gap-x-3">
+        <button
+          onClick={() => handleSubmit()}
+          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          <SearchIcon sx={{ color: "white", fontSize: 20 }} />
+          Tìm kiếm
+        </button>
+        <button
+          onClick={() => onReset(true)}
+          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          RESET
+        </button>
+      </div>
     </div>
   );
 }

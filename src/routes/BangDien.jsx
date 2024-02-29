@@ -8,6 +8,7 @@ import BangDienHeader from "../components/BangDienHeader";
 import TabBar from "../components/TabBar";
 import { CATEGORIES } from "../constants/categories";
 import { parse, formatISO } from "date-fns";
+import DropdownList from "../components/DropdownList";
 
 function BangDien() {
   const [data, setData] = useState([]);
@@ -79,22 +80,18 @@ function BangDien() {
   };
   //test
   return (
-    <div className=" flex w-full h-full">
-      <div className=" w-2/12">
-        <TabBar
-          tabs={CATEGORIES}
-          style={1}
-          onTabClick={handleDataFromSideBar}
-        />
-      </div>
+    <div className=" flex w-full h-full ">
       <div className=" flex flex-col flex-1 items-start">
         <div className=" w-full">
           <BangDienHeader />
         </div>
-        <div className=" p-4">
+        <div className=" p-4 flex items-center gap-x-4">
           <SearchBar onSelect={handleSearch} suggestionData={tickerName} />
+          <DropdownList list={CATEGORIES} onClick={handleDataFromSideBar} />
         </div>
-        <StockBD data={data} oldData={oldData} />
+        <div className=" w-full flex-1">
+          <StockBD data={data} oldData={oldData} />
+        </div>
       </div>
     </div>
   );
