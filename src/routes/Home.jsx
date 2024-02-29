@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -17,7 +17,7 @@ function Home() {
       <a href="#home" className=" fixed right-0 bottom-0 bg-blue-500 ">
         <KeyboardArrowUpIcon sx={{ color: "blue", fontSize: 50 }} />
       </a>
-      <div className=" px-8 pb-4">
+      <div className=" px-8 pb-4 absolute w-full z-50">
         <Header />
       </div>
       <div id="home">

@@ -19,6 +19,7 @@ import { getTheme } from "./slices/themeSlice";
 import Settings from "./routes/Settings";
 import LocCoPhieu from "./routes/LocCoPhieu";
 import Admin from "./routes/Admin";
+import Login from "./routes/Login";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -35,6 +36,7 @@ function App() {
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
         </Route>
         <Route element={<Admin />} path="/admin" />
+        <Route element={<Login />} path="/login" />
       </Route>
     )
   );

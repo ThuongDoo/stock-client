@@ -21,18 +21,8 @@ function Header({ style = 1 }) {
   const navigate = useNavigate();
   const { isLoggedIn, username } = useSelector(getUser);
   const dispatch = useDispatch();
+  const [isHidden, setIsHidden] = useState(false);
 
-  const handleLogin = async () => {
-    await api
-      .post("/user/login", { phone: 1234, password: "123456" })
-      .then((res) => {
-        console.log(res.data);
-
-        dispatch(login());
-      })
-      .catch((err) => console.log(err));
-    // dispatch(login());
-  };
   // delete
   const handleProtected = async () => {
     await api
@@ -47,7 +37,7 @@ function Header({ style = 1 }) {
         .get("/user/logout")
         .then((res) => console.log(res.data))
         .catch((err) => console.log(err));
-      navigate("/home");
+      navigate("/");
     } else if (value === "settings") {
       navigate("/settings");
     } else if (value === "admin") {
@@ -63,15 +53,51 @@ function Header({ style = 1 }) {
           <Link to={"/"}>My Logo</Link>
         </div>
       </nav>
-      <div className=" flex gap-x-3">
-        {/* <button onClick={() => dispatch(toggleTheme())}>
-          {darkMode ? (
-            <DarkModeIcon sx={{ color: "white", fontSize: 25 }} />
-          ) : (
-            <LightModeIcon sx={{ color: "black", fontSize: 25 }} />
-          )}
-        </button> */}
-        <div className=" flex gap-x-3 justify-between items-center ">
+      <div className=" block lg:hidden" onClick={() => setIsHidden(!isHidden)}>
+        <div>
+          <ListIcon sx={{ color: "white", fontSize: 30 }} />
+        </div>
+        {isHidden && (
+          <div className=" absolute bg-slate-900 right-0 top-12 flex flex-col gap-y-3 p-3 w-32  rounded-lg justify-between">
+            {isLoggedIn ? (
+              <DropdownButton
+                onMenuClick={handleMenuClick}
+                username={username}
+              />
+            ) : (
+              <>
+                <button
+                  className="  dark:hover:text-slate-500"
+                  onClick={() => navigate("/login")}
+                >
+                  Đăng nhập
+                </button>
+                <a href="#contact" className=" ">
+                  Đăng ký
+                </a>
+              </>
+            )}
+            {style === 1 ? (
+              <>
+                <a href="#feature">Tính năng</a>
+                <a href="#review">Đánh giá</a>
+                <a href="#about-us">Về chúng tôi</a>
+                <a href="#contact">Liên hệ</a>
+
+                <a href="#pricing">Bảng giá</a>
+                <a href="#payment">Thanh toán</a>
+                <Link to={"/dashboard"}>Khuyến nghị</Link>
+                {/* <button onClick={() => handleProtected()}>Protec</button> */}
+              </>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="hidden lg:flex gap-x-3  flex-1 justify-between">
+        <div className=" flex items-center gap-x-3">
           {style === 1 ? (
             <>
               <a href="#feature">Tinh nang</a>
@@ -82,18 +108,20 @@ function Header({ style = 1 }) {
               <a href="#pricing">Bang gia</a>
               <a href="#payment">Thanh toan</a>
               <Link to={"/dashboard"}>Khuyen nghi</Link>
-              {/* <button onClick={() => handleProtected()}>Protec</button> */}
+              <button onClick={() => handleProtected()}>Protec</button>
             </>
           ) : (
             <div></div>
           )}
+        </div>
+        <div className=" flex gap-x-3 justify-between items-center ">
           {isLoggedIn ? (
             <DropdownButton onMenuClick={handleMenuClick} username={username} />
           ) : (
             <>
               <button
                 className=" dark:text-white dark:hover:text-slate-500"
-                onClick={() => handleLogin()}
+                onClick={() => navigate("/login")}
               >
                 Đăng nhập
               </button>

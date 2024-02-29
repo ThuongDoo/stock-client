@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import TabBar from "../components/TabBar";
+import api from "../utils/api";
 
 function Dashboard() {
+  useEffect(() => {
+    const fetchDate = async () => {
+      await api
+        .get("/user/dashboard")
+        .then((res) => console.log("success"))
+        .catch((err) => console.log(err));
+    };
+    fetchDate();
+  }, []);
+
   return (
     <div className=" dark:bg-black bg-white ">
       <div className=" flex h-full  min-h-screen w-screen  ">
