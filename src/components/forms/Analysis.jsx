@@ -30,7 +30,7 @@ const Analysis = ({ filters, onSubmit }) => {
       enableReinitialize={true}
     >
       {({ isSubmitting, setFieldValue }) => (
-        <Form className="  text-black  overflow-scroll">
+        <Form className="  text-black  ">
           <div className="  grid grid-cols-2 ">
             {filters.map((box, index) => (
               <label className=" flex gap-x-2" key={index}>

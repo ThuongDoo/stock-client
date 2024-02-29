@@ -80,13 +80,12 @@ function Header({ style = 1 }) {
             {style === 1 ? (
               <>
                 <a href="#feature">Tính năng</a>
-                <a href="#review">Đánh giá</a>
-                <a href="#about-us">Về chúng tôi</a>
-                <a href="#contact">Liên hệ</a>
+              <a href="#about-us">Về chúng tôi</a>
+              <a href="#contact">Liên hệ</a>
 
-                <a href="#pricing">Bảng giá</a>
-                <a href="#payment">Thanh toán</a>
-                <Link to={"/dashboard"}>Khuyến nghị</Link>
+              <a href="#pricing">Bảng giá</a>
+              <Link to={"/dashboard"}>X</Link>
+              <button onClick={() => handleProtected()}>Protec</button>
                 {/* <button onClick={() => handleProtected()}>Protec</button> */}
               </>
             ) : (
@@ -100,14 +99,12 @@ function Header({ style = 1 }) {
         <div className=" flex items-center gap-x-3">
           {style === 1 ? (
             <>
-              <a href="#feature">Tinh nang</a>
-              <a href="#review">Danh gia</a>
-              <a href="#about-us">Ve chung toi</a>
-              <a href="#contact">Lien he</a>
+              <a href="#feature">Tính năng</a>
+              <a href="#about-us">Về chúng tôi</a>
+              <a href="#contact">Liên hệ</a>
 
-              <a href="#pricing">Bang gia</a>
-              <a href="#payment">Thanh toan</a>
-              <Link to={"/dashboard"}>Khuyen nghi</Link>
+              <a href="#pricing">Bảng giá</a>
+              <Link to={"/dashboard"} className=" font-bold">X Products</Link>
               <button onClick={() => handleProtected()}>Protec</button>
             </>
           ) : (

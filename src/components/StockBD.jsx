@@ -56,7 +56,7 @@ function StockBD({ data, oldData }) {
   };
   return (
     <div className=" container mx-auto h-full ">
-      <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[60rem] md:h-[39rem] overflow-scroll ">
+      <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[60rem] md:h-[39rem] overflow-y-scroll ">
         {data?.map((stock, index) => (
           <div
             key={index}

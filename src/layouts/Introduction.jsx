@@ -14,7 +14,7 @@ function Introduction() {
           <h1 className=" text-6xl font-bold">Chiến lược - Công cụ</h1>
           <h1 className=" text-6xl font-bold">Tối ưu hoá hiệu quả đầu tư</h1>
         </div>
-        <p className=" text-2xl text-blue-500">
+        <p className=" text-2xl text-blue-200 italic">
           Nền tảng đầu tư theo các trường phái Mark Minervini, O'Neil,…
         </p>
       </div>
@@ -22,7 +22,7 @@ function Introduction() {
         to={"/dashboard"}
         className=" bg-blue-500 rounded-full w-fit py-4 px-8 z-10"
       >
-        <button className=" text-lg font-bold">XYZ PRODUCTS</button>
+        <button className=" text-lg font-extrabold">XYZ PRODUCTS</button>
       </Link>
     </div>
   );

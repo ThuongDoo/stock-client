@@ -42,7 +42,7 @@ function ThemDieuKien({ onChange, data }) {
   return (
     <div className=" flex flex-col h-full">
       <TabBar tabs={tabs} onTabClick={(tab) => setTrangThaiPhanTich(tab)} />
-      <div className=" overflow-scroll">
+      <div className=" overflow-y-scroll">
         <Analysis
           filters={filters[TrangThaiPhanTich]}
           onSubmit={handleSubmit}

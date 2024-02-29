@@ -35,14 +35,14 @@ const featureCards = [
 
 function Feature() {
   return (
-    <div className=" h-screen  text-black bg-white p-8 grid grid-cols-3">
+    <div className="  min-h-screen  text-black bg-white p-8 grid grid-cols-1 md:grid-cols-3">
       {featureCards.map((card, index) => (
         <div
           key={index}
-          className=" flex flex-col justify-center items-center gap-y-2"
+          className=" flex flex-col justify-center items-center gap-y-2 "
         >
           <img src={card.image} alt="" />
-          <h1 className=" text-2xl font-extrabold">{card.content}</h1>
+          <h1 className=" text-2xl font-bold text-[#586b80]">{card.content}</h1>
         </div>
       ))}
     </div>

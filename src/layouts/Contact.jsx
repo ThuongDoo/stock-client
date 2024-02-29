@@ -27,7 +27,7 @@ function Contact() {
       <div className=" flex w-11/12 justify-between bg-blue-500 p-8">
         <div className=" w-1/2 flex flex-col">
           <div className=" flex flex-col items-start">
-            <h1 className=" text-yellow-500 font-bold">ĐỘI NGŨ XYZ TEAM</h1>
+            <h1 className=" text-yellow-500 font-bold text-3xl">XYZ TEAM</h1>
             <h1>
               <span className=" font-bold">Dia chi: </span>dhfjkaga
             </h1>

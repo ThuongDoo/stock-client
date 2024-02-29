@@ -26,21 +26,20 @@ function Home() {
       <div id="feature">
         <Feature />
       </div>
-      <div id="contact">
-        <Contact />
-      </div>
-      <div id="review">
+      
+      <div id="about-us">
         <Review />
       </div>
-      <div id="about-us">
+      {/* <div id="about-us">
         <AboutUs />
-      </div>
+      </div> */}
       <div id="pricing">
         <Pricing />
       </div>
-      <div id="payment">
-        <Payment />
+      <div id="contact">
+        <Contact />
       </div>
+      
       <Footer />
     </div>
   );
