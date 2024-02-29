@@ -22,7 +22,7 @@ function Introduction() {
         to={"/dashboard"}
         className=" bg-blue-500 rounded-full w-fit py-4 px-8 z-10"
       >
-        <button>XYZ Products</button>
+        <button className=" text-lg font-bold">XYZ PRODUCTS</button>
       </Link>
     </div>
   );
