@@ -24,7 +24,7 @@ import Login from "./routes/Login";
 function App() {
   const darkMode = useSelector(getTheme);
   console.log(darkMode);
-  console.log(('reloaddd'));
+  console.log(('reloa'));
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />} errorElement={<ErrorPage />}>
