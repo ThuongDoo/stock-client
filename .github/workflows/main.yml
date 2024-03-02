@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Pull code
         working-directory: '/home/dev/Documents/website/stock-client'
-        run: git pull origin master
+        run: git pull origin main
    
       
   deploy:
