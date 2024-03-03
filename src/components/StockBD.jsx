@@ -56,38 +56,42 @@ function StockBD({ data, oldData }) {
   };
   return (
     <div className=" container mx-auto h-full ">
-      <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[60rem] md:h-[39rem] overflow-y-scroll ">
-        {data?.map((stock, index) => (
-          <div
-            key={index}
-            className={` flex-col m-2 justify-between text-black  rounded-lg px-2 ${getColorClass(
-              stock?.["Tang/Giam (%)"]
-            )}`}
-          >
-            <div className=" flex justify-between">
-              <p>{stock?.Ticker}</p>
-              <p>{stock?.Giahientai}</p>
-              <p>{formatNumber(stock?.Volume)}</p>
-              <p
-              // className={`${
-              //   stock?.["Tang/Giam (%)"] > 0
-              //     ? "text-green-900"
-              //     : "text-red-500"
-              // }`}
-              >
-                {stock?.["Tang/Giam (%)"]}%
-              </p>
-            </div>
-            <div className=" flex justify-between">
-              {/* <p>{stock?.["Tang/Giam"]}</p> */}
-              <div className=" flex justify-between w-full">
-                <p>Gia tri GD: </p>
-                <p>{formatNumber(stock?.GiatriGD)}</p>
+      {data.length > 0 ? (
+        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[60rem] md:h-[39rem] overflow-y-scroll ">
+          {data?.map((stock, index) => (
+            <div
+              key={index}
+              className={` flex-col m-2 justify-between text-black  rounded-lg px-2 ${getColorClass(
+                stock?.["Tang/Giam (%)"]
+              )}`}
+            >
+              <div className=" flex justify-between">
+                <p>{stock?.Ticker}</p>
+                <p>{stock?.Giahientai}</p>
+                <p>{formatNumber(stock?.Volume)}</p>
+                <p
+                // className={`${
+                //   stock?.["Tang/Giam (%)"] > 0
+                //     ? "text-green-900"
+                //     : "text-red-500"
+                // }`}
+                >
+                  {stock?.["Tang/Giam (%)"]}%
+                </p>
+              </div>
+              <div className=" flex justify-between">
+                {/* <p>{stock?.["Tang/Giam"]}</p> */}
+                <div className=" flex justify-between w-full">
+                  <p>Gia tri GD: </p>
+                  <p>{formatNumber(stock?.GiatriGD)}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className=" text-center">Không tìm thấy dữ liệu</div>
+      )}
     </div>
   );
 }

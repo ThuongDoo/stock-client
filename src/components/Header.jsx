@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTheme, toggleTheme } from "../slices/themeSlice";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -7,6 +7,7 @@ import DropdownButton from "./DropdownButton";
 import { getUser, login, logout } from "../slices/userSlice";
 import api from "../utils/api";
 import ListIcon from "@mui/icons-material/List";
+import logo from "../images/logo.png";
 
 import {
   Link,
@@ -22,6 +23,20 @@ function Header({ style = 1 }) {
   const { isLoggedIn, username } = useSelector(getUser);
   const dispatch = useDispatch();
   const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await api
+        .get("/user/showMe")
+        .then((res) => {
+          console.log(res.data);
+          dispatch(login({ username: res.data.name, role: res.data.role }));
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+    console.log("haha");
+  }, []);
 
   // delete
   const handleProtected = async () => {
@@ -50,7 +65,9 @@ function Header({ style = 1 }) {
     <header className=" text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
       <nav className=" flex gap-x-3 items-center  ">
         <div className="   px-2 py-1">
-          <Link to={"/"}>My Logo</Link>
+          <Link to={"/"}>
+            <img src={logo} alt="" className=" size-10" />
+          </Link>
         </div>
       </nav>
       <div className=" block lg:hidden" onClick={() => setIsHidden(!isHidden)}>
@@ -80,12 +97,12 @@ function Header({ style = 1 }) {
             {style === 1 ? (
               <>
                 <a href="#feature">Tính năng</a>
-              <a href="#about-us">Về chúng tôi</a>
-              <a href="#contact">Liên hệ</a>
+                <a href="#about-us">Về chúng tôi</a>
+                <a href="#contact">Liên hệ</a>
 
-              <a href="#pricing">Bảng giá</a>
-              <Link to={"/dashboard"}>X</Link>
-              <button onClick={() => handleProtected()}>Protec</button>
+                <a href="#pricing">Bảng giá</a>
+                <Link to={"/dashboard"}>X Products</Link>
+                {/* <button onClick={() => handleProtected()}>Protec</button> */}
                 {/* <button onClick={() => handleProtected()}>Protec</button> */}
               </>
             ) : (
@@ -104,8 +121,10 @@ function Header({ style = 1 }) {
               <a href="#contact">Liên hệ</a>
 
               <a href="#pricing">Bảng giá</a>
-              <Link to={"/dashboard"} className=" font-bold">X Products</Link>
-              <button onClick={() => handleProtected()}>Protec</button>
+              <Link to={"/dashboard"} className=" font-bold">
+                X Products
+              </Link>
+              {/* <button onClick={() => handleProtected()}>Protec</button> */}
             </>
           ) : (
             <div></div>

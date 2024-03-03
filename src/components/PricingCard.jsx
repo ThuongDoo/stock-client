@@ -2,12 +2,15 @@ import React from "react";
 
 function PricingCard({ name, price, services, color }) {
   return (
-    <div className=" flex flex-col gap-y-2 py-12 w-80 relative h-fit items-center">
+    <div className=" flex flex-col gap-y-2 py-12  relative h-fit items-center">
       <div
         style={{ backgroundColor: color }}
-        className=" h-5/6 rounded-lg w-full bottom-0 absolute z-0"
+        className=" h-5/6 rounded-lg w-80 bottom-0 absolute z-0"
       ></div>
-      <div className=" bg-white rounded-lg w-56 h-32 flex flex-col items-center justify-evenly z-10">
+      <div
+        style={{ border: "2px solid " + color }}
+        className="  bg-white border rounded-lg w-56 h-32 flex flex-col items-center justify-evenly z-10"
+      >
         <h1 style={{ color }} className=" text-4xl font-extralight">
           {name}
         </h1>

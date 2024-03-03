@@ -7,15 +7,7 @@ import TabBar from "../components/TabBar";
 import api from "../utils/api";
 
 function Dashboard() {
-  useEffect(() => {
-    const fetchDate = async () => {
-      await api
-        .get("/user/dashboard")
-        .then((res) => console.log("success"))
-        .catch((err) => console.log(err));
-    };
-    fetchDate();
-  }, []);
+  
 
   return (
     <div className=" dark:bg-black bg-white ">

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Introduction() {
   return (
-    <div className=" h-screen text-white flex flex-col items-center justify-center gap-y-14">
+    <div className=" min-h-screen text-white flex flex-col items-center justify-center gap-y-14">
       <img
         src="https://i.vnbusiness.vn/2023/08/04/-3386-1691138721_860x0.jpg"
         alt=""
@@ -11,10 +11,14 @@ function Introduction() {
       />
       <div className=" flex flex-col gap-y-2 z-10">
         <div className=" flex flex-col gap-y-4">
-          <h1 className=" text-6xl font-bold">Chiến lược - Công cụ</h1>
-          <h1 className=" text-6xl font-bold">Tối ưu hoá hiệu quả đầu tư</h1>
+          <h1 className=" text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold">
+            Chiến lược - Công cụ
+          </h1>
+          <h1 className=" text-2xl sm:text-2xl md:text-4xl lg:text-6xl font-bold">
+            Tối ưu hoá hiệu quả đầu tư
+          </h1>
         </div>
-        <p className=" text-2xl text-blue-200 italic">
+        <p className=" text-lg md:text-xl lg:text-2xl text-blue-200 italic">
           Nền tảng đầu tư theo các trường phái Mark Minervini, O'Neil,…
         </p>
       </div>

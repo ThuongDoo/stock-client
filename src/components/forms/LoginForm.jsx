@@ -29,7 +29,7 @@ const LoginForm = () => {
       .then((res) => {
         console.log(res.data);
 
-        dispatch(login());
+        // dispatch(login({username:}));
         navigate("/");
       })
       .catch((err) => setError("Sai thông tin đăng nhập"));

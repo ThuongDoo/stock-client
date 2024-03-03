@@ -35,7 +35,7 @@ const featureCards = [
 
 function Feature() {
   return (
-    <div className="  min-h-screen  text-black bg-white p-8 grid grid-cols-1 md:grid-cols-3">
+    <div className="  min-h-screen  text-black bg-white p-8 grid grid-cols-1 gap-y-32 md:gap-y-0 md:grid-cols-3">
       {featureCards.map((card, index) => (
         <div
           key={index}

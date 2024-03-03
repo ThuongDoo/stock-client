@@ -11,6 +11,7 @@ import { getTheme, toggleTheme } from "../slices/themeSlice";
 import DropdownButton from "./DropdownButton";
 import { logout } from "../slices/userSlice";
 import api from "../utils/api";
+import logo from "../images/logo.png";
 
 function Sidebar() {
   const darkMode = useSelector(getTheme);
@@ -21,9 +22,32 @@ function Sidebar() {
     { name: "buy-sell", displayName: "Tín hiệu", icon: FilterAltIcon },
     { name: "loc-co-phieu", displayName: "Lọc cổ phiếu", icon: ContrastIcon },
   ];
-
+  const userLogout = async () => {
+    await api
+      .get("/user/logout")
+      .then((res) => {
+        dispatch(logout());
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
+  };
   const handleSideBar = (tab) => {
-    navigate(tab.name);
+    if (tab.name === "buy-sell") {
+      const fetchDate = async () => {
+        await api
+          .get("/user/protected")
+          .then((res) => {
+            console.log("success");
+            navigate(tab.name);
+          })
+          .catch((err) => {
+            userLogout();
+          });
+      };
+      fetchDate();
+    } else {
+      navigate(tab.name);
+    }
   };
   const handleMenuClick = async (value) => {
     if (value === "logout") {
@@ -43,8 +67,12 @@ function Sidebar() {
   return (
     <div className=" flex flex-col justify-between h-screen border-r border-slate-700">
       <div className=" border-b border-slate-700">
-        <div onClick={() => navigate("/")} className=" cursor-pointer py-10">
-          <h1 className=" text-3xl font-extrabold">XYZ TEAM</h1>
+        <div
+          onClick={() => navigate("/")}
+          className=" cursor-pointer py-10 flex justify-center items-center"
+        >
+          {/* <h1 className=" text-3xl font-extrabold">XYZ TEAM</h1> */}
+          <img src={logo} alt="" className=" size-20" />
         </div>
 
         <div className=" py-3">

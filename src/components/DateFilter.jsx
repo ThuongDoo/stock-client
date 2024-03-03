@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function DateFilter({ onChange }) {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -22,8 +23,12 @@ function DateFilter({ onChange }) {
         selected={selectedDate}
         onChange={handleDateChange}
         dateFormat="dd/MM/yyyy" // Định dạng ngày tháng
+        // showMonthYearDropdown
+        showYearDropdown
+        showMonthDropdown
         className=" border rounded-lg px-2 py-2 dark:bg-slate-900 dark:border-slate-700 border-black w-48"
         todayButton={today}
+        isClearable
         placeholderText="Chọn ngày"
       />
     </div>

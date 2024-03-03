@@ -6,7 +6,7 @@ function ReviewCard({ name, position, content, image }) {
       <img src={image} alt="" className=" w-72 h-96 rounded-md" />
       <h2 className="text-xl font-semibold">{name}</h2>
       <p className="text-gray-500">{position}</p>
-      <p className="mt-2 text-3xl font-extralight text-slate-400">{content}</p>
+      {/* <p className="mt-2 text-3xl font-extralight text-slate-400">{content}</p> */}
     </div>
   );
 }

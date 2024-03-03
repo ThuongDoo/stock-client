@@ -1,5 +1,6 @@
 import React from "react";
 import PricingCard from "../components/PricingCard";
+import SimpleCarousel from "../components/SimpleCarousel";
 
 function Pricing() {
   const data = [
@@ -29,13 +30,15 @@ function Pricing() {
     },
   ];
   return (
-    <div className=" h-screen text-white flex flex-col justify-around items-center">
-      <h1 className=" text-5xl">Pricing</h1>
+    <div className=" min-h-screen text-white flex flex-col justify-around items-center bg-white">
+      <h1 className=" text-5xl text-black">Pricing</h1>
       {/* mien phi 15 ngay,  */}
-      <div className=" flex justify-around  w-full ">
-        {data?.map((item, index) => (
-          <PricingCard key={index} {...item} />
-        ))}
+      <div className="   w-full  ">
+        <SimpleCarousel slides={3}>
+          {data?.map((item, index) => (
+            <PricingCard key={index} {...item} />
+          ))}
+        </SimpleCarousel>
       </div>
     </div>
   );

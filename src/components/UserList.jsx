@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import moment from "moment";
 import React from "react";
 
@@ -25,7 +26,11 @@ function UserList({ userList, onEdit }) {
             const expirationDate = moment(user.expirationDate);
             const daysRemaining = expirationDate.diff(moment(), "days");
             const expirationText =
-              daysRemaining >= 0 ? `${daysRemaining} ngày` : "Đã hết hạn";
+              daysRemaining >= 0
+                ? `${daysRemaining} ngày`
+                : isNaN(daysRemaining)
+                ? "null"
+                : "Đã hết hạn";
             return (
               <tr key={index}>
                 <td>{user.name}</td>
@@ -33,7 +38,14 @@ function UserList({ userList, onEdit }) {
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>{user.role}</td>
-                <td>{user.expirationDate}</td>
+                <td>
+                  {user.expirationDate === null
+                    ? "null"
+                    : format(
+                        new Date(user.expirationDate),
+                        "dd-MM-yyyy HH:mm:ss"
+                      )}
+                </td>
                 <td>{expirationText}</td>
                 <td>
                   <button onClick={() => handleEdit(user)}>Edit</button>

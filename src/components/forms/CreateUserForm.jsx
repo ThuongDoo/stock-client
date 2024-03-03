@@ -6,7 +6,8 @@ const initialValues = {
   name: "",
   email: "",
   phone: "",
-  role: "",
+  role: "STOCK1",
+  date: "15",
 };
 
 const validationSchema = Yup.object({
@@ -79,14 +80,15 @@ const CreateUserForm = ({ userData, onSubmit }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
-            <Field as="select" id="role" name="role">
+            <Field as="select" id="date" name="date">
               <option value="">Role</option>
-              <option value="Stock1">Stock1</option>
-              <option value="Stock2">Stock2</option>
-              <option value="Stock3">Stock3</option>
+              <option value="15">Stock1</option>
+              <option value="30">Stock2</option>
+              <option value="178">Stock3</option>
+              <option value="0">Stock4</option>
             </Field>
             <ErrorMessage
-              name="role"
+              name="date"
               component="div"
               className="text-red-500"
             />

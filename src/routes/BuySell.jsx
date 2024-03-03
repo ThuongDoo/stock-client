@@ -3,12 +3,38 @@ import api from "../utils/api";
 import { SOCKET_SERVER_URL } from "../constants/socket";
 import { io } from "socket.io-client";
 import BuysellSearch from "../components/BuysellSearch";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../slices/userSlice";
 
 function BuySell() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isReset, setIsReset] = useState(false);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const userLogout = async () => {
+    await api
+      .get("/user/logout")
+      .then((res) => {
+        dispatch(logout());
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    const fetchDate = async () => {
+      await api
+        .get("/user/protected")
+        .then((res) => console.log("success"))
+        .catch((err) => {
+          userLogout();
+        });
+    };
+    fetchDate();
+  }, [data, isReset]);
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
 
@@ -96,51 +122,55 @@ function BuySell() {
         />
       </div>
       <div className=" max-h-[40rem]  overflow-y-auto block ">
-        <table className=" dark:text-white table-auto overflow-scroll w-full ">
-          <thead>
-            <tr className="">
-              <th className=" px-4 py-2">STT</th>
-              <th className=" px-4 py-2">Mã CP</th>
-              <th className=" px-4 py-2">Thời gian KN</th>
-              <th className=" px-4 py-2">Giá mua</th>
-              <th className=" px-4 py-2">Lãi/lỗ tạm tính (%)</th>
-              <th className=" px-4 py-2">Trạng thái</th>
-            </tr>
-          </thead>
-          <tbody className="  ">
-            {data?.map((stock, index) => (
-              <tr
-                key={index}
-                className={` ${
-                  index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
-                }  border border-slate-700 `}
-              >
-                <td>{index}</td>
-                <td>{stock?.ticker}</td>
-                <td>{stock?.date}</td>
-                <td>{stock?.price}</td>
-                <td
-                  className={` ${
-                    stock.profit > 0
-                      ? "text-green-500"
-                      : stock.profit < 0
-                      ? "text-red-500"
-                      : "text-yellow-500"
-                  }`}
-                >
-                  {stock?.profit} %
-                </td>
-                <td>
-                  {stock?.status === 1
-                    ? "Nắm giữ"
-                    : stock?.status === 0
-                    ? "Bán"
-                    : "Mua mới"}
-                </td>
+        {data.length > 0 ? (
+          <table className=" dark:text-white table-auto overflow-scroll w-full ">
+            <thead>
+              <tr className="">
+                <th className=" px-4 py-2">STT</th>
+                <th className=" px-4 py-2">Mã CP</th>
+                <th className=" px-4 py-2">Thời gian KN</th>
+                <th className=" px-4 py-2">Giá mua</th>
+                <th className=" px-4 py-2">Lãi/lỗ tạm tính (%)</th>
+                <th className=" px-4 py-2">Trạng thái</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="  ">
+              {data?.map((stock, index) => (
+                <tr
+                  key={index}
+                  className={` ${
+                    index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
+                  }  border border-slate-700 `}
+                >
+                  <td>{index}</td>
+                  <td>{stock?.ticker}</td>
+                  <td>{stock?.date}</td>
+                  <td>{stock?.price.toFixed(2)}</td>
+                  <td
+                    className={` ${
+                      stock.profit > 0
+                        ? "text-green-500"
+                        : stock.profit < 0
+                        ? "text-red-500"
+                        : "text-yellow-500"
+                    }`}
+                  >
+                    {stock?.profit} %
+                  </td>
+                  <td>
+                    {stock?.status === 1
+                      ? "Nắm giữ"
+                      : stock?.status === 0
+                      ? "Bán"
+                      : "Mua mới"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div>Không tìm thấy dữ liệu</div>
+        )}
       </div>
     </div>
   );

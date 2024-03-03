@@ -7,20 +7,24 @@ import { MenuItem as BaseMenuItem } from "@mui/base/MenuItem";
 import { Dropdown } from "@mui/base/Dropdown";
 import { useSelector } from "react-redux";
 import { getTheme } from "../slices/themeSlice";
+import { getUser } from "../slices/userSlice";
 
-export default function DropdownButton({ onMenuClick, username }) {
+export default function DropdownButton({ onMenuClick }) {
   // Replace this with your app logic for determining dark mode
+
+  const { isLoggedIn, username, role } = useSelector(getUser);
 
   const handleMenuClick = (value) => {
     onMenuClick(value);
   };
-
   return (
     <Dropdown>
       <MenuButton>{username}</MenuButton>
       <Menu>
         <MenuItem onClick={() => handleMenuClick("settings")}>Cài đặt</MenuItem>
-        <MenuItem onClick={() => handleMenuClick("admin")}>Admin</MenuItem>
+        <div className={`${role === "admin" ? "block" : "hidden"}`}>
+          <MenuItem onClick={() => handleMenuClick("admin")}>Admin</MenuItem>
+        </div>
         <MenuItem onClick={() => handleMenuClick("logout")}>Đăng xuất</MenuItem>
       </Menu>
     </Dropdown>

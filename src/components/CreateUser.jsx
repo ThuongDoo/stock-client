@@ -4,6 +4,7 @@ import api from "../utils/api";
 
 function CreateUser({ userData }) {
   const handleCreateUser = async (values) => {
+    values.date = Number(values.date);
     await api
       .post("/user", values)
       .then((res) => console.log(res.data))

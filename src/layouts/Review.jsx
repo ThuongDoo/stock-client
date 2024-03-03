@@ -1,6 +1,7 @@
 import React from "react";
 import ReviewCard from "../components/ReviewCard";
 import Slider from "../components/Slider";
+import SimpleCarousel from "../components/SimpleCarousel";
 
 function Review() {
   const data = [
@@ -46,14 +47,19 @@ function Review() {
     },
   ];
   return (
-    <div className=" h-screen  bg-white flex flex-col justify-around">
+    <div className=" min-h-screen  bg-white flex flex-col justify-around">
       <h1 className=" text-5xl text-black font-bold">XYZ Team</h1>
       <div className=" ">
-        <Slider
+        <SimpleCarousel>
+          {data.map((item, index) => (
+            <ReviewCard key={index} {...item} />
+          ))}
+        </SimpleCarousel>
+        {/* <Slider
           components={data.map((item, index) => (
             <ReviewCard key={index} {...item} />
           ))}
-        />
+        /> */}
       </div>
     </div>
   );

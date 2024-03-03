@@ -8,6 +8,9 @@ import EditUser from "../components/EditUser";
 import api from "../utils/api";
 import TabBar from "../components/TabBar";
 import ImportFile from "../components/ImportFile";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getUser, logout } from "../slices/userSlice";
 
 function Admin() {
   const [activeTab, setActiveTab] = useState("users");
@@ -16,6 +19,9 @@ function Admin() {
   const [userRequest, setUserRequest] = useState([]);
   const [requestUpdateFlag, setRequestUpdateFlag] = useState(false);
   const [userData, setUserData] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { role } = useSelector(getUser);
 
   const tabs = [
     { name: "users", displayName: "Users" },
@@ -26,6 +32,22 @@ function Admin() {
   const handleTabChange = (tabName) => {
     setActiveTab(tabName.name);
   };
+
+  const userLogout = async () => {
+    await api
+      .get("/user/logout")
+      .then((res) => {
+        dispatch(logout());
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    if (role !== "admin") {
+      navigate("/");
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     const fetchData = async () => {
