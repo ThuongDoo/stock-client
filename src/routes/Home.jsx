@@ -14,7 +14,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 function Home() {
   return (
     <div className=" bg-black ">
-      <a href="#home" className=" fixed right-0 bottom-0 bg-blue-500 ">
+      <a href="#home" className=" fixed right-0 bottom-0 bg-blue-500 z-50">
         <KeyboardArrowUpIcon sx={{ color: "blue", fontSize: 50 }} />
       </a>
       <div className=" pb-4 absolute w-full z-50 px-6 md:px-12 lg:px-24">

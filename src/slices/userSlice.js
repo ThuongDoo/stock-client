@@ -6,12 +6,18 @@ export const userSlice = createSlice({
     isLoggedIn: false,
     username: "",
     role: null,
+    expirationDate: null,
+    email: null,
+    phone: null,
   },
   reducers: {
     login: (state, action) => {
       state.isLoggedIn = true;
       state.username = action.payload.username;
       state.role = action.payload.role;
+      state.expirationDate = action.payload.expirationDate;
+      state.email = action.payload.email;
+      state.phone = action.payload.phone;
     },
     logout: (state) => {
       state.isLoggedIn = false;

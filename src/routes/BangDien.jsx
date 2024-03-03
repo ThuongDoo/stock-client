@@ -13,6 +13,7 @@ import DropdownList from "../components/DropdownList";
 function BangDien() {
   const [data, setData] = useState([]);
   const [oldData, setOldData] = useState([]);
+  const [sanData, setSanData] = useState([]);
   const [tickerName, setTickerName] = useState([]);
   const [selectedStocks, setSelectedStocks] = useState(CATEGORIES[0].stocks);
   useEffect(() => {
@@ -23,6 +24,14 @@ function BangDien() {
         .get("/stock/getAll")
         .then((res) => {
           setTickerName(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    const fetchSan = async () => {
+      await api
+        .get("/stock/getSan")
+        .then((res) => {
+          setSanData(res.data);
         })
         .catch((err) => console.log(err));
     };
@@ -37,10 +46,12 @@ function BangDien() {
     socket.on("updateStock", (newData) => {
       console.log("relod", newData);
       setOldData(data);
-      setData(newData);
+      setData(newData.data);
+      setSanData(newData.sanData);
     });
 
     fetchTickerName();
+    fetchSan();
 
     return () => {
       socket.disconnect();
@@ -79,11 +90,13 @@ function BangDien() {
     fetchData();
   };
   //test
+  console.log("san");
+  console.log(sanData);
   return (
     <div className=" flex w-full h-full ">
       <div className=" flex flex-col flex-1 items-start">
         <div className=" w-full">
-          <BangDienHeader />
+          <BangDienHeader data={sanData} />
         </div>
         <div className=" p-4 flex items-center gap-x-4">
           <SearchBar onSelect={handleSearch} suggestionData={tickerName} />

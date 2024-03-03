@@ -16,6 +16,7 @@ import {
   redirect,
   useNavigate,
 } from "react-router-dom";
+import MyDropdownButton from "./MyDropdownButton";
 
 function Header({ style = 1 }) {
   const darkMode = useSelector(getTheme);
@@ -30,7 +31,15 @@ function Header({ style = 1 }) {
         .get("/user/showMe")
         .then((res) => {
           console.log(res.data);
-          dispatch(login({ username: res.data.name, role: res.data.role }));
+          dispatch(
+            login({
+              username: res.data.name,
+              role: res.data.role,
+              expirationDate: res.data.expirationDate,
+              email: res.data.email,
+              phone: res.data.phone,
+            })
+          );
         })
         .catch((err) => console.log(err));
     };
@@ -76,25 +85,7 @@ function Header({ style = 1 }) {
           <ListIcon sx={{ color: "white", fontSize: 30 }} />
         </div>
         {isHidden && (
-          <div className=" absolute bg-slate-900 right-0 top-12 flex flex-col gap-y-3 p-3 w-52  rounded-lg justify-between items-start">
-            {isLoggedIn ? (
-              <DropdownButton
-                onMenuClick={handleMenuClick}
-                username={username}
-              />
-            ) : (
-              <>
-                <button
-                  className="  dark:hover:text-slate-500"
-                  onClick={() => navigate("/login")}
-                >
-                  Đăng nhập
-                </button>
-                <a href="#contact" className=" ">
-                  Đăng ký
-                </a>
-              </>
-            )}
+          <div className=" absolute bg-slate-900 right-0 top-16 flex flex-col gap-y-3 p-3 w-52  rounded-lg justify-between items-start">
             {style === 1 ? (
               <>
                 <a href="#feature">Tính năng</a>
@@ -108,6 +99,21 @@ function Header({ style = 1 }) {
               </>
             ) : (
               <div></div>
+            )}
+            {isLoggedIn ? (
+              <MyDropdownButton onMenuClick={handleMenuClick} />
+            ) : (
+              <>
+                <button
+                  className="  dark:hover:text-slate-500"
+                  onClick={() => navigate("/login")}
+                >
+                  Đăng nhập
+                </button>
+                <a href="#contact" className=" ">
+                  Đăng ký
+                </a>
+              </>
             )}
           </div>
         )}

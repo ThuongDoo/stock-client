@@ -57,11 +57,11 @@ function StockBD({ data, oldData }) {
   return (
     <div className=" container mx-auto h-full ">
       {data.length > 0 ? (
-        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[60rem] md:h-[39rem] overflow-y-scroll ">
+        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[24rem] overflow-y-scroll ">
           {data?.map((stock, index) => (
             <div
               key={index}
-              className={` flex-col m-2 justify-between text-black  rounded-lg px-2 ${getColorClass(
+              className={` flex-col m-2 justify-between text-black h-fit  rounded-lg px-2 ${getColorClass(
                 stock?.["Tang/Giam (%)"]
               )}`}
             >

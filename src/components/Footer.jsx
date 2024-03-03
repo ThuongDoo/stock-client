@@ -11,15 +11,18 @@ const Footer = () => {
       <div className=" py-4 flex justify-between ">
         <div className="  flex flex-col justify-between  items-start">
           <div className="   flex  items-start flex-col   gap-x-3">
-            <h1 className=" text-xs sm:text-sm lg:text-lg">Hotline:</h1>
-            <h1 className=" text-xs sm:text-sm lg:text-lg">
+            <h1 className=" text-xs sm:text-sm lg:text-lg font-bold">
+              Hotline:
+            </h1>
+            <h1 className=" text-xs sm:text-sm lg:text-lg pl-3">
               0939.600.338 (Luân)
             </h1>
-            <h1 className=" text-xs sm:text-sm lg:text-lg">
+            <h1 className=" text-xs sm:text-sm lg:text-lg pl-3">
               0936.842.309 (Phú)
             </h1>
             <h1 className=" text-xs sm:text-sm lg:text-lg">
-              Email: support@chungkhoanxyz.com
+              <span className=" font-bold">Email: </span>
+              support@chungkhoanxyz.com
             </h1>
           </div>
           <div className="    flex  justify-center divide-x-2 ">

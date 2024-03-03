@@ -1,6 +1,6 @@
 import React from "react";
 import ContactForm from "../components/forms/ContactForm";
-import zaloIcon from "../images/icons8-zalo-48.png";
+import zaloIcon from "../images/zalo.png";
 import api from "../utils/api";
 import contactBackground from "../images/contactBackground.png";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -30,7 +30,7 @@ function Contact() {
         <h1 className=" text-5xl text-white ">Liên hệ tư vấn</h1>
       </div>
       <div className=" flex flex-col gap-y-3 lg:flex-row  w-11/12 justify-between bg-blue-950 p-8 m-8">
-        <div className=" w-full lg:w-1/2 flex  justify-between gap-y-10 lg:flex-col ">
+        <div className=" w-full flex-col md:flex-row lg:w-1/2 flex  justify-between gap-y-10 lg:flex-col ">
           <div className=" flex flex-col items-start ">
             <div className=" flex gap-x-3 pb-3 items-center">
               <img src={logo} alt="" className=" size-14 bg-black" />
@@ -56,14 +56,18 @@ function Contact() {
               <h1>0939.600.338 (Luân)</h1>
               <h1>0936.842.309 (Phú)</h1>
             </h1>
-            <div className=" flex flex-col sm:flex-row">
+            <div className=" flex flex-row pb-6 md:pb-0">
               <a
                 href={zaloLink}
                 target="_blank"
                 rel="noreferrer"
                 className="text-gray-400 hover:text-white transition duration-300 ease-in-out"
               >
-                <img src={zaloIcon} alt="Zalo" className=" size-14" />
+                <img
+                  src={zaloIcon}
+                  alt="Zalo"
+                  className=" size-12 bg-white m-1.5"
+                />
               </a>
               <a
                 href={zaloLink}
