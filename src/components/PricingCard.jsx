@@ -1,6 +1,6 @@
 import React from "react";
 
-function PricingCard({ name, price, services, color }) {
+function PricingCard({ name, price, services, color, discount }) {
   return (
     <div className=" flex flex-col gap-y-2 py-12  relative h-fit items-center">
       <div
@@ -11,10 +11,13 @@ function PricingCard({ name, price, services, color }) {
         style={{ border: "2px solid " + color }}
         className="  bg-white border rounded-lg w-56 h-32 flex flex-col items-center justify-evenly z-10"
       >
-        <h1 style={{ color }} className=" text-4xl font-extralight">
+        <h1 style={{ color }} className=" text-4xl font-bold ">
           {name}
         </h1>
-        <h1 style={{ color }} className=" text-5xl font-bold">
+        <h1 style={{ color }} className=" line-through text-2xl">
+          {discount}
+        </h1>
+        <h1 style={{ color }} className=" text-3xl ">
           {price}
         </h1>
       </div>

@@ -10,7 +10,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
 function Contact() {
-  const zaloLink = "https://zalo.me/0333817395";
+  const zaloLink = "https://zalo.me/g/cbgvag037";
 
   const handleSubmit = async (values) => {
     await api
@@ -39,28 +39,22 @@ function Contact() {
             <div className="  flex items-center gap-x-1">
               <LocationOnIcon sx={{ color: "white", fontSize: 30 }} />
               <span className=" font-bold text-xs md:text-sm lg:text-lg">
-                dhfjkaga
+                311I25 Đường số 7, Phường An Phú, Quận 2, TP. HCM
               </span>
-              dhfjkaga
-            </div>
-            <div className="  flex items-center gap-x-1">
-              <LocalPhoneIcon sx={{ color: "white", fontSize: 30 }} />
-              <span className=" font-bold text-xs md:text-sm lg:text-lg">
-                jdngljangl
-              </span>
-              jdngljangl
             </div>
             <div className="  flex items-center gap-x-1">
               <EmailIcon sx={{ color: "white", fontSize: 30 }} />
               <span className=" font-bold text-xs md:text-sm lg:text-lg">
-                support@chungkhoanxyz@gmail.com
+                support@chungkhoanxyz.com
               </span>
             </div>
           </div>
           <div className=" flex flex-col items-center justify-center flex-1 ">
             <h1 className=" font-extrabold hidden sm:block">TƯ VẤN MIỄN PHÍ</h1>
             <h1 className=" bg-orange-600 w-fit px-5 py-2 font-extrabold rounded-lg text-sm md:text-lg hidden sm:block">
-              HOTLINE 012345678
+              HOTLINE
+              <h1>0939.600.338 (Luân)</h1>
+              <h1>0936.842.309 (Phú)</h1>
             </h1>
             <div className=" flex flex-col sm:flex-row">
               <a

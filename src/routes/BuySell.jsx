@@ -59,6 +59,7 @@ function BuySell() {
       await api
         .get("/stock/buysell?limit=20")
         .then((res) => {
+          console.log(res.data.data);
           updateData(res.data.data, res.data.realtimeData);
           // setData(res.data);
         })
@@ -87,7 +88,7 @@ function BuySell() {
       await api
         .get(url)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           updateData(res.data.data, res.data.realtimeData);
           // setData(res.data);
         })
@@ -102,14 +103,19 @@ function BuySell() {
       const correspondingItemB = newRealtimeData.find(
         (itemB) => itemB.ticker === itemA.ticker
       );
-      let profit =
-        (((correspondingItemB ? correspondingItemB.price : itemA.price) -
-          itemA.price) /
-          itemA.price) *
-        100;
-      profit = parseFloat(profit).toFixed(2);
-      // Trả về phần tử mới có thuộc tính profit
-      return { ...itemA, profit };
+      if (!itemA.profit) {
+        if (correspondingItemB) {
+          let profit =
+            (((correspondingItemB ? correspondingItemB.price : itemA.price) -
+              itemA.price) /
+              itemA.price) *
+            100;
+          itemA.profit = parseFloat(profit).toFixed(2);
+        }
+      }
+
+      // // Trả về phần tử mới có thuộc tính profit
+      return { ...itemA };
     });
     setData(aWithProfit);
   };

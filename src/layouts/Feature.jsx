@@ -36,7 +36,7 @@ const featureCards = [
 function Feature() {
   return (
     <div className="">
-      <h1 className=" text-black bg-white text-3xl">Tính năng</h1>
+      {/* <h1 className=" text-black bg-white text-3xl">Tính năng</h1> */}
       <div className="  min-h-screen  text-black bg-white p-8 grid grid-cols-1 gap-y-32 md:gap-y-0 md:grid-cols-3">
         {featureCards.map((card, index) => (
           <div

@@ -2,6 +2,7 @@ import React from "react";
 
 import zaloIcon from "../images/icons8-zalo-48.png";
 import logo from "../images/logo.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const zaloLink = "https://zalo.me/0333817395";
@@ -10,27 +11,48 @@ const Footer = () => {
       <div className=" py-4 flex justify-between ">
         <div className="  flex flex-col justify-between  items-start">
           <div className="   flex  items-start flex-col   gap-x-3">
-            <h1 className=" text-xs sm:text-sm lg:text-lg">Hotline: 0987654</h1>
+            <h1 className=" text-xs sm:text-sm lg:text-lg">Hotline:</h1>
             <h1 className=" text-xs sm:text-sm lg:text-lg">
-              Email: support@chungkhoanxyz@gmail.com
+              0939.600.338 (Luân)
+            </h1>
+            <h1 className=" text-xs sm:text-sm lg:text-lg">
+              0936.842.309 (Phú)
+            </h1>
+            <h1 className=" text-xs sm:text-sm lg:text-lg">
+              Email: support@chungkhoanxyz.com
             </h1>
           </div>
           <div className="    flex  justify-center divide-x-2 ">
-            <h1 className=" text-xs sm:text-sm md:text-lg pr-2 lg:pr-5">
+            <a
+              href="#feature"
+              className=" text-xs sm:text-sm md:text-lg pr-2 lg:pr-5"
+            >
               Tính năng
-            </h1>
-            <h1 className=" text-xs sm:text-sm md:text-lg px-2 lg:px-5">
+            </a>
+            <a
+              href="#about-us"
+              className=" text-xs sm:text-sm md:text-lg px-2 lg:px-5"
+            >
               Về chúng tôi
-            </h1>
-            <h1 className=" text-xs sm:text-sm md:text-lg px-2 lg:px-5">
+            </a>
+            <Link
+              to={"/dashboard"}
+              className=" text-xs sm:text-sm md:text-lg px-2 lg:px-5"
+            >
               X Products
-            </h1>
-            <h1 className=" text-xs sm:text-sm md:text-lg px-2 lg:px-5">
+            </Link>
+            <a
+              href="#contact"
+              className=" text-xs sm:text-sm md:text-lg px-2 lg:px-5"
+            >
               Liên hệ
-            </h1>
-            <h1 className=" text-xs sm:text-sm md:text-lg pl-2 lg:pl-5">
+            </a>
+            <a
+              href="#pricing"
+              className=" text-xs sm:text-sm md:text-lg pl-2 lg:pl-5"
+            >
               Bảng giá
-            </h1>
+            </a>
           </div>
         </div>
         <div className=" flex flex-col items-center">
