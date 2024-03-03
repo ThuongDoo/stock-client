@@ -62,7 +62,7 @@ function Header({ style = 1 }) {
   };
   console.log(darkMode);
   return (
-    <header className=" text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
+    <header className=" mx-8  text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
       <nav className=" flex gap-x-3 items-center  ">
         <div className="   px-2 py-1">
           <Link to={"/"}>
@@ -75,7 +75,7 @@ function Header({ style = 1 }) {
           <ListIcon sx={{ color: "white", fontSize: 30 }} />
         </div>
         {isHidden && (
-          <div className=" absolute bg-slate-900 right-0 top-12 flex flex-col gap-y-3 p-3 w-32  rounded-lg justify-between">
+          <div className=" absolute bg-slate-900 -right-8 top-12 flex flex-col gap-y-3 p-3 w-52  rounded-lg justify-between items-start">
             {isLoggedIn ? (
               <DropdownButton
                 onMenuClick={handleMenuClick}
