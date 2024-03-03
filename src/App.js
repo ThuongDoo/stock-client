@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+import logo from "./images/logo.png";
 import "./App.css";
 import {
   Route,
@@ -20,11 +20,12 @@ import Settings from "./routes/Settings";
 import LocCoPhieu from "./routes/LocCoPhieu";
 import Admin from "./routes/Admin";
 import Login from "./routes/Login";
+import { Helmet } from "react-helmet";
 
 function App() {
   const darkMode = useSelector(getTheme);
   console.log(darkMode);
-  console.log(('reload'));
+  console.log("reload");
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />} errorElement={<ErrorPage />}>

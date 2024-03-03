@@ -122,8 +122,9 @@ function LocCoPhieu() {
   };
 
   return (
-    <div className=" flex flex-col h-full">
-      <div className=" flex h-1/2">
+    <div className=" flex flex-col h-full justify-center">
+      <h1>Tính năng sắp ra mắt</h1>
+      {/* <div className=" flex h-1/2">
         <div className=" flex-1 bg-blue-500">
           <ThemDieuKien
             onChange={handleThemDieuKien}
@@ -134,7 +135,7 @@ function LocCoPhieu() {
           <DieuKienLoc filters={filterArray} />
         </div>
       </div>
-      <div className=" bg-yellow-500 h-1/2">hihi</div>
+      <div className=" bg-yellow-500 h-1/2">hihi</div> */}
     </div>
   );
 }
