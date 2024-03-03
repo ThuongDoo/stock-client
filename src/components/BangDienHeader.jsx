@@ -34,9 +34,12 @@ function BangDienHeader() {
     },
   ];
   return (
-    <div className="  w-full items-center grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-5 divide-x-2 divide-slate-700">
+    <div className="  w-full items-center grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-5 ">
       {data?.map((item, index) => (
-        <div key={index} className=" flex-1 px-3 mb-2">
+        <div
+          key={index}
+          className=" flex-1 px-3 mb-2 border-x border-slate-700 box-border"
+        >
           <h1 className=" text-lg">{item.name}</h1>
           <div className=" flex justify-between">
             <h1>{item.GiaHienTai}</h1>

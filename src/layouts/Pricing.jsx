@@ -5,7 +5,7 @@ import SimpleCarousel from "../components/SimpleCarousel";
 function Pricing() {
   const data = [
     {
-      name: "Basic",
+      name: "Trải nghiệm",
       price: "20$",
       services: ["Dashboard", "Market Watch", "Loc co phieu", "So Sanh"],
       color: "#CA8A04",
@@ -31,7 +31,7 @@ function Pricing() {
   ];
   return (
     <div className=" min-h-screen text-white flex flex-col justify-around items-center bg-white">
-      <h1 className=" text-5xl text-black">Pricing</h1>
+      <h1 className=" text-5xl text-black">Bảng giá</h1>
       {/* mien phi 15 ngay,  */}
       <div className="   w-full  ">
         <SimpleCarousel slides={3}>

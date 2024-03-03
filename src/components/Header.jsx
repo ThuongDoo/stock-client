@@ -62,11 +62,12 @@ function Header({ style = 1 }) {
   };
   console.log(darkMode);
   return (
-    <header className=" mx-8  text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
+    <header className="   text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
       <nav className=" flex gap-x-3 items-center  ">
         <div className="   px-2 py-1">
-          <Link to={"/"}>
-            <img src={logo} alt="" className=" size-10" />
+          <Link to={"/"} className=" flex items-center space-x-2 pr-5">
+            <img src={logo} alt="" className=" size-8" />
+            <h1 className=" text-2xl font-bold">XYZTeam</h1>
           </Link>
         </div>
       </nav>
@@ -75,7 +76,7 @@ function Header({ style = 1 }) {
           <ListIcon sx={{ color: "white", fontSize: 30 }} />
         </div>
         {isHidden && (
-          <div className=" absolute bg-slate-900 -right-8 top-12 flex flex-col gap-y-3 p-3 w-52  rounded-lg justify-between items-start">
+          <div className=" absolute bg-slate-900 right-0 top-12 flex flex-col gap-y-3 p-3 w-52  rounded-lg justify-between items-start">
             {isLoggedIn ? (
               <DropdownButton
                 onMenuClick={handleMenuClick}
@@ -143,7 +144,8 @@ function Header({ style = 1 }) {
               </button>
               <a
                 href="#contact"
-                className=" rounded-full border border-blue-500 px-3 py-1 text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white"
+                // className=" rounded-full border font-bold border-blue-500 px-3 py-1 text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white"
+                className=" rounded-full font-bold  px-3 py-1 bg-blue-500 text-white"
               >
                 Đăng ký
               </a>

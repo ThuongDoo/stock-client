@@ -35,16 +35,21 @@ const featureCards = [
 
 function Feature() {
   return (
-    <div className="  min-h-screen  text-black bg-white p-8 grid grid-cols-1 gap-y-32 md:gap-y-0 md:grid-cols-3">
-      {featureCards.map((card, index) => (
-        <div
-          key={index}
-          className=" flex flex-col justify-center items-center gap-y-2 "
-        >
-          <img src={card.image} alt="" />
-          <h1 className=" text-2xl font-bold text-[#586b80]">{card.content}</h1>
-        </div>
-      ))}
+    <div className="">
+      <h1 className=" text-black bg-white text-3xl">Tính năng</h1>
+      <div className="  min-h-screen  text-black bg-white p-8 grid grid-cols-1 gap-y-32 md:gap-y-0 md:grid-cols-3">
+        {featureCards.map((card, index) => (
+          <div
+            key={index}
+            className=" flex flex-col justify-center items-center gap-y-2 "
+          >
+            <img src={card.image} alt="" className=" size-32" />
+            <h1 className=" text-2xl font-bold text-[#586b80]">
+              {card.content}
+            </h1>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

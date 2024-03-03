@@ -10,7 +10,7 @@ function Introduction() {
         className=" absolute left-0  w-full h-full opacity-40 z-0"
       />
       <div className=" flex flex-col gap-y-2 z-10">
-        <div className=" flex flex-col gap-y-4">
+        <div className=" flex flex-col gap-y-2 lg:gap-y-4">
           <h1 className=" text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold">
             Chiến lược - Công cụ
           </h1>

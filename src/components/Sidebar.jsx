@@ -72,7 +72,7 @@ function Sidebar() {
           className=" cursor-pointer py-10 flex justify-center items-center"
         >
           {/* <h1 className=" text-3xl font-extrabold">XYZ TEAM</h1> */}
-          <img src={logo} alt="" className=" size-20" />
+          <img src={logo} alt="" className=" size-10 md:size-20" />
         </div>
 
         <div className=" py-3">

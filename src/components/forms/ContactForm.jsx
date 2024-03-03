@@ -92,7 +92,7 @@ const ContactForm = ({ onSubmit }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className=" bg-yellow-500 rounded-full px-4 py-2 w-full text-white font-extrabold"
+            className=" bg-orange-600 rounded-full px-4 py-2 w-full text-white font-extrabold"
           >
             GỬI LIÊN HỆ NGAY
           </button>

@@ -17,7 +17,7 @@ function Home() {
       <a href="#home" className=" fixed right-0 bottom-0 bg-blue-500 ">
         <KeyboardArrowUpIcon sx={{ color: "blue", fontSize: 50 }} />
       </a>
-      <div className=" pb-4 absolute w-full z-50">
+      <div className=" pb-4 absolute w-full z-50 px-6 md:px-12 lg:px-24">
         <Header />
       </div>
       <div id="home">

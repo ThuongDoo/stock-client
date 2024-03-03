@@ -142,7 +142,7 @@ function BuySell() {
                     index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
                   }  border border-slate-700 `}
                 >
-                  <td>{index}</td>
+                  <td>{index + 1}</td>
                   <td>{stock?.ticker}</td>
                   <td>{stock?.date}</td>
                   <td>{stock?.price.toFixed(2)}</td>

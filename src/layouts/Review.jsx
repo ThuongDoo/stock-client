@@ -48,7 +48,9 @@ function Review() {
   ];
   return (
     <div className=" min-h-screen  bg-white flex flex-col justify-around">
-      <h1 className=" text-5xl text-black font-bold">XYZ Team</h1>
+      <h1 className=" text-4xl text-black font-semibold font-sans ">
+        XYZ Team
+      </h1>
       <div className=" ">
         <SimpleCarousel>
           {data.map((item, index) => (
