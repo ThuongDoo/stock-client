@@ -10,10 +10,10 @@ function BangDienHeader({ data }) {
         >
           <h1 className=" text-lg">{item.San}</h1>
           <div className=" flex justify-between">
-            <h1>{item.Giahientai.toFixed(2)}</h1>
+            <h1>{Number(item.Giahientai).toFixed(2)}</h1>
             <h1>
-              {item?.["Tang/Giam"].toFixed(2)} /{" "}
-              {item?.["Tang/Giam (%)"].toFixed(2)}%
+              {Number(item?.["Tang/Giam"]).toFixed(2)} /{" "}
+              {Number(item?.["Tang/Giam (%)"]).toFixed(2)}%
             </h1>
           </div>
         </div>
