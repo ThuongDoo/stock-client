@@ -51,11 +51,11 @@ function Contact() {
           </div>
           <div className=" flex flex-col items-center justify-center flex-1 ">
             <h1 className=" font-extrabold hidden sm:block">TƯ VẤN MIỄN PHÍ</h1>
-            <h1 className=" bg-orange-600 w-fit px-5 py-2 font-extrabold rounded-lg text-sm md:text-lg hidden sm:block">
+            <div className=" bg-orange-600 w-fit px-5 py-2 font-extrabold rounded-lg text-sm md:text-lg hidden sm:block">
               HOTLINE
               <h1>0939.600.338 (Luân)</h1>
               <h1>0936.842.309 (Phú)</h1>
-            </h1>
+            </div>
             <div className=" flex flex-row pb-6 md:pb-0">
               <a
                 href={zaloLink}
