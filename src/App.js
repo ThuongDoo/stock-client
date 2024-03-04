@@ -25,7 +25,7 @@ import { Helmet } from "react-helmet";
 function App() {
   const darkMode = useSelector(getTheme);
   console.log(darkMode);
-  console.log("reload");
+  console.log("reloa");
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />} errorElement={<ErrorPage />}>
