@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
 import api from "../utils/api";
-import { formatISO, parse } from "date-fns";
+import { addHours, formatISO, parse } from "date-fns";
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
@@ -44,8 +44,8 @@ const ImportFile = () => {
       // Tạo một đối tượng Date từ chuỗi ngày tháng đầu vào
       try {
         const parsedDate = parse(dateString, "M/d/yyyy HH:mm:ss", new Date());
-        console.log(dateString);
-        const isoString = formatISO(parsedDate);
+        const modifiedDate = addHours(parsedDate, 7);
+        const isoString = formatISO(modifiedDate);
         return isoString;
       } catch (error) {
         return dateString;
