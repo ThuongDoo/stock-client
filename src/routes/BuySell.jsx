@@ -6,6 +6,7 @@ import BuysellSearch from "../components/BuysellSearch";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../slices/userSlice";
+import { format } from "date-fns";
 
 function BuySell() {
   const [data, setData] = useState([]);
@@ -150,7 +151,7 @@ function BuySell() {
                 >
                   <td>{index + 1}</td>
                   <td>{stock?.ticker}</td>
-                  <td>{stock?.date}</td>
+                  <td>{format(stock?.date, "dd-MM-yyyy")}</td>
                   <td>{stock?.price.toFixed(2)}</td>
                   <td
                     className={` ${
