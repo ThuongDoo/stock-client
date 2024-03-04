@@ -85,7 +85,7 @@ const CreateUserForm = ({ userData, onSubmit }) => {
               <option value="15">Stock1</option>
               <option value="30">Stock2</option>
               <option value="178">Stock3</option>
-              <option value="0">Stock4</option>
+              <option value="365">Stock4</option>
             </Field>
             <ErrorMessage
               name="date"
