@@ -44,6 +44,7 @@ const ImportFile = () => {
       // Tạo một đối tượng Date từ chuỗi ngày tháng đầu vào
       try {
         const parsedDate = parse(dateString, "M/d/yyyy HH:mm:ss", new Date());
+        console.log(dateString);
         const isoString = formatISO(parsedDate);
         return isoString;
       } catch (error) {
@@ -55,7 +56,7 @@ const ImportFile = () => {
       .map((item) => {
         return {
           ticker: item.Ticker,
-          price: Number(item.Giamua),
+          price: Number(item.GiaHT),
           date: convertToISO(item["Date/Time"]),
           profit: Number(item["Lai/lo%"]),
           status: Number(item["Mua-Ban"]),

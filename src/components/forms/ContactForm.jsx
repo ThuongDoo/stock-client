@@ -93,6 +93,7 @@ const ContactForm = ({ onSubmit }) => {
             type="submit"
             disabled={isSubmitting}
             className=" bg-orange-600 rounded-full px-4 py-2 w-full text-white font-extrabold"
+            onClick={() => alert("yêu cầu đã được gửi")}
           >
             GỬI LIÊN HỆ NGAY
           </button>
