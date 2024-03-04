@@ -80,6 +80,13 @@ function Admin() {
     setEditUser(value);
   };
 
+  const handleUpdateMuaMoi = async () => {
+    await api
+      .patch("/stock/updateMuaMoi")
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className=" dark:bg-slate-900">
       <div className=" px-8">
@@ -100,6 +107,17 @@ function Admin() {
           )}
           {activeTab === "import" && <ImportFile />}
         </div>
+      </div>
+      <div className=" h-32">
+        <h1>CLICK IT AT 9:00PM</h1>
+        <button
+          onClick={() => {
+            handleUpdateMuaMoi();
+          }}
+          className=" bg-blue-500 text-white p-3 rounded-lg"
+        >
+          UPDATE MUA MOI
+        </button>
       </div>
       {createUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

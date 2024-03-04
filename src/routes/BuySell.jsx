@@ -113,6 +113,8 @@ function BuySell() {
             100;
           itemA.profit = parseFloat(profit).toFixed(2);
         }
+        const a = 0;
+        itemA.profit = a.toFixed(2);
       }
 
       // // Trả về phần tử mới có thuộc tính profit
