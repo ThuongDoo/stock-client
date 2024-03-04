@@ -10,7 +10,9 @@ function DateFilter({ onChange }) {
 
   const handleDateChange = (date) => {
     // console.log(date);
-    date.setHours(7);
+    if (date) {
+      date.setHours(7);
+    }
     setSelectedDate(date);
     onChange(date);
     // Xử lý ngày được chọn ở đây
