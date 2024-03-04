@@ -8,7 +8,7 @@ function BangDienHeader({ data }) {
           key={index}
           className=" flex-1 px-3 mb-2 border-x border-slate-700 box-border"
         >
-          <h1 className=" text-lg">{item.San}</h1>
+          <h1 className=" text-lg">{item.Ticker}</h1>
           <div className=" flex justify-between">
             <h1>{Number(item.Giahientai).toFixed(2)}</h1>
             <h1>
