@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import api from "../utils/api";
 import StockBD from "../components/StockBD";
 import SearchBar from "../components/SearchBar";
-import io from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
 import BangDienHeader from "../components/BangDienHeader";
 import TabBar from "../components/TabBar";
 import { CATEGORIES } from "../constants/categories";
 import { parse, formatISO } from "date-fns";
 import DropdownList from "../components/DropdownList";
+import { io } from "socket.io-client";
 
 function BangDien() {
   const [data, setData] = useState([]);
