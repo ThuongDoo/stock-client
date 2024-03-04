@@ -17,7 +17,7 @@ function BangDien() {
   const [tickerName, setTickerName] = useState([]);
   const [selectedStocks, setSelectedStocks] = useState(CATEGORIES[0].stocks);
   useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL, { autoConnect: false });
+    const socket = io(SOCKET_SERVER_URL);
     const fetchTickerName = async () => {
       console.log("reload");
       await api

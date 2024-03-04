@@ -37,7 +37,7 @@ function BuySell() {
     fetchDate();
   }, [data, isReset]);
   useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL, { autoConnect: false });
+    const socket = io(SOCKET_SERVER_URL);
 
     socket.on("connect", () => {
       console.log("Connected to server");
