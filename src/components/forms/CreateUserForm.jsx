@@ -25,7 +25,7 @@ const CreateUserForm = ({ userData, onSubmit }) => {
   initialValues.phone = userData.phone;
   const handleSubmit = (values, { setSubmitting }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
-    if (values.date === "") {
+    if (values.date === "100") {
       values.role = "admin";
     }
     console.log(values);
