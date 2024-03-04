@@ -154,7 +154,7 @@ function BuySell() {
                   <td>{index + 1}</td>
                   <td>{stock?.ticker}</td>
                   <td>{format(stock?.date, "dd-MM-yyyy")}</td>
-                  <td>{stock?.price.toFixed(2)}</td>
+                  <td>{Number(stock?.price).toFixed(2)}</td>
                   <td
                     className={` ${
                       stock.profit > 0
