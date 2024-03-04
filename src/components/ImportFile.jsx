@@ -56,7 +56,7 @@ const ImportFile = () => {
       .map((item) => {
         return {
           ticker: item.Ticker,
-          price: Number(item.GiaHT),
+          price: Number(item.Giamua),
           date: convertToISO(item["Date/Time"]),
           profit: item["Lai/lo%"] !== "" ? Number(item["Lai/lo%"]) : null,
           status: Number(item["Mua-Ban"]),
