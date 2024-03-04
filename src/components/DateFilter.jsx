@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 function DateFilter({ onChange }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const today = moment(new Date()).format("dddd, DD/MM/YYYY");
+
   const handleDateChange = (date) => {
+    // console.log(date);
+    date.setHours(7);
     setSelectedDate(date);
     onChange(date);
     // Xử lý ngày được chọn ở đây
