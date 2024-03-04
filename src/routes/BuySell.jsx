@@ -61,6 +61,7 @@ function BuySell() {
         .get("/stock/buysell?limit=20")
         .then((res) => {
           console.log(res.data.data);
+          console.log(res.data.realtimeData);
           updateData(res.data.data, res.data.realtimeData);
           // setData(res.data);
         })
@@ -113,8 +114,8 @@ function BuySell() {
             100;
           itemA.profit = parseFloat(profit).toFixed(2);
         }
-        const a = 0;
-        itemA.profit = a.toFixed(2);
+        // const a = 0;
+        // itemA.profit = a.toFixed(2);
       }
 
       // // Trả về phần tử mới có thuộc tính profit
