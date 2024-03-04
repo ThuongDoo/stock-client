@@ -164,7 +164,7 @@ function BuySell() {
                         : "text-yellow-500"
                     }`}
                   >
-                    {stock?.profit} %
+                    {Number(stock?.profit)} %
                   </td>
                   <td>
                     {stock?.status === 1
