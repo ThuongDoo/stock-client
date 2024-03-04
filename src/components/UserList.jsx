@@ -1,10 +1,27 @@
 import { format } from "date-fns";
 import moment from "moment";
 import React from "react";
+import api from "../utils/api";
 
 function UserList({ userList, onEdit }) {
   const handleEdit = (value) => {
     onEdit(value);
+  };
+
+  const handleDelete = async (value) => {
+    console.log(value);
+    await api
+      .delete(`/user/deleteUser/${value}`)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  const handleReset = async (value) => {
+    console.log(value);
+    await api
+      .patch(`user/resetPassword/${value}`)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
   return (
     <div>
@@ -47,6 +64,19 @@ function UserList({ userList, onEdit }) {
                       )}
                 </td>
                 <td>{expirationText}</td>
+                <td
+                  onClick={() => handleDelete(user.phone)}
+                  className=" cursor-pointer"
+                >
+                  Delete
+                </td>
+                <td
+                  className=" cursor-pointer"
+                  onClick={() => handleReset(user.phone)}
+                >
+                  ResetPass
+                </td>
+
                 <td>
                   <button onClick={() => handleEdit(user)}>Edit</button>
                 </td>

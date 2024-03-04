@@ -4,10 +4,9 @@ import * as Yup from "yup";
 
 const initialValues = {
   name: "",
-  password: "",
   email: "",
   phone: "",
-  role: "",
+  date: "",
 };
 
 const validationSchema = Yup.object({
@@ -18,15 +17,16 @@ const validationSchema = Yup.object({
   phone: Yup.string().required("*Vui lòng nhâp số điện thoại"),
 });
 
-const EditUserForm = ({ userData }) => {
+const EditUserForm = ({ userData, onSubmit }) => {
   console.log(userData);
   initialValues.email = userData.email;
   initialValues.name = userData.name;
   initialValues.phone = userData.phone;
-  initialValues.password = userData.password;
   const handleSubmit = (values, { setSubmitting }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
     console.log(values);
+    values.role = "stock1";
+    onSubmit(values);
     setSubmitting(false);
   };
 
@@ -39,6 +39,7 @@ const EditUserForm = ({ userData }) => {
       {({ isSubmitting }) => (
         <Form className=" flex flex-col h-full justify-between text-black gap-y-5">
           <div className=" flex flex-col items-start">
+            <label htmlFor="name">Name</label>
             <Field
               type="name"
               id="name"
@@ -53,6 +54,7 @@ const EditUserForm = ({ userData }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
+            <label htmlFor="email">Email</label>
             <Field
               type="email"
               id="email"
@@ -67,19 +69,7 @@ const EditUserForm = ({ userData }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
-            <Field
-              id="password"
-              name="password"
-              placeholder="Số điện thoại"
-              className="rounded-full px-4 py-2 w-full"
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className=" text-red-500 font-extrabold"
-            />
-          </div>
-          <div className=" flex flex-col items-start">
+            <label htmlFor="phone">Phone</label>
             <Field
               id="phone"
               name="phone"
@@ -93,14 +83,16 @@ const EditUserForm = ({ userData }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
-            <Field as="select" id="selectedOption" name="selectedOption">
-              <option value="">Role</option>
-              <option value="option1">Stock1</option>
-              <option value="option2">Stock2</option>
-              <option value="option3">Stock3</option>
+            <label htmlFor="date">Thêm ngày</label>
+            <Field as="select" id="date" name="date">
+              <option value="">Thêm ngày</option>
+              <option value="15">Stock1</option>
+              <option value="30">Stock2</option>
+              <option value="178">Stock3</option>
+              <option value="365">Stock4</option>
             </Field>
             <ErrorMessage
-              name="selectedOption"
+              name="date"
               component="div"
               className="text-red-500"
             />
@@ -110,7 +102,7 @@ const EditUserForm = ({ userData }) => {
             disabled={isSubmitting}
             className=" bg-yellow-500 rounded-full px-4 py-2 w-full text-white font-extrabold"
           >
-            CREATE
+            EDIT
           </button>
         </Form>
       )}

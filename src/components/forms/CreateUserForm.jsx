@@ -25,6 +25,9 @@ const CreateUserForm = ({ userData, onSubmit }) => {
   initialValues.phone = userData.phone;
   const handleSubmit = (values, { setSubmitting }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
+    if (values.date === "") {
+      values.role = "admin";
+    }
     console.log(values);
     onSubmit(values);
     setSubmitting(false);
@@ -86,6 +89,7 @@ const CreateUserForm = ({ userData, onSubmit }) => {
               <option value="30">Stock2</option>
               <option value="178">Stock3</option>
               <option value="365">Stock4</option>
+              <option value="100">Admin</option>
             </Field>
             <ErrorMessage
               name="date"
