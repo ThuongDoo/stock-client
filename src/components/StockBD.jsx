@@ -14,6 +14,7 @@ function formatNumber(num) {
 }
 
 function StockBD({ data, oldData }) {
+  data.sort((a, b) => b["Tang/Giam (%)"] - a["Tang/Giam (%)"]);
   console.log(data);
   console.log("stock");
   console.log(data);
@@ -57,7 +58,7 @@ function StockBD({ data, oldData }) {
   return (
     <div className=" container mx-auto h-full ">
       {data.length > 0 ? (
-        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[24rem] overflow-y-scroll ">
+        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  max-h-[24rem] overflow-y-scroll">
           {data?.map((stock, index) => (
             <div
               key={index}

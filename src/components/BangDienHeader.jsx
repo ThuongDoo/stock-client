@@ -12,8 +12,29 @@ function BangDienHeader({ data }) {
           <div className=" flex justify-between">
             <h1>{Number(item.Giahientai).toFixed(2)}</h1>
             <h1>
-              {Number(item?.["Tang/Giam"]).toFixed(2)} /{" "}
-              {Number(item?.["Tang/Giam (%)"]).toFixed(2)}%
+              <span
+                className={`${
+                  item?.["Tang/Giam"] > 0
+                    ? "text-green-500"
+                    : item?.["Tang/Giam"] < 0
+                    ? "text-red-500"
+                    : "text-yellow-500"
+                }`}
+              >
+                {Number(item?.["Tang/Giam"]).toFixed(2)}
+              </span>
+              <span> / </span>
+              <span
+                className={`${
+                  item?.["Tang/Giam (%)"] > 0
+                    ? "text-green-500"
+                    : item?.["Tang/Giam"] < 0
+                    ? "text-red-500"
+                    : "text-yellow-500"
+                }`}
+              >
+                {Number(item?.["Tang/Giam (%)"]).toFixed(2)}%
+              </span>
             </h1>
           </div>
         </div>

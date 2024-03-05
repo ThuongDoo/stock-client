@@ -10,6 +10,7 @@ import { format } from "date-fns";
 
 function BuySell() {
   const [data, setData] = useState([]);
+  const [buysellRealtime, setBuysellRealtime] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isReset, setIsReset] = useState(false);
 
@@ -35,6 +36,9 @@ function BuySell() {
         });
     };
     fetchDate();
+    if (isReset) {
+      setData(buysellRealtime);
+    }
   }, [data, isReset]);
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
@@ -46,7 +50,7 @@ function BuySell() {
       console.log("Received data:", data);
       // Xử lý dữ liệu được nhận tại đây
       console.log(data);
-      updateData(data.data, data.realtimeData);
+      updateRealtimeData(data.data, data.realtimeData);
     });
 
     return () => {
@@ -72,6 +76,7 @@ function BuySell() {
   }, [isReset]);
 
   const handleSearch = (value) => {
+    setIsReset(false);
     let url = "/stock/buysell?";
 
     // Kiểm tra và thêm thuộc tính date vào URL nếu tồn tại
@@ -99,6 +104,29 @@ function BuySell() {
     fetchData();
   };
 
+  const updateRealtimeData = (newData, newRealtimeData) => {
+    const aWithProfit = newData.map((itemA) => {
+      // Tìm phần tử tương ứng trong mảng b dựa trên name
+      const correspondingItemB = newRealtimeData.find(
+        (itemB) => itemB.ticker === itemA.ticker
+      );
+      if (!itemA.profit) {
+        // if (correspondingItemB) {
+        //   let profit =
+        //     (((correspondingItemB ? correspondingItemB.price : itemA.price) -
+        //       itemA.price) /
+        //       itemA.price) *
+        //     100;
+        //   itemA.profit = parseFloat(profit).toFixed(2);
+        // }
+      }
+
+      // // Trả về phần tử mới có thuộc tính profit
+      return { ...itemA };
+    });
+    setBuysellRealtime(aWithProfit);
+  };
+
   const updateData = (newData, newRealtimeData) => {
     const aWithProfit = newData.map((itemA) => {
       // Tìm phần tử tương ứng trong mảng b dựa trên name
@@ -106,16 +134,14 @@ function BuySell() {
         (itemB) => itemB.ticker === itemA.ticker
       );
       if (!itemA.profit) {
-        if (correspondingItemB) {
-          let profit =
-            (((correspondingItemB ? correspondingItemB.price : itemA.price) -
-              itemA.price) /
-              itemA.price) *
-            100;
-          itemA.profit = parseFloat(profit).toFixed(2);
-        }
-        // const a = 0;
-        // itemA.profit = a.toFixed(2);
+        // if (correspondingItemB) {
+        //   let profit =
+        //     (((correspondingItemB ? correspondingItemB.price : itemA.price) -
+        //       itemA.price) /
+        //       itemA.price) *
+        //     100;
+        //   itemA.profit = parseFloat(profit).toFixed(2);
+        // }
       }
 
       // // Trả về phần tử mới có thuộc tính profit
@@ -128,7 +154,7 @@ function BuySell() {
       <div className=" flex justify-between">
         <BuysellSearch
           onSubmit={handleSearch}
-          onReset={() => setIsReset(!isReset)}
+          onReset={() => setIsReset(true)}
         />
       </div>
       <div className=" max-h-[40rem]  overflow-y-auto block ">
@@ -165,15 +191,11 @@ function BuySell() {
                         : "text-yellow-500"
                     }`}
                   >
-                    {Number(stock?.profit)} %
+                    {stock?.profit !== null
+                      ? Number(stock?.profit) + " %"
+                      : "--"}{" "}
                   </td>
-                  <td>
-                    {stock?.status === 1
-                      ? "Nắm giữ"
-                      : stock?.status === 0
-                      ? "Bán"
-                      : "Mua mới"}
-                  </td>
+                  <td>{stock?.status === 0 ? "Bán" : "Mua"}</td>
                 </tr>
               ))}
             </tbody>
