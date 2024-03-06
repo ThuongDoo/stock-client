@@ -12,7 +12,7 @@ function BuySell() {
   const [data, setData] = useState([]);
   const [buysellRealtime, setBuysellRealtime] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isReset, setIsReset] = useState(false);
+  const [isReset, setIsReset] = useState(true);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,9 +36,6 @@ function BuySell() {
         });
     };
     fetchDate();
-    if (isReset) {
-      setData(buysellRealtime);
-    }
   }, [data, isReset]);
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
@@ -64,15 +61,16 @@ function BuySell() {
       await api
         .get("/stock/buysell?limit=20")
         .then((res) => {
-          console.log(res.data.data);
-          console.log(res.data.realtimeData);
+          // console.log(res.data.data);
+          // console.log(res.data.realtimeData);
           updateData(res.data.data, res.data.realtimeData);
           // setData(res.data);
         })
         .catch((err) => console.log(err));
     };
-    fetchData();
-    console.log("hih");
+    if (isReset) {
+      fetchData();
+    }
   }, [isReset]);
 
   const handleSearch = (value) => {
@@ -124,6 +122,10 @@ function BuySell() {
       // // Trả về phần tử mới có thuộc tính profit
       return { ...itemA };
     });
+    if (isReset) {
+      console.log("reset");
+      setData(aWithProfit);
+    }
     setBuysellRealtime(aWithProfit);
   };
 
