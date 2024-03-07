@@ -17,6 +17,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import MyDropdownButton from "./MyDropdownButton";
+import MyHeaderDropdownHidden from "./MyHeaderDropdownHidden";
 
 function Header({ style = 1 }) {
   const darkMode = useSelector(getTheme);
@@ -101,7 +102,7 @@ function Header({ style = 1 }) {
               <div></div>
             )}
             {isLoggedIn ? (
-              <MyDropdownButton onMenuClick={handleMenuClick} />
+              <MyHeaderDropdownHidden onMenuClick={handleMenuClick} />
             ) : (
               <>
                 <button
