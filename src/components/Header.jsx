@@ -88,11 +88,11 @@ function Header({ style = 1 }) {
           <div className=" absolute bg-slate-900 right-0 top-16 flex flex-col gap-y-3 p-3 w-52  rounded-lg justify-between items-start">
             {style === 1 ? (
               <>
-                <a href="#feature">Tính năng</a>
-                <a href="#about-us">Về chúng tôi</a>
+                <a href="/#feature">Tính năng</a>
+                <a href="/#about-us">Về chúng tôi</a>
                 <a href="#contact">Liên hệ</a>
 
-                <a href="#pricing">Bảng giá</a>
+                <a href="/#pricing">Bảng giá</a>
                 <Link to={"/dashboard"}>X Products</Link>
                 {/* <button onClick={() => handleProtected()}>Protec</button> */}
                 {/* <button onClick={() => handleProtected()}>Protec</button> */}
@@ -110,7 +110,7 @@ function Header({ style = 1 }) {
                 >
                   Đăng nhập
                 </button>
-                <a href="#contact" className=" ">
+                <a href="/#contact" className=" ">
                   Đăng ký
                 </a>
               </>
@@ -123,11 +123,12 @@ function Header({ style = 1 }) {
         <div className=" flex items-center gap-x-3">
           {style === 1 ? (
             <>
-              <a href="#feature">Tính năng</a>
-              <a href="#about-us">Về chúng tôi</a>
-              <a href="#contact">Liên hệ</a>
+              <a href="/#feature">Tính năng</a>
 
-              <a href="#pricing">Bảng giá</a>
+              <a href="/#about-us">Về chúng tôi</a>
+              <a href="/#contact">Liên hệ</a>
+
+              <a href="/#pricing">Bảng giá</a>
               <Link to={"/dashboard"} className=" font-bold">
                 X Products
               </Link>
@@ -149,7 +150,7 @@ function Header({ style = 1 }) {
                 Đăng nhập
               </button>
               <a
-                href="#contact"
+                href="/#contact"
                 // className=" rounded-full border font-bold border-blue-500 px-3 py-1 text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white"
                 className=" rounded-full font-bold  px-3 py-1 bg-blue-500 text-white"
               >
