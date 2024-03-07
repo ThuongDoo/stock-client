@@ -48,7 +48,7 @@ function SearchBar({ suggestionData, onSelect }) {
       />
       <ul
         ref={dropdownRef}
-        className={`absolute w-full ${
+        className={`absolute w-full z-50 ${
           suggestions.length > 0 && searchTerm !== "" ? "block" : "hidden"
         } bg-gray-500 border rounded-md`}
       >
