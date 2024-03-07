@@ -5,6 +5,10 @@ import api from "../utils/api";
 import SearchIcon from "@mui/icons-material/Search";
 import moment from "moment";
 
+function sortByTickerLengthAscending(data) {
+  return data.sort((a, b) => a.length - b.length);
+}
+
 function BuysellSearch({ onSubmit, onReset }) {
   const [tickerName, setTickerName] = useState([]);
   const [selectedTicker, setSelectedTicker] = useState(null);
@@ -15,7 +19,9 @@ function BuysellSearch({ onSubmit, onReset }) {
       await api
         .get("/stock/getAll")
         .then((res) => {
-          setTickerName(res.data);
+          const sortData = res.data;
+          sortByTickerLengthAscending(sortData);
+          setTickerName(sortData);
         })
         .catch((err) => console.log(err));
     };

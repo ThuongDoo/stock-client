@@ -140,7 +140,10 @@ function Header({ style = 1 }) {
         </div>
         <div className=" flex gap-x-3 justify-between items-center ">
           {isLoggedIn ? (
-            <DropdownButton onMenuClick={handleMenuClick} username={username} />
+            <MyDropdownButton
+              onMenuClick={handleMenuClick}
+              username={username}
+            />
           ) : (
             <>
               <button

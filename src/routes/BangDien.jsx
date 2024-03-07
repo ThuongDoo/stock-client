@@ -10,6 +10,10 @@ import { parse, formatISO } from "date-fns";
 import DropdownList from "../components/DropdownList";
 import { io } from "socket.io-client";
 
+function sortByTickerLengthAscending(data) {
+  return data.sort((a, b) => a.length - b.length);
+}
+
 function BangDien() {
   const [data, setData] = useState([]);
   const [oldData, setOldData] = useState([]);
@@ -23,6 +27,8 @@ function BangDien() {
       await api
         .get("/stock/getAll")
         .then((res) => {
+          const sortData = res.data;
+          sortByTickerLengthAscending(sortData);
           setTickerName(res.data);
         })
         .catch((err) => console.log(err));
