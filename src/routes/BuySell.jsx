@@ -13,7 +13,6 @@ function BuySell() {
   const [buysellRealtime, setBuysellRealtime] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isReset, setIsReset] = useState(true);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -53,7 +52,7 @@ function BuySell() {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [isReset]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -123,7 +122,6 @@ function BuySell() {
       return { ...itemA };
     });
     if (isReset) {
-      console.log("reset");
       setData(aWithProfit);
     }
     setBuysellRealtime(aWithProfit);
