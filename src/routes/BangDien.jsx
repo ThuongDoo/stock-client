@@ -62,7 +62,7 @@ function BangDien() {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [selectedStocks]);
 
   useEffect(() => {
     const fetchData = async () => {
