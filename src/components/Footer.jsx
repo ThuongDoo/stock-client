@@ -15,10 +15,10 @@ const Footer = () => {
               Hotline:
             </h1>
             <h1 className=" text-xs sm:text-sm lg:text-lg pl-3">
-              0939.600.338 (Luân)
+              0939.600.338 (Mr. Luân)
             </h1>
             <h1 className=" text-xs sm:text-sm lg:text-lg pl-3">
-              0936.842.309 (Phú)
+              0936.842.309 (Mr. Phú)
             </h1>
             <h1 className=" text-xs sm:text-sm lg:text-lg">
               <span className=" font-bold">Email: </span>

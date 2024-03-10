@@ -10,6 +10,7 @@ import Payment from "../layouts/Payment";
 import AboutUs from "../layouts/AboutUs";
 import Contact from "../layouts/Contact";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { deletedBuysell } from "../constants/deletedBuysell";
 
 function Home() {
   return (

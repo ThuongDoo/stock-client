@@ -38,8 +38,9 @@ function Contact() {
             </div>
             <div className="  flex items-center gap-x-1">
               <LocationOnIcon sx={{ color: "white", fontSize: 30 }} />
-              <span className=" font-bold text-xs md:text-sm lg:text-lg">
-                311I25 Đường số 7, Phường An Phú, Quận 2, TP. HCM
+              <span className=" font-bold text-xs md:text-sm lg:text-lg text-start">
+                P2 Vinhomes Central Park, Phường 22, Quận Bình Thạnh, Thành phố
+                Hồ Chí Minh
               </span>
             </div>
             <div className="  flex items-center gap-x-1">
@@ -53,8 +54,8 @@ function Contact() {
             <h1 className=" font-extrabold hidden sm:block">TƯ VẤN MIỄN PHÍ</h1>
             <div className=" bg-orange-600 w-fit px-5 py-2 font-extrabold rounded-lg text-sm md:text-lg hidden sm:block">
               HOTLINE
-              <h1>0939.600.338 (Luân)</h1>
-              <h1>0936.842.309 (Phú)</h1>
+              <h1>0939.600.338 (Mr. Luân)</h1>
+              <h1>0936.842.309 (Mr. Phú)</h1>
             </div>
             <div className=" flex flex-row pb-6 md:pb-0">
               <a

@@ -10,7 +10,6 @@ import { format } from "date-fns";
 
 function BuySell() {
   const [data, setData] = useState([]);
-  const [buysellRealtime, setBuysellRealtime] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isReset, setIsReset] = useState(true);
   const navigate = useNavigate();
@@ -45,8 +44,9 @@ function BuySell() {
     socket.on("buysell", (data) => {
       console.log("Received data:", data);
       // Xử lý dữ liệu được nhận tại đây
-      console.log(data);
-      updateRealtimeData(data.data, data.realtimeData);
+      if (isReset) {
+        setData(data.data);
+      }
     });
 
     return () => {
@@ -58,12 +58,12 @@ function BuySell() {
     setIsLoading(true);
     const fetchData = async () => {
       await api
-        .get("/stock/buysell?limit=20")
+        .get("/stock/buysell")
         .then((res) => {
-          // console.log(res.data.data);
+          console.log(res.data.data);
           // console.log(res.data.realtimeData);
-          updateData(res.data.data, res.data.realtimeData);
-          // setData(res.data);
+          // updateData(res.data.data, res.data.realtimeData);
+          setData(res.data.data);
         })
         .catch((err) => console.log(err));
     };
@@ -74,7 +74,8 @@ function BuySell() {
 
   const handleSearch = (value) => {
     setIsReset(false);
-    let url = "/stock/buysell?";
+    console.log("value", value);
+    let url = "/stock/filterBuysell?";
 
     // Kiểm tra và thêm thuộc tính date vào URL nếu tồn tại
     if (value.date) {
@@ -85,70 +86,22 @@ function BuySell() {
     if (value.ticker) {
       url += `ticker=${value.ticker}&`;
     }
-    if (value.date === null && value.ticker === null) {
+    if (value.date === null && (value.ticker === null || value.ticker === "")) {
       url += "limit=20&";
     }
+    console.log(url);
     const fetchData = async () => {
       await api
         .get(url)
         .then((res) => {
-          // console.log(res.data);
-          updateData(res.data.data, res.data.realtimeData);
-          // setData(res.data);
+          console.log(res.data);
+          setData(res.data.data);
         })
         .catch((err) => console.log(err));
     };
     fetchData();
   };
 
-  const updateRealtimeData = (newData, newRealtimeData) => {
-    const aWithProfit = newData.map((itemA) => {
-      // Tìm phần tử tương ứng trong mảng b dựa trên name
-      const correspondingItemB = newRealtimeData.find(
-        (itemB) => itemB.ticker === itemA.ticker
-      );
-      if (!itemA.profit) {
-        // if (correspondingItemB) {
-        //   let profit =
-        //     (((correspondingItemB ? correspondingItemB.price : itemA.price) -
-        //       itemA.price) /
-        //       itemA.price) *
-        //     100;
-        //   itemA.profit = parseFloat(profit).toFixed(2);
-        // }
-      }
-
-      // // Trả về phần tử mới có thuộc tính profit
-      return { ...itemA };
-    });
-    if (isReset) {
-      setData(aWithProfit);
-    }
-    setBuysellRealtime(aWithProfit);
-  };
-
-  const updateData = (newData, newRealtimeData) => {
-    const aWithProfit = newData.map((itemA) => {
-      // Tìm phần tử tương ứng trong mảng b dựa trên name
-      const correspondingItemB = newRealtimeData.find(
-        (itemB) => itemB.ticker === itemA.ticker
-      );
-      if (!itemA.profit) {
-        // if (correspondingItemB) {
-        //   let profit =
-        //     (((correspondingItemB ? correspondingItemB.price : itemA.price) -
-        //       itemA.price) /
-        //       itemA.price) *
-        //     100;
-        //   itemA.profit = parseFloat(profit).toFixed(2);
-        // }
-      }
-
-      // // Trả về phần tử mới có thuộc tính profit
-      return { ...itemA };
-    });
-    setData(aWithProfit);
-  };
   console.log("reset", isReset);
   return (
     <div className=" flex flex-col px-4 py-4 gap-y-4">
@@ -164,11 +117,15 @@ function BuySell() {
             <thead>
               <tr className="">
                 <th className=" px-4 py-2">STT</th>
-                <th className=" px-4 py-2">Mã CP</th>
+                <th className=" px-4 py-2">Mã</th>
                 <th className=" px-4 py-2">Thời gian KN</th>
                 <th className=" px-4 py-2">Giá mua</th>
-                <th className=" px-4 py-2">Lãi/lỗ tạm tính (%)</th>
-                <th className=" px-4 py-2">Trạng thái</th>
+                <th className=" px-4 py-2">Lãi/lỗ</th>
+                <th className=" px-4 py-2">Thời gian nắm giữ</th>
+                <th className=" px-4 py-2">Vị thế</th>
+                <th className=" px-4 py-2" colSpan={3}>
+                  Ghi chú
+                </th>
               </tr>
             </thead>
             <tbody className="  ">
@@ -181,8 +138,8 @@ function BuySell() {
                 >
                   <td>{index + 1}</td>
                   <td>{stock?.ticker}</td>
-                  <td>{format(stock?.date, "dd-MM-yyyy")}</td>
-                  <td>{Number(stock?.price).toFixed(2)}</td>
+                  <td>{format(stock?.knTime, "dd-MM-yyyy")}</td>
+                  <td>{stock?.buyPrice.toFixed(2)}</td>
                   <td
                     className={` ${
                       stock.profit > 0
@@ -192,11 +149,29 @@ function BuySell() {
                         : "text-yellow-500"
                     }`}
                   >
-                    {stock?.profit !== null
-                      ? Number(stock?.profit) + " %"
-                      : "--"}{" "}
+                    {stock?.profit + "%"}
                   </td>
-                  <td>{stock?.status === 0 ? "Bán" : "Mua"}</td>
+                  <td>T + {stock?.holdingDuration}</td>
+                  <td>
+                    {stock?.status === 0
+                      ? "Bán"
+                      : stock?.status === 1
+                      ? "Mua"
+                      : stock?.status === 2
+                      ? "Nắm giữ"
+                      : "Mua mới"}
+                  </td>
+                  <td>
+                    {stock?.sellTime !== null
+                      ? format(stock?.sellTime, "dd-MM-yyyy")
+                      : ""}
+                  </td>
+                  <td>
+                    {stock?.sellPrice !== null
+                      ? stock?.sellPrice.toFixed(2)
+                      : ""}
+                  </td>
+                  <td>{stock?.risk ? stock?.risk : ""}</td>
                 </tr>
               ))}
             </tbody>

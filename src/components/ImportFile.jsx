@@ -2,21 +2,103 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import api from "../utils/api";
 import { addHours, formatISO, parse } from "date-fns";
+import { deletedBuysell } from "../constants/deletedBuysell";
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
+const createBuySellObject = (buySignal, sellSignal) => {
+  const buysell = {};
+  buysell.ticker = buySignal.Ticker;
+  buysell.knTime = buySignal["Date/Time"];
+  buysell.buyPrice = Number(buySignal["Giamua/ban"]);
+
+  if (sellSignal?.["Mua-Ban"] === "0") {
+    buysell.status = Number(sellSignal["Mua-Ban"]);
+    buysell.profit = Number(sellSignal["Lai/lo%"]);
+    buysell.holdingDuration = Number(sellSignal["T+"]);
+    buysell.sellTime = sellSignal["Date/Time"];
+    buysell.sortTime = sellSignal["Date/Time"];
+    buysell.sellPrice = Number(sellSignal["Giamua/ban"]);
+  } else {
+    buysell.status = 2;
+    buysell.profit = 0;
+    buysell.holdingDuration = 0;
+    buysell.sortTime = buySignal["Date/Time"];
+  }
+
+  buysell.risk = sellSignal?.risk;
+  return buysell;
+};
+
+const groupByProperty = (array, property) => {
+  // Tạo một đối tượng để lưu trữ các nhóm
+  let groups = {};
+
+  // Lặp qua mảng và nhóm các phần tử dựa trên thuộc tính
+  array.forEach((item) => {
+    const value = item[property];
+    if (!groups[value]) {
+      // Nếu nhóm chưa tồn tại, tạo mới
+      groups[value] = [item];
+    } else {
+      // Nếu nhóm đã tồn tại, thêm vào nhóm đó
+      groups[value].push(item);
+    }
+  });
+
+  // Chuyển đổi đối tượng nhóm thành mảng và trả về
+  return groups;
+};
+
+const filterObjectByKeys = (objectToFilter, keysToRemove) => {
+  for (let key in objectToFilter) {
+    if (keysToRemove.includes(key) || key === "") {
+      delete objectToFilter[key];
+    }
+  }
+  return objectToFilter;
+};
+
+const filterBuysellSignal = async (data) => {
+  const tempData = data;
+
+  //Định dạng lại ngày
+  tempData.forEach((row) => {
+    row["Date/Time"] = parse(row["Date/Time"], "M/d/yyyy HH:mm:ss", new Date());
+  });
+
+  tempData.sort((a, b) => a["Date/Time"] - b["Date/Time"]);
+  const lastRow = tempData[tempData.length - 1];
+
+  //lọc tín hiệu có buy sell
+  const filterSignal = tempData.filter((row) => row["Mua-Ban"] !== "");
+
+  //xoá phần tử đầu nếu nó là sell
+  if (filterSignal[0]?.["Mua-Ban"] === "0") {
+    filterSignal.shift();
+  }
+  if (filterSignal.length === 0) {
+    return null;
+  }
+
+  if (
+    lastRow["Mua-Ban"] === "" &&
+    filterSignal[filterSignal.length - 1]["Mua-Ban"] === "1"
+  ) {
+    filterSignal.push(lastRow);
+  }
+
+  const filterArray = [];
+  for (let i = 0; i < filterSignal.length; i += 2) {
+    let buysell = createBuySellObject(filterSignal[i], filterSignal[i + 1]);
+    filterArray.push(buysell);
+  }
+  return filterArray;
+};
+
 const ImportFile = () => {
-  // This state will store the parsed data
-
-  // It state will contain the error when
-  // correct file extension is not used
   const [error, setError] = useState("");
-
-  // It will store the file uploaded by the user
   const [file, setFile] = useState("");
-
-  // This function will be called when
-  // the file input changes
   const handleFileChange = (e) => {
     setError("");
 
@@ -37,31 +119,21 @@ const ImportFile = () => {
       setFile(inputFile);
     }
   };
-  const formatData = (csvData) => {
-    const convertToISO = (dateString) => {
-      // console.log(dateString);
 
-      // Tạo một đối tượng Date từ chuỗi ngày tháng đầu vào
-      try {
-        const parsedDate = parse(dateString, "M/d/yyyy HH:mm:ss", new Date());
-        const modifiedDate = addHours(parsedDate, 7);
-        const isoString = formatISO(modifiedDate);
-        return isoString;
-      } catch (error) {
-        return dateString;
-      }
-    };
-    return csvData
-      .filter((item) => item.Ticker !== "")
-      .map((item) => {
-        return {
-          ticker: item.Ticker,
-          price: Number(item.Giamua),
-          date: convertToISO(item["Date/Time"]),
-          profit: item["Lai/lo%"] !== "" ? Number(item["Lai/lo%"]) : null,
-          status: Number(item["Mua-Ban"]),
-        };
-      });
+  const formatData = async (csvData) => {
+    let filteredTickers = groupByProperty(csvData, "Ticker");
+    let removedTickers = filterObjectByKeys(filteredTickers, deletedBuysell);
+    let removedArray = Object.values(removedTickers);
+    const buysellArray = [];
+    // buysellArray.push(filterBuysellSignal(removedArray[40]));
+
+    for (const item of removedArray) {
+      const result = await filterBuysellSignal(item);
+      buysellArray.push(result);
+    }
+
+    const resultArray = buysellArray.flat();
+    return resultArray;
   };
 
   const updateData = async (data) => {
@@ -70,7 +142,7 @@ const ImportFile = () => {
     // Thêm phần tử header: "done" vào cuối mảng
     data.push({ header: "done" });
 
-    const chunkSize = 1000;
+    const chunkSize = 500;
     const totalChunks = Math.ceil(data.length / chunkSize); // Tính tổng số chunks
 
     for (let i = 0; i < totalChunks; i++) {
@@ -101,7 +173,7 @@ const ImportFile = () => {
       const csv = Papa.parse(target.result, {
         header: true,
       });
-      const newData = formatData(csv?.data);
+      const newData = await formatData(csv?.data);
       updateData(newData);
       console.log(newData);
     };

@@ -43,6 +43,12 @@ function BuysellSearch({ onSubmit, onReset }) {
     });
   };
 
+  const handleReset = () => {
+    // setSelectedDate(null);
+    // setSelectedTicker(null);
+    onReset(true);
+  };
+
   return (
     <div className=" flex flex-col gap-y-3 lg:flex-row gap-x-3">
       <div className=" flex flex-col sm:flex-row gap-x-3 gap-y-3">
@@ -58,7 +64,7 @@ function BuysellSearch({ onSubmit, onReset }) {
           Tìm kiếm
         </button>
         <button
-          onClick={() => onReset(true)}
+          onClick={() => handleReset()}
           className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           RESET
