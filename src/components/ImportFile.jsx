@@ -142,7 +142,7 @@ const ImportFile = () => {
     // Thêm phần tử header: "done" vào cuối mảng
     data.push({ header: "done" });
 
-    const chunkSize = 500;
+    const chunkSize = 300;
     const totalChunks = Math.ceil(data.length / chunkSize); // Tính tổng số chunks
 
     for (let i = 0; i < totalChunks; i++) {
