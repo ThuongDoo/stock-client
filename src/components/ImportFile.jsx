@@ -59,6 +59,25 @@ const filterObjectByKeys = (objectToFilter, keysToRemove) => {
   return objectToFilter;
 };
 
+const filterArrayByRule = async (arr) => {
+  let filteredArray = [];
+  let prevValue = "0"; // Giá trị ban đầu để có thể so sánh với 0
+
+  for (let i = 0; i < arr.length; i++) {
+    // Nếu thuộc tính "Mua-Ban" của object là 1 hoặc 0
+    if (arr[i]["Mua-Ban"] !== prevValue) {
+      // Kiểm tra nếu giá trị "Mua-Ban" khác với giá trị của object trước đó
+      console.log("push");
+      filteredArray.push(arr[i]); // Thêm object vào mảng lọc
+    }
+    filteredArray.pop();
+    filteredArray.push(arr[i]);
+    prevValue = arr[i]["Mua-Ban"]; // Cập nhật giá trị trước đó
+  }
+
+  return filteredArray;
+};
+
 const filterBuysellSignal = async (data) => {
   const tempData = data;
 
@@ -73,7 +92,7 @@ const filterBuysellSignal = async (data) => {
   const lastRow = tempData[tempData.length - 1];
 
   //lọc tín hiệu có buy sell
-  const filterSignal = tempData.filter((row) => row["Mua-Ban"] !== "");
+  let filterSignal = tempData.filter((row) => row["Mua-Ban"] !== "");
 
   //xoá phần tử đầu nếu nó là sell
   if (filterSignal[0]?.["Mua-Ban"] === "0") {
@@ -82,6 +101,9 @@ const filterBuysellSignal = async (data) => {
   if (filterSignal.length === 0) {
     return null;
   }
+
+  const tempSignal = await filterArrayByRule(filterSignal);
+  filterSignal = tempSignal;
 
   if (
     lastRow["Mua-Ban"] === "" &&
@@ -126,8 +148,9 @@ const ImportFile = () => {
     let filteredTickers = groupByProperty(csvData, "Ticker");
     let removedTickers = filterObjectByKeys(filteredTickers, deletedBuysell);
     let removedArray = Object.values(removedTickers);
+
     const buysellArray = [];
-    // buysellArray.push(filterBuysellSignal(removedArray[40]));
+    // buysellArray.push(await filterBuysellSignal(removedArray[61]));
 
     for (const item of removedArray) {
       const result = await filterBuysellSignal(item);
@@ -177,7 +200,6 @@ const ImportFile = () => {
       });
       const newData = await formatData(csv?.data);
       updateData(newData);
-      console.log(newData);
     };
     reader.readAsText(file);
   };

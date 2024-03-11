@@ -108,7 +108,7 @@ function Admin() {
           {activeTab === "import" && <ImportFile />}
         </div>
       </div>
-      <div className=" h-32">
+      {/* <div className=" h-32">
         <h1>CLICK IT AT 9:00PM</h1>
         <button
           onClick={() => {
@@ -118,7 +118,7 @@ function Admin() {
         >
           UPDATE MUA MOI
         </button>
-      </div>
+      </div> */}
       {createUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-lg relative">
