@@ -64,7 +64,9 @@ const filterBuysellSignal = async (data) => {
 
   //Định dạng lại ngày
   tempData.forEach((row) => {
-    row["Date/Time"] = parse(row["Date/Time"], "M/d/yyyy HH:mm:ss", new Date());
+    const parsedDate = parse(row["Date/Time"], "M/d/yyyy HH:mm:ss", new Date());
+    const modifiedDate = addHours(parsedDate, 7);
+    row["Date/Time"] = modifiedDate;
   });
 
   tempData.sort((a, b) => a["Date/Time"] - b["Date/Time"]);
