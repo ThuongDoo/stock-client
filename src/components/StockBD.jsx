@@ -15,9 +15,6 @@ function formatNumber(num) {
 
 function StockBD({ data, oldData }) {
   data.sort((a, b) => b["Tang/Giam (%)"] - a["Tang/Giam (%)"]);
-  console.log(data);
-  console.log("stock");
-  console.log(data);
   const getColorClass = (value) => {
     if (value >= 6.7) {
       return "bg-customeStock17";

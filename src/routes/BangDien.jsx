@@ -23,7 +23,6 @@ function BangDien() {
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
     const fetchTickerName = async () => {
-      console.log("reload");
       await api
         .get("/stock/getAll")
         .then((res) => {
@@ -46,12 +45,13 @@ function BangDien() {
       console.log("Connected to server");
     });
     socket.on("stockUpdated", (newData) => {
+      console.log("sendData", selectedStocks);
       socket.emit("updateStockRequest", selectedStocks);
     });
 
     socket.on("updateStock", (newData) => {
-      console.log("relod", newData);
       setOldData(data);
+      console.log(newData.data);
       setData(newData.data);
       setSanData(newData.sanData);
     });
@@ -70,14 +70,12 @@ function BangDien() {
         .get(`/stock/getStockByName/${selectedStocks}`)
         .then((res) => {
           setOldData(data);
-          console.log("daa", res.data);
 
           setData(res.data);
         })
         .catch((err) => console.log(err));
     };
     fetchData();
-    console.log("hah");
   }, [selectedStocks]);
   const handleDataFromSideBar = (category) => {
     setSelectedStocks(category.stocks);
@@ -95,9 +93,11 @@ function BangDien() {
     };
     fetchData();
   };
+  console.log("reload");
+  // console.log("san", sanData);
+  // console.log("seleted", selectedStocks);
+  // console.log("data", data);
   //test
-  console.log("san");
-  console.log(sanData);
   return (
     <div className=" flex w-full h-full ">
       <div className=" flex flex-col flex-1 items-start">
