@@ -82,6 +82,7 @@ function BangDien() {
   };
 
   const handleSearch = (value) => {
+    setSelectedStocks(value);
     const fetchData = async () => {
       await api
         .get(`/stock/getStockByName/${value}`)
