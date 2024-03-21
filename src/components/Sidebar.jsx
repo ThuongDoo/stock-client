@@ -65,7 +65,7 @@ function Sidebar() {
     }
   };
   return (
-    <div className=" flex flex-col justify-between h-screen border-r border-slate-700">
+    <div className=" flex flex-col justify-between h-full border-r border-slate-700">
       <div className=" border-b border-slate-700">
         <div
           onClick={() => navigate("/")}

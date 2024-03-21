@@ -105,7 +105,7 @@ function BangDien() {
         <div className=" w-full">
           <BangDienHeader data={sanData} />
         </div>
-        <div className=" p-4 flex items-center gap-x-4">
+        <div className=" p-4 flex flex-col gap-y-4 md:flex-row md:gap-y-0 gap-x-4">
           <SearchBar onSelect={handleSearch} suggestionData={tickerName} />
           <DropdownList list={CATEGORIES} onClick={handleDataFromSideBar} />
         </div>
