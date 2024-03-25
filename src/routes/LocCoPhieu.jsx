@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import ThemDieuKien from "../components/ThemDieuKien";
-import DieuKienLoc from "../components/DieuKienLoc";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import LocCoPhieuForm from "../components/forms/LocCoPhieuForm";
+import { Field, Form, Formik } from "formik";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
+  // const [checkedFilter, setCheckedFilter] = useState([]);
+  const [checkedFilter, setCheckedFilter] = useState([]);
   let stockData = {
     ADX: "33.80",
     Beta: "1.01",
@@ -68,278 +70,322 @@ function LocCoPhieu() {
     PTCB: [
       {
         group: "Định giá",
-        filter: {
-          "P/E": {
+        filter: [
+          {
             option: 0,
-            suggest: null,
+            suggest: [1],
+            displayName: "P/E",
             name: "P/E",
           },
-          "P/B": {
+          {
             option: 0,
-            suggest: null,
+            suggest: [1],
+            displayName: "P/B",
             name: "P/B",
           },
-          "P/S": {
+          {
             option: 0,
-            suggest: null,
+            suggest: [1],
+            displayName: "P/S",
             name: "P/S",
           },
-          EPS: {
+          {
             option: 0,
-            suggest: null,
+            suggest: [1],
+            displayName: "EPS",
             name: "EPS",
           },
-          Beta: {
+          {
             option: 0,
-            suggest: null,
-            name: "Hệ số Beta",
+            suggest: [1],
+            displayName: "Hệ số Beta",
+            name: "Beta",
           },
-        },
+        ],
       },
       {
         group: "Lợi nhuận",
-        filter: {
-          Bienloinhuangop: {
+        filter: [
+          {
             option: 0,
-            suggest: null,
-            name: "Biên lợi nhuận gộp",
+            suggest: [1],
+            displayName: "Biên lợi nhuận gộp",
+            name: "Bienloinhuangop",
           },
-          Bienloinhuanhoatdong: {
+          {
             option: 0,
-            suggest: null,
-            name: "Biên lợi nhuận hoạt động",
+            suggest: [1],
+            displayName: "Biên lợi nhuận hoạt động",
+            name: "Bienloinhuanhoatdong",
           },
-          LNGtrenCP: {
+          {
             option: 0,
-            suggest: null,
-            name: "Lợi nhuận gộp trên mỗi cổ phiếu",
+            suggest: [1],
+            displayName: "Lợi nhuận gộp trên mỗi cổ phiếu",
+            name: "LNGtrenCP",
           },
-          "ROA (%)": {
+          {
             option: 0,
-            suggest: null,
-            name: "ROA",
+            suggest: [1],
+            displayName: "ROA",
+            name: "ROA (%)",
           },
-          "ROE (%)": {
+          {
             option: 0,
-            suggest: null,
-            name: "ROE",
+            suggest: [1],
+            displayName: "ROE",
+            name: "ROE (%)",
           },
-        },
+        ],
       },
     ],
     PTKT: [
       {
         group: "Thông tin cơ bản",
-        filter: {
-          San: {
+        filter: [
+          {
             option: 1,
             suggest: ["HSX", "HNX", "UPCOM"],
-            name: "Niêm yết trên sàn",
+            displayName: "Niêm yết trên sàn",
+            name: "San",
           },
-          TyleCPluuhanh: {
-            option: 0,
-            suggest: null,
-            name: "Tổng số CP lưu hành",
-          },
-          Volume: {
+          {
             option: 0,
             suggest: [10000, 100000, 200000, 500000],
-            name: "Khối lượng giao dịch",
+            displayName: "Tổng số CP lưu hành",
+            name: "TyleCPluuhanh",
           },
-          "Free-Float": {
+          {
             option: 0,
-            suggest: null,
-            name: "Tỷ lệ Free - Float",
+            suggest: [10000, 100000, 200000, 500000],
+            displayName: "Khối lượng giao dịch",
+            name: "Volume",
           },
-        },
+          {
+            option: 0,
+            suggest: [10000, 100000, 200000, 500000],
+            displayName: "Tỷ lệ Free - Float",
+            name: "Free-Float",
+          },
+        ],
       },
       {
         group: "Xu hướng chính",
-        filter: {
-          Uptrend: {
-            option: 3,
-            suggest: [1],
+        filter: [
+          {
+            option: 2,
+            suggest: null,
+            displayName: "Uptrend",
             name: "Uptrend",
           },
-          Downtrend: {
-            option: 3,
-            suggest: [0],
+          {
+            option: 2,
+            suggest: null,
+            displayName: "Downtrend",
             name: "Downtrend",
           },
-          Sideway: {
-            option: 0,
+          {
+            option: 2,
             suggest: null,
+            displayName: "Sideway",
             name: "Sideway",
           },
-        },
+        ],
       },
       {
         group: "Tín hiệu kỹ thuật",
-        filter: {
-          PPSEPA: {
+        filter: [
+          {
             option: 2,
             suggest: null,
-            name: "SEPA (Mark Minervini)",
+            displayName: "SEPA (Mark Minervini)",
+            name: "PPSEPA",
           },
-          NoSupply: {
+          {
             option: 2,
             suggest: null,
-            name: "Cổ phiếu cạn cung",
+            displayName: "Cổ phiếu cạn cung",
+            name: "NoSupply",
           },
-          Shakeoutconfirmed: {
+          {
             option: 2,
             suggest: null,
-            name: "Shakeout (Rủ bỏ)",
+            displayName: "Shakeout (Rủ bỏ)",
+            name: "Shakeoutconfirmed",
           },
-          MFI: {
+          {
             option: 0,
             suggest: [20, 80],
-            name: "Chỉ báo MFI(14)",
+            displayName: "Chỉ báo MFI(14)",
+            name: "MFI",
           },
-        },
+        ],
       },
       {
         group: "Chỉ số sức mạnh RS",
-        filter: {
-          RSI: {
+        filter: [
+          {
             option: 0,
             suggest: [30, 70],
-            name: "RSI(14)",
+            displayName: "RSI(14)",
+            name: "RSI",
           },
-          RSRating: {
+          {
             option: 0,
             suggest: [70],
-            name: "RS Rating (Mark Minervini) ",
+            displayName: "RS Rating (Mark Minervini) ",
+            name: "RSRating",
           },
-          "RS-O'neil": {
+          {
             option: 0,
             suggest: [70],
-            name: "RS O'neil",
+            displayName: "RS O'neil",
+            name: "RS-O'neil",
           },
-        },
+        ],
       },
       {
         group: "Tín hiệu MACD",
-        filter: {
-          MACD: {
+        filter: [
+          {
             option: 0,
             suggest: [0],
-            name: "MACD tọa độ",
+            displayName: "MACD tọa độ",
+            name: "MACD",
           },
-          MACDcatlen: {
-            option: 1,
+          {
+            option: 2,
             suggest: null,
-            name: "Đường MACD Cắt lên",
+            displayName: "Đường MACD Cắt lên",
+            name: "MACDcatlen",
           },
-          MACDcatxuong: {
-            option: 1,
+          {
+            option: 2,
             suggest: null,
-            name: "Đường MACD Cắt xuống",
+            displayName: "Đường MACD Cắt xuống",
+            name: "MACDcatxuong",
           },
-          MACDnamtren: {
-            option: 1,
+          {
+            option: 2,
             suggest: null,
-            name: "Đường MACD Nằm trên",
+            displayName: "Đường MACD Nằm trên",
+            name: "MACDnamtren",
           },
-          MACDnamduoi: {
-            option: 1,
+          {
+            option: 2,
             suggest: null,
-            name: "Đường MACD Nằm dưới",
+            displayName: "Đường MACD Nằm dưới",
+            name: "MACDnamduoi",
           },
-        },
+        ],
       },
       {
         group: "Chỉ báo ADX(14)",
-        filter: {
-          ADX: {
+        filter: [
+          {
             option: 0,
             suggest: [20, 40, 50, 70],
-            name: "ADX(14)",
+            displayName: "ADX(14)",
+            name: "ADX",
           },
-          DMI: {
+          {
             option: 0,
             suggest: [20],
-            name: "DMI+",
+            displayName: "DMI+",
+            name: "DMI",
           },
-          "DMI-": {
+          {
             option: 0,
             suggest: [20, 80],
+            displayName: "DMI-",
             name: "DMI-",
           },
-        },
+        ],
       },
       {
         group: "Bolinger Band",
-        filter: {
-          ChamdaitrenBB: {
+        filter: [
+          {
             option: 2,
             suggest: null,
-            name: "Bolinger Band chạm trên",
+            displayName: "Bolinger Band chạm trên",
+            name: "ChamdaitrenBB",
           },
-          ChamdaiduoiBB: {
+          {
             option: 2,
             suggest: null,
-            name: "Bolinger Band chạm dưới",
+            displayName: "Bolinger Band chạm dưới",
+            name: "ChamdaiduoiBB",
           },
-        },
+        ],
       },
       {
         group: "Giá nằm trên đường đường SMA",
-        filter: {
-          MA10: {
+        filter: [
+          {
             option: 2,
             suggest: null,
-            name: "SMA (10)",
+            displayName: "SMA (10)",
+            name: "MA10",
           },
-          MA20: {
+          {
             option: 2,
             suggest: null,
-            name: "SMA (20)",
+            displayName: "SMA (20)",
+            name: "MA20",
           },
-          MA50: {
+          {
             option: 2,
             suggest: null,
-            name: "SMA (50)",
+            displayName: "SMA (50)",
+            name: "MA50",
           },
-          MA100: {
+          {
             option: 2,
             suggest: null,
-            name: "SMA (100)",
+            displayName: "SMA (100)",
+            name: "MA100",
           },
-          MA200: {
+          {
             option: 2,
             suggest: null,
-            name: "SMA (200)",
+            displayName: "SMA (200)",
+            name: "MA200",
           },
-        },
+        ],
       },
       {
         group: "Giá 52 tuần",
-        filter: {
-          GiaCaoNhat52W: {
+        filter: [
+          {
             option: 2,
             suggest: null,
-            name: "Cao nhất",
+            displayName: "Cao nhất",
+            name: "GiaCaoNhat52W",
           },
-          GiaThapHon52W: {
+          {
             option: 2,
             suggest: null,
-            name: "Thấp nhất",
+            displayName: "Thấp nhất",
+            name: "GiaThapHon52W",
           },
-        },
+        ],
       },
     ],
   };
 
-  const FilterComponent = ({ label = "PTCK" }) => {
+  const FilterComponent = ({ data, label }) => {
+    const handleSubmit = (values) => {
+      setCheckedFilter(values.checked);
+    };
     return (
-      <div className=" bg-gray-800 bg-opacity-30 flex justify-center top-0 left-0 items-center fixed h-full w-full ">
+      <div className=" bg-gray-800 bg-opacity-30 flex justify-center top-0 left-0 items-center fixed h-full w-full">
         <div
           className=" w-full h-full"
           onClick={() => setButtonClicked(0)}
         ></div>
-        <div className=" bg-green-500 absolute w-3/4 h-3/4 flex flex-col">
-          <div className=" flex justify-between items-center bg-slate-900">
+        <div className=" bg-slate-900  absolute w-3/4 h-3/4 flex flex-col rounded-xl  drop-shadow-glow">
+          <div className=" flex justify-between items-center  px-3 py-1 border-b border-slate-700 ">
             <h1>{label}</h1>
             <button
               className=" flex hover:bg-gray-500"
@@ -348,9 +394,177 @@ function LocCoPhieu() {
               <CloseIcon sx={{ fontSize: 20, color: "white" }} />
             </button>
           </div>
-          <div></div>
+          <div className=" overflow-y-scroll m-3">
+            <LocCoPhieuForm
+              data={data[label]}
+              onSubmit={handleSubmit}
+              checkedValues={checkedFilter}
+            />
+          </div>
         </div>
       </div>
+    );
+  };
+
+  const DieuKieuLocForm = () => {
+    const flattenedFilters = Object.values(filterValue).flatMap((group) =>
+      group.flatMap((filterGroup) => filterGroup.filter)
+    );
+    const data = flattenedFilters.filter((itemA) =>
+      checkedFilter.some((itemB) => itemB === itemA.name)
+    );
+    const objectFromData = {};
+    for (const obj of data) {
+      if (obj.option === 0) {
+        objectFromData[obj.name] = { condition: ">", value: "" };
+      } else if (obj.option === 1) {
+        objectFromData[obj.name] = obj.suggest;
+      } else if (obj.option === 2) {
+        objectFromData[obj.name] = 1;
+      }
+    }
+
+    const handleSubmit = (values) => {
+      if (values.Uptrend && values.Downtrend) {
+        // console.log("hihi");
+        values.trend = 2;
+        delete values.Uptrend;
+        delete values.Downtrend;
+      } else if (values.Uptrend) {
+        delete values.Uptrend;
+        values.trend = 1;
+      } else if (values.Downtrend) {
+        delete values.Downtrend;
+        values.trend = 0;
+      }
+    };
+    return (
+      <Formik
+        initialValues={objectFromData}
+        onSubmit={handleSubmit}
+        // enableReinitialize
+      >
+        {({ submitForm, handleChange, values }) => (
+          <Form className=" flex flex-col h-full">
+            <div className=" flex-1 overflow-y-scroll">
+              {data.map((item) => (
+                <div
+                  key={item.name}
+                  className=" flex w-full justify-between  items-center gap-x-2"
+                >
+                  <div className=" flex items-center w-full bg-slate-800 px-2 py-1 rounded-sm">
+                    <h1 className="  w-1/5 text-left font-semibold">
+                      {item.displayName}
+                    </h1>
+                    {item.option === 0 ? (
+                      <div className=" text-black flex gap-x-3 ">
+                        <Field
+                          onChange={(e) => {
+                            handleChange(e);
+                            submitForm();
+                          }}
+                          as="select"
+                          name={`${item.name}.condition`}
+                        >
+                          <option value=">=">Lớn hơn</option>
+                          <option value="<=">Bé hơn</option>
+                          <option value="=">Bằng</option>
+                          <option value="range">Khoảng</option>
+                        </Field>
+                        {values[item.name].condition === "range" ? (
+                          <div>
+                            {delete values[item.name].value}
+                            <Field
+                              name={`${item.name}.value1`}
+                              type="number"
+                              onChange={(e) => {
+                                handleChange(e);
+                                submitForm();
+                              }}
+                            />
+                            <Field
+                              name={`${item.name}.value2`}
+                              type="number"
+                              onChange={(e) => {
+                                handleChange(e);
+                                submitForm();
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className=" flex items-center">
+                            {delete values[item.name].value1}
+                            {delete values[item.name].value2}
+                            <Field
+                              list={item.name}
+                              name={`${item.name}.value`}
+                              type="number"
+                              onChange={(e) => {
+                                handleChange(e);
+                                submitForm();
+                              }}
+                            />
+                            <datalist id={item.name}>
+                              {item.suggest.map((suggestItem) => (
+                                <option key={suggestItem} value={suggestItem}>
+                                  {suggestItem}
+                                </option>
+                              ))}
+                            </datalist>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      item.option === 1 && (
+                        <div className=" flex gap-x-2 items-center ">
+                          {item.suggest.map((suggestItem, index) => (
+                            <label
+                              key={index}
+                              className="text-left flex gap-x-1 items-center"
+                            >
+                              <Field
+                                type="checkbox"
+                                name={item.name}
+                                value={suggestItem}
+                                onChange={(e) => {
+                                  handleChange(e);
+                                  submitForm();
+                                }}
+                              />
+                              <h1 className="">{suggestItem}</h1>
+                            </label>
+                          ))}
+                        </div>
+                      )
+                    )}
+                  </div>
+                  <CloseIcon
+                    sx={{ color: "white", fontSize: 20 }}
+                    className=" hover:bg-blue-500 rounded-sm"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="  flex gap-x-4 justify-end items-center">
+              <button
+                onClick={() => setButtonClicked(1)}
+                className=" border rounded-lg px-3"
+              >
+                PTCB
+              </button>
+              <button
+                onClick={() => setButtonClicked(2)}
+                className=" border rounded-lg px-3"
+              >
+                PTKT
+              </button>
+              <button className=" border rounded-lg px-3" type="submit">
+                Tìm kiếm
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     );
   };
 
@@ -360,27 +574,14 @@ function LocCoPhieu() {
     </div>
     // <div className=" flex flex-col h-full">
     //   {buttonClicked === 1 ? (
-    //     <FilterComponent />
+    //     <FilterComponent data={filterValue} label="PTCB" />
     //   ) : (
-    //     buttonClicked === 2 && <FilterComponent />
+    //     buttonClicked === 2 && (
+    //       <FilterComponent data={filterValue} label="PTKT" />
+    //     )
     //   )}
-    //   <div className="   h-1/2 flex flex-col gap-y-3">
-    //     <div className="  flex gap-x-4">
-    //       <button
-    //         onClick={() => setButtonClicked(1)}
-    //         className=" border rounded-lg px-3"
-    //       >
-    //         PTCB
-    //       </button>
-    //       <button
-    //         onClick={() => setButtonClicked(2)}
-    //         className=" border rounded-lg px-3"
-    //       >
-    //         PTKT
-    //       </button>
-    //       <button className=" border rounded-lg px-3">Tìm kiếm</button>
-    //     </div>
-    //     <div className=" bg-blue-500 flex-1">dieu kien loc</div>
+    //   <div className="   h-1/2 bg-slate-900">
+    //     <DieuKieuLocForm />
     //   </div>
     //   <div className=" bg-yellow-500 h-1/2">KET QUA</div>
     // </div>
