@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import LocCoPhieuForm from "../components/forms/LocCoPhieuForm";
 import { Field, Form, Formik } from "formik";
+import api from "../utils/api";
+import { io } from "socket.io-client";
+import { SOCKET_SERVER_URL } from "../constants/socket";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
   // const [checkedFilter, setCheckedFilter] = useState([]);
   const [checkedFilter, setCheckedFilter] = useState([]);
+  const [result, setResult] = useState([]);
   let stockData = {
     ADX: "33.80",
     Beta: "1.01",
@@ -73,31 +77,31 @@ function LocCoPhieu() {
         filter: [
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "P/E",
             name: "P/E",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "P/B",
             name: "P/B",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "P/S",
             name: "P/S",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "EPS",
             name: "EPS",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "Hệ số Beta",
             name: "Beta",
           },
@@ -108,31 +112,31 @@ function LocCoPhieu() {
         filter: [
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "Biên lợi nhuận gộp",
             name: "Bienloinhuangop",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "Biên lợi nhuận hoạt động",
             name: "Bienloinhuanhoatdong",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "Lợi nhuận gộp trên mỗi cổ phiếu",
             name: "LNGtrenCP",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "ROA",
             name: "ROA (%)",
           },
           {
             option: 0,
-            suggest: [1],
+            suggest: [],
             displayName: "ROE",
             name: "ROE (%)",
           },
@@ -374,12 +378,83 @@ function LocCoPhieu() {
     ],
   };
 
+  const flattenedFilters = Object.values(filterValue).flatMap((group) =>
+    group.flatMap((filterGroup) => filterGroup.filter)
+  );
+
+  const objectFilters = {};
+
+  flattenedFilters.forEach((obj) => {
+    if (obj.option === 0) {
+      objectFilters[obj.name] = {
+        ...obj,
+        condition: ">",
+        value: "",
+        isChecked: false,
+      };
+    } else if (obj.option === 1) {
+      objectFilters[obj.name] = {
+        ...obj,
+        value: obj.suggest,
+        isChecked: false,
+      };
+    } else if (obj.option === 2) {
+      objectFilters[obj.name] = { ...obj, value: 1, isChecked: false };
+    }
+  });
+
+  const [filters, setFilters] = useState(objectFilters);
+
+  useEffect(() => {
+    const newFilter = filters;
+
+    for (let key in newFilter) {
+      if (checkedFilter.some((itemB) => itemB === newFilter[key].name)) {
+        newFilter[key].isChecked = true;
+      } else {
+        newFilter[key].isChecked = false;
+      }
+    }
+    setFilters(newFilter);
+    console.log("set");
+  }, [checkedFilter]);
+
+  useEffect(() => {
+    const socket = io(SOCKET_SERVER_URL);
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+    socket.on("stockUpdated", (newData) => {
+      socket.emit("updateFilterRequest", filters);
+    });
+    socket.on("updateFilter", (newData) => {
+      console.log("upda");
+      setResult(newData.data);
+    });
+
+    const fetchData = async () => {
+      await api
+        .post(`/stock/filter`, filters)
+        .then((res) => {
+          setResult(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    console.log("fetch");
+    fetchData();
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [filters, checkedFilter]);
+
   const FilterComponent = ({ data, label }) => {
     const handleSubmit = (values) => {
       setCheckedFilter(values.checked);
     };
     return (
-      <div className=" bg-gray-800 bg-opacity-30 flex justify-center top-0 left-0 items-center fixed h-full w-full">
+      <div className=" bg-gray-800 bg-opacity-30 flex justify-center top-0 left-0 items-center fixed h-full w-full z-50">
         <div
           className=" w-full h-full"
           onClick={() => setButtonClicked(0)}
@@ -407,153 +482,142 @@ function LocCoPhieu() {
   };
 
   const DieuKieuLocForm = () => {
-    const flattenedFilters = Object.values(filterValue).flatMap((group) =>
-      group.flatMap((filterGroup) => filterGroup.filter)
-    );
-    const data = flattenedFilters.filter((itemA) =>
-      checkedFilter.some((itemB) => itemB === itemA.name)
-    );
-    const objectFromData = {};
-    for (const obj of data) {
-      if (obj.option === 0) {
-        objectFromData[obj.name] = { condition: ">", value: "" };
-      } else if (obj.option === 1) {
-        objectFromData[obj.name] = obj.suggest;
-      } else if (obj.option === 2) {
-        objectFromData[obj.name] = 1;
-      }
-    }
+    const data = filters;
 
-    const handleSubmit = (values) => {
-      if (values.Uptrend && values.Downtrend) {
-        // console.log("hihi");
-        values.trend = 2;
-        delete values.Uptrend;
-        delete values.Downtrend;
-      } else if (values.Uptrend) {
-        delete values.Uptrend;
-        values.trend = 1;
-      } else if (values.Downtrend) {
-        delete values.Downtrend;
-        values.trend = 0;
-      }
+    const handleSubmit = async (values) => {
+      setFilters(values);
+      console.log(values);
     };
+
+    const handleDelete = async (deletedItem) => {
+      console.log(checkedFilter);
+      console.log(deletedItem);
+      const newCheckedFilter = checkedFilter.filter(
+        (item) => item != deletedItem
+      );
+      // console.log(newCheckedFilter);
+      setCheckedFilter(newCheckedFilter);
+    };
+
     return (
-      <Formik
-        initialValues={objectFromData}
-        onSubmit={handleSubmit}
-        // enableReinitialize
-      >
+      <Formik initialValues={data} onSubmit={handleSubmit} enableReinitialize>
         {({ submitForm, handleChange, values }) => (
           <Form className=" flex flex-col h-full">
             <div className=" flex-1 overflow-y-scroll">
-              {data.map((item) => (
-                <div
-                  key={item.name}
-                  className=" flex w-full justify-between  items-center gap-x-2"
-                >
-                  <div className=" flex items-center w-full bg-slate-800 px-2 py-1 rounded-sm">
-                    <h1 className="  w-1/5 text-left font-semibold">
-                      {item.displayName}
-                    </h1>
-                    {item.option === 0 ? (
-                      <div className=" text-black flex gap-x-3 ">
-                        <Field
-                          onChange={(e) => {
-                            handleChange(e);
-                            submitForm();
-                          }}
-                          as="select"
-                          name={`${item.name}.condition`}
-                        >
-                          <option value=">=">Lớn hơn</option>
-                          <option value="<=">Bé hơn</option>
-                          <option value="=">Bằng</option>
-                          <option value="range">Khoảng</option>
-                        </Field>
-                        {values[item.name].condition === "range" ? (
-                          <div>
-                            {delete values[item.name].value}
-                            <Field
-                              name={`${item.name}.value1`}
-                              type="number"
-                              onChange={(e) => {
-                                handleChange(e);
-                                submitForm();
-                              }}
-                            />
-                            <Field
-                              name={`${item.name}.value2`}
-                              type="number"
-                              onChange={(e) => {
-                                handleChange(e);
-                                submitForm();
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          <div className=" flex items-center">
-                            {delete values[item.name].value1}
-                            {delete values[item.name].value2}
-                            <Field
-                              list={item.name}
-                              name={`${item.name}.value`}
-                              type="number"
-                              onChange={(e) => {
-                                handleChange(e);
-                                submitForm();
-                              }}
-                            />
-                            <datalist id={item.name}>
-                              {item.suggest.map((suggestItem) => (
-                                <option key={suggestItem} value={suggestItem}>
-                                  {suggestItem}
-                                </option>
-                              ))}
-                            </datalist>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      item.option === 1 && (
-                        <div className=" flex gap-x-2 items-center ">
-                          {item.suggest.map((suggestItem, index) => (
-                            <label
-                              key={index}
-                              className="text-left flex gap-x-1 items-center"
-                            >
+              {Object.values(data)
+                .filter((item) => item.isChecked === true)
+                .map((item) => (
+                  <div
+                    key={item.name}
+                    className=" flex w-full justify-between  items-center gap-x-2"
+                  >
+                    <div className=" flex items-center w-full bg-slate-800 px-2 py-1 rounded-sm">
+                      <h1 className="  w-1/5 text-left font-semibold">
+                        {item.displayName}
+                      </h1>
+                      {item.option === 0 ? (
+                        <div className=" text-black flex gap-x-3 ">
+                          <Field
+                            onChange={(e) => {
+                              handleChange(e);
+                              submitForm();
+                            }}
+                            as="select"
+                            name={`${item.name}.condition`}
+                          >
+                            <option value=">=">Lớn hơn</option>
+                            <option value="<=">Bé hơn</option>
+                            <option value="=">Bằng</option>
+                            <option value="range">Khoảng</option>
+                          </Field>
+                          {item.condition === "range" ? (
+                            <div>
+                              {delete item.value}
                               <Field
-                                type="checkbox"
-                                name={item.name}
-                                value={suggestItem}
+                                name={`${item.name}.value1`}
+                                type="number"
                                 onChange={(e) => {
                                   handleChange(e);
-                                  submitForm();
                                 }}
                               />
-                              <h1 className="">{suggestItem}</h1>
-                            </label>
-                          ))}
+                              <Field
+                                name={`${item.name}.value2`}
+                                type="number"
+                                onChange={(e) => {
+                                  handleChange(e);
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <div className=" flex items-center">
+                              {delete item.value1}
+                              {delete item.value2}
+                              <Field
+                                list={item.name}
+                                name={`${item.name}.value`}
+                                type="number"
+                                onChange={(e) => {
+                                  handleChange(e);
+                                }}
+                              />
+                              <datalist id={item.name}>
+                                {item.suggest.map((suggestItem) => (
+                                  <option key={suggestItem} value={suggestItem}>
+                                    {suggestItem}
+                                  </option>
+                                ))}
+                              </datalist>
+                            </div>
+                          )}
                         </div>
-                      )
-                    )}
+                      ) : (
+                        item.option === 1 && (
+                          <div className=" flex gap-x-2 items-center ">
+                            {item.suggest.map((suggestItem, index) => (
+                              <label
+                                key={index}
+                                className="text-left flex gap-x-1 items-center"
+                              >
+                                <Field
+                                  type="checkbox"
+                                  name={item.name}
+                                  value={suggestItem}
+                                  onChange={(e) => {
+                                    handleChange(e);
+                                  }}
+                                />
+                                <h1 className="">{suggestItem}</h1>
+                              </label>
+                            ))}
+                          </div>
+                        )
+                      )}
+                    </div>
+                    <CloseIcon
+                      sx={{ color: "white", fontSize: 20 }}
+                      className=" hover:bg-blue-500 rounded-sm"
+                      onClick={() => {
+                        handleDelete(item.name);
+                      }}
+                    />
                   </div>
-                  <CloseIcon
-                    sx={{ color: "white", fontSize: 20 }}
-                    className=" hover:bg-blue-500 rounded-sm"
-                  />
-                </div>
-              ))}
+                ))}
             </div>
             <div className="  flex gap-x-4 justify-end items-center">
               <button
-                onClick={() => setButtonClicked(1)}
+                onClick={() => {
+                  setButtonClicked(1);
+                  setFilters(values);
+                }}
                 className=" border rounded-lg px-3"
               >
                 PTCB
               </button>
               <button
-                onClick={() => setButtonClicked(2)}
+                onClick={() => {
+                  setButtonClicked(2);
+                  setFilters(values);
+                }}
                 className=" border rounded-lg px-3"
               >
                 PTKT
@@ -569,22 +633,62 @@ function LocCoPhieu() {
   };
 
   return (
-    <div className=" flex items-center justify-center w-full h-full">
-      <h1>Tính năng sắp ra mắt</h1>
-    </div>
-    // <div className=" flex flex-col h-full">
-    //   {buttonClicked === 1 ? (
-    //     <FilterComponent data={filterValue} label="PTCB" />
-    //   ) : (
-    //     buttonClicked === 2 && (
-    //       <FilterComponent data={filterValue} label="PTKT" />
-    //     )
-    //   )}
-    //   <div className="   h-1/2 bg-slate-900">
-    //     <DieuKieuLocForm />
-    //   </div>
-    //   <div className=" bg-yellow-500 h-1/2">KET QUA</div>
+    // <div className=" flex items-center justify-center w-full h-full">
+    //   <h1>Tính năng sắp ra mắt</h1>
     // </div>
+    <div className=" flex flex-col h-screen">
+      {buttonClicked === 1 ? (
+        <FilterComponent data={filterValue} label="PTCB" />
+      ) : (
+        buttonClicked === 2 && (
+          <FilterComponent data={filterValue} label="PTKT" />
+        )
+      )}
+      <div className="   h-1/2 bg-slate-900">
+        <DieuKieuLocForm />
+      </div>
+      <div className="  h-1/2  flex-grow overflow-auto border">
+        {result.length > 0 ? (
+          <table className=" dark:text-white relative w-full   ">
+            <thead className=" bg-slate-900 sticky top-0">
+              <tr className=" ">
+                <th className=" px-4 py-2">STT</th>
+                <th className=" px-4 py-2">Mã</th>
+                <th className=" px-4 py-2">Sàn</th>
+                <th className=" px-4 py-2">Giá</th>
+                <th className=" px-4 py-2">+/-</th>
+                <th className=" px-4 py-2">%</th>
+                <th className=" px-4 py-2">Volume</th>
+              </tr>
+            </thead>
+            <tbody
+              className="bg-grey-light divide-y"
+              style={{ height: "50vh" }}
+            >
+              {result?.map((stock, index) => (
+                <tr
+                  key={index}
+                  className={` ${
+                    index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
+                  }  border border-slate-700 `}
+                >
+                  <td>{index + 1}</td>
+                  <td>{stock?.Ticker}</td>
+                  <td>{stock?.San}</td>
+                  <td>{stock?.Giahientai}</td>
+                  <td>{stock["Tang/Giam"]}</td>
+
+                  <td>{stock["Tang/Giam (%)"]}</td>
+                  <td>{stock?.Volume}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div>Không tìm thấy dữ liệu</div>
+        )}
+      </div>
+    </div>
   );
 }
 
