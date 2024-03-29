@@ -416,7 +416,6 @@ function LocCoPhieu() {
       }
     }
     setFilters(newFilter);
-    console.log("set");
   }, [checkedFilter]);
 
   useEffect(() => {
@@ -428,7 +427,6 @@ function LocCoPhieu() {
       socket.emit("updateFilterRequest", filters);
     });
     socket.on("updateFilter", (newData) => {
-      console.log("upda");
       setResult(newData.data);
     });
 
@@ -437,7 +435,6 @@ function LocCoPhieu() {
         .post(`/stock/filter`, filters)
         .then((res) => {
           setResult(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
     };
@@ -450,21 +447,33 @@ function LocCoPhieu() {
   }, [filters, checkedFilter]);
 
   const FilterComponent = ({ data, label }) => {
+    const [tempValue, setTempValue] = useState([]);
     const handleSubmit = (values) => {
-      setCheckedFilter(values.checked);
+      setTempValue(values.checked);
     };
+
     return (
       <div className=" bg-gray-800 bg-opacity-30 flex justify-center top-0 left-0 items-center fixed h-full w-full z-50">
         <div
           className=" w-full h-full"
-          onClick={() => setButtonClicked(0)}
+          onClick={() => {
+            setButtonClicked(0);
+            if (tempValue.length > 0) {
+              setCheckedFilter(tempValue);
+            }
+          }}
         ></div>
         <div className=" bg-slate-900  absolute w-3/4 h-3/4 flex flex-col rounded-xl  drop-shadow-glow">
           <div className=" flex justify-between items-center  px-3 py-1 border-b border-slate-700 ">
             <h1>{label}</h1>
             <button
               className=" flex hover:bg-gray-500"
-              onClick={() => setButtonClicked(0)}
+              onClick={() => {
+                setButtonClicked(0);
+                if (tempValue.length > 0) {
+                  setCheckedFilter(tempValue);
+                }
+              }}
             >
               <CloseIcon sx={{ fontSize: 20, color: "white" }} />
             </button>
@@ -486,12 +495,9 @@ function LocCoPhieu() {
 
     const handleSubmit = async (values) => {
       setFilters(values);
-      console.log(values);
     };
 
     const handleDelete = async (deletedItem) => {
-      console.log(checkedFilter);
-      console.log(deletedItem);
       const newCheckedFilter = checkedFilter.filter(
         (item) => item != deletedItem
       );
@@ -503,20 +509,21 @@ function LocCoPhieu() {
       <Formik initialValues={data} onSubmit={handleSubmit} enableReinitialize>
         {({ submitForm, handleChange, values }) => (
           <Form className=" flex flex-col h-full">
-            <div className=" flex-1 overflow-y-scroll">
+            <h1 className=" text-left px-2 font-semibold">Điều kiện lọc</h1>
+            <div className=" flex-1 overflow-y-scroll space-y-0.5 py-2">
               {Object.values(data)
                 .filter((item) => item.isChecked === true)
                 .map((item) => (
                   <div
                     key={item.name}
-                    className=" flex w-full justify-between  items-center gap-x-2"
+                    className=" flex w-full justify-between  items-center gap-x-2 text-sm px-2"
                   >
-                    <div className=" flex items-center w-full bg-slate-800 px-2 py-1 rounded-sm">
-                      <h1 className="  w-1/5 text-left font-semibold">
+                    <div className=" flex items-center w-full bg-slate-800 px-2 py-1 rounded-md">
+                      <h1 className=" w-1/3 text-left font-semibold">
                         {item.displayName}
                       </h1>
                       {item.option === 0 ? (
-                        <div className=" text-black flex gap-x-3 ">
+                        <div className=" text-black flex gap-x-3">
                           <Field
                             onChange={(e) => {
                               handleChange(e);
@@ -524,6 +531,7 @@ function LocCoPhieu() {
                             }}
                             as="select"
                             name={`${item.name}.condition`}
+                            className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
                           >
                             <option value=">=">Lớn hơn</option>
                             <option value="<=">Bé hơn</option>
@@ -531,7 +539,7 @@ function LocCoPhieu() {
                             <option value="range">Khoảng</option>
                           </Field>
                           {item.condition === "range" ? (
-                            <div>
+                            <div className=" space-x-2">
                               {delete item.value}
                               <Field
                                 name={`${item.name}.value1`}
@@ -539,6 +547,7 @@ function LocCoPhieu() {
                                 onChange={(e) => {
                                   handleChange(e);
                                 }}
+                                className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
                               />
                               <Field
                                 name={`${item.name}.value2`}
@@ -546,6 +555,7 @@ function LocCoPhieu() {
                                 onChange={(e) => {
                                   handleChange(e);
                                 }}
+                                className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
                               />
                             </div>
                           ) : (
@@ -559,6 +569,7 @@ function LocCoPhieu() {
                                 onChange={(e) => {
                                   handleChange(e);
                                 }}
+                                className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
                               />
                               <datalist id={item.name}>
                                 {item.suggest.map((suggestItem) => (
@@ -580,7 +591,7 @@ function LocCoPhieu() {
                               >
                                 <Field
                                   type="checkbox"
-                                  name={item.name}
+                                  name={`${item.name}.value`}
                                   value={suggestItem}
                                   onChange={(e) => {
                                     handleChange(e);
@@ -636,7 +647,7 @@ function LocCoPhieu() {
     // <div className=" flex items-center justify-center w-full h-full">
     //   <h1>Tính năng sắp ra mắt</h1>
     // </div>
-    <div className=" flex flex-col h-screen">
+    <div className=" flex flex-col h-screen p-2 gap-y-2">
       {buttonClicked === 1 ? (
         <FilterComponent data={filterValue} label="PTCB" />
       ) : (
@@ -647,8 +658,8 @@ function LocCoPhieu() {
       <div className="   h-1/2 bg-slate-900">
         <DieuKieuLocForm />
       </div>
-      <div className="  h-1/2  flex-grow overflow-auto border">
-        {result.length > 0 ? (
+      <div className="  h-1/2  flex-grow overflow-auto">
+        <div>
           <table className=" dark:text-white relative w-full   ">
             <thead className=" bg-slate-900 sticky top-0">
               <tr className=" ">
@@ -662,8 +673,8 @@ function LocCoPhieu() {
               </tr>
             </thead>
             <tbody
-              className="bg-grey-light divide-y"
-              style={{ height: "50vh" }}
+              className="bg-grey-light divide-y "
+              // style={{ height: "50vh" }}
             >
               {result?.map((stock, index) => (
                 <tr
@@ -684,9 +695,7 @@ function LocCoPhieu() {
               ))}
             </tbody>
           </table>
-        ) : (
-          <div>Không tìm thấy dữ liệu</div>
-        )}
+        </div>
       </div>
     </div>
   );

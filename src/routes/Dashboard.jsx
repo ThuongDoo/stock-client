@@ -14,7 +14,7 @@ function Dashboard() {
         <div className=" w-2/12 ">
           <Sidebar />
         </div>
-        <div className=" w-10/12 p-3 ">
+        <div className=" w-10/12  ">
           <Outlet />
         </div>
       </div>
