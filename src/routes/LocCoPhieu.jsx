@@ -778,7 +778,7 @@ function LocCoPhieu() {
         <DieuKieuLocForm />
       </div>
       <div className=" h-fit ">
-        <CustomGrid data={{ columns, rows: result }} />
+        {/* <CustomGrid data={{ columns, rows: result }} /> */}
       </div>
     </div>
   );

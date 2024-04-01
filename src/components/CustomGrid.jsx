@@ -1,88 +1,65 @@
 import * as React from "react";
 import {
   DataGrid,
-  GridColumnMenu,
-  GridColumnMenuContainer,
-  GridColumnMenuFilterItem,
-  GridColumnMenuSortItem,
-  GridToolbar,
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
   GridToolbarExport,
-  GridToolbarFilterButton,
   gridPageCountSelector,
   gridPageSelector,
   useGridApiContext,
-  useGridApiRef,
   useGridSelector,
 } from "@mui/x-data-grid";
 // import { useDemoData } from "@mui/x-data-grid-generator";
 import { styled } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 
-function customCheckbox(theme) {
-  return {
-    "& .MuiCheckbox-root svg": {
-      width: 16,
-      height: 16,
-      backgroundColor: "transparent",
-      border: `1px solid ${
-        theme.palette.mode === "light" ? "#d9d9d9" : "rgb(67, 67, 67)"
-      }`,
-      borderRadius: 2,
-    },
-    "& .MuiCheckbox-root svg path": {
-      display: "none",
-    },
-    "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg": {
-      backgroundColor: "#1890ff",
-      borderColor: "#1890ff",
-    },
-    "& .MuiCheckbox-root.Mui-checked .MuiIconButton-label:after": {
-      position: "absolute",
-      display: "table",
-      border: "2px solid #fff",
-      borderTop: 0,
-      borderLeft: 0,
-      transform: "rotate(45deg) translate(-50%,-50%)",
-      opacity: 1,
-      transition: "all .2s cubic-bezier(.12,.4,.29,1.46) .1s",
-      content: '""',
-      top: "50%",
-      left: "39%",
-      width: 5.71428571,
-      height: 9.14285714,
-    },
-    "& .MuiCheckbox-root.MuiCheckbox-indeterminate .MuiIconButton-label:after":
-      {
-        width: 8,
-        height: 8,
-        backgroundColor: "#1890ff",
-        transform: "none",
-        top: "39%",
-        border: 0,
-      },
-  };
-}
-
-function customTool(theme) {
-  return {
-    "& .base-Popper-root, .MuiDataGrid-panel": {
-      backgroundColor: "blue",
-    },
-    "& .css-n3z9fz-MuiPopper-root-MuiDataGrid-panel": {
-      backgroundColor: "green",
-    },
-    "& .MuiDataGrid-columnsManagementHeader, .css-nchus6-MuiDataGrid-columnsManagementHeader":
-      {
-        backgroundColor: "blue",
-      },
-  };
-}
+// function customCheckbox(theme) {
+//   return {
+//     "& .MuiCheckbox-root svg": {
+//       width: 16,
+//       height: 16,
+//       backgroundColor: "transparent",
+//       border: `1px solid ${
+//         theme.palette.mode === "light" ? "#d9d9d9" : "rgb(67, 67, 67)"
+//       }`,
+//       borderRadius: 2,
+//     },
+//     "& .MuiCheckbox-root svg path": {
+//       display: "none",
+//     },
+//     "& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg": {
+//       backgroundColor: "#1890ff",
+//       borderColor: "#1890ff",
+//     },
+//     "& .MuiCheckbox-root.Mui-checked .MuiIconButton-label:after": {
+//       position: "absolute",
+//       display: "table",
+//       border: "2px solid #fff",
+//       borderTop: 0,
+//       borderLeft: 0,
+//       transform: "rotate(45deg) translate(-50%,-50%)",
+//       opacity: 1,
+//       transition: "all .2s cubic-bezier(.12,.4,.29,1.46) .1s",
+//       content: '""',
+//       top: "50%",
+//       left: "39%",
+//       width: 5.71428571,
+//       height: 9.14285714,
+//     },
+//     "& .MuiCheckbox-root.MuiCheckbox-indeterminate .MuiIconButton-label:after":
+//       {
+//         width: 8,
+//         height: 8,
+//         backgroundColor: "#1890ff",
+//         transform: "none",
+//         top: "39%",
+//         border: 0,
+//       },
+//   };
+// }
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   border: 0,
@@ -132,8 +109,7 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     borderRadius: 0,
   },
   "% .MuiDataGrid-footerContainer": { backgroundColor: "blue" },
-  ...customCheckbox(theme),
-  ...customTool(theme),
+  // ...customCheckbox(theme),
 }));
 
 function CustomPagination() {
