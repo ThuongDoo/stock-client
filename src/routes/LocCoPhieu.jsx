@@ -6,6 +6,7 @@ import api from "../utils/api";
 import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
 import { BarChart } from "@mui/icons-material";
+import CustomGridTest from "../components/CustomGridTest";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -762,17 +763,6 @@ function LocCoPhieu() {
   //   },
   // ];
 
-  const rows = [
-    { id: 1, col1: "Hello", col2: "World" },
-    { id: 2, col1: "DataGridPro", col2: "is Awesome" },
-    { id: 3, col1: "MUI", col2: "is Amazing" },
-  ];
-
-  const columns = [
-    { field: "col1", headerName: "Column 1", width: 150 },
-    { field: "col2", headerName: "Column 2", width: 150 },
-  ];
-
   return (
     // <div className=" flex items-center justify-center w-full h-full">
     //   <h1>Tính năng sắp ra mắt</h1>
@@ -793,17 +783,7 @@ function LocCoPhieu() {
         {/* <CustomGridTest /> */}
         <div style={{ height: 300, width: "100%" }}>
           {/* <DataGrid rows={rows} columns={columns} /> */}
-          <BarChart
-            series={[
-              { data: [35, 44, 24, 34] },
-              { data: [51, 6, 49, 30] },
-              { data: [15, 25, 30, 50] },
-              { data: [60, 50, 15, 25] },
-            ]}
-            height={290}
-            xAxis={[{ data: ["Q1", "Q2", "Q3", "Q4"], scaleType: "band" }]}
-            margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-          />
+          <CustomGridTest />
         </div>
       </div>
     </div>
