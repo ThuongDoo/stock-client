@@ -8,6 +8,7 @@ import { SOCKET_SERVER_URL } from "../constants/socket";
 import CustomGrid from "../components/CustomGrid";
 import CustomGridTest from "../components/CustomGridTest";
 import { DataGrid } from "@mui/x-data-grid";
+import ReactDOM from "react-dom";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -658,110 +659,121 @@ function LocCoPhieu() {
       </Formik>
     );
   };
+  // const columns = [
+  //   {
+  //     field: "id",
+  //     headerName: "STT",
+  //     type: "number",
+  //     flex: 0.5, // headerClassName: "bg-blue-500",
+  //     minWidth: 80,
+  //   },
+  //   {
+  //     field: "Ticker",
+  //     headerName: "Ma CK",
+  //     // headerClassName: "bg-blue-500",
+  //     flex: 1,
+  //     minWidth: 120,
+  //   },
+  //   {
+  //     field: "San",
+  //     headerName: "San",
+  //     minWidth: 120,
+  //     flex: 1,
+  //     // headerClassName: "bg-blue-500",
+  //   },
+  //   {
+  //     field: "Giahientai",
+  //     headerName: "Gia",
+  //     type: "number",
+  //     // headerClassName: "bg-blue-500",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "Tang/Giam",
+  //     headerName: "+/-",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "Tang/Giam (%)",
+  //     headerName: "%",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     // hideable: false,
+  //     minWidth: 120,
+  //     // filterable: false,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "Volume",
+  //     headerName: "KL Giao dich",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "RSRating",
+  //     headerName: "RS Rating",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "RS-O'neil",
+  //     headerName: "RS O'neil",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "RSI",
+  //     headerName: "RSI(14)",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "ADX",
+  //     headerName: "ADX(14)",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "DMI ",
+  //     headerName: "DMI+",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  //   {
+  //     field: "DMI-",
+  //     headerName: "DMI-",
+  //     // headerClassName: "bg-blue-500",
+  //     type: "number",
+  //     minWidth: 120,
+  //     flex: 1,
+  //   },
+  // ];
+
+  const rows = [
+    { id: 1, col1: "Hello", col2: "World" },
+    { id: 2, col1: "DataGridPro", col2: "is Awesome" },
+    { id: 3, col1: "MUI", col2: "is Amazing" },
+  ];
+
   const columns = [
-    {
-      field: "id",
-      headerName: "STT",
-      type: "number",
-      flex: 0.5, // headerClassName: "bg-blue-500",
-      minWidth: 80,
-    },
-    {
-      field: "Ticker",
-      headerName: "Ma CK",
-      // headerClassName: "bg-blue-500",
-      flex: 1,
-      minWidth: 120,
-    },
-    {
-      field: "San",
-      headerName: "San",
-      minWidth: 120,
-      flex: 1,
-      // headerClassName: "bg-blue-500",
-    },
-    {
-      field: "Giahientai",
-      headerName: "Gia",
-      type: "number",
-      // headerClassName: "bg-blue-500",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "Tang/Giam",
-      headerName: "+/-",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "Tang/Giam (%)",
-      headerName: "%",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      // hideable: false,
-      minWidth: 120,
-      // filterable: false,
-      flex: 1,
-    },
-    {
-      field: "Volume",
-      headerName: "KL Giao dich",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "RSRating",
-      headerName: "RS Rating",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "RS-O'neil",
-      headerName: "RS O'neil",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "RSI",
-      headerName: "RSI(14)",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "ADX",
-      headerName: "ADX(14)",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "DMI ",
-      headerName: "DMI+",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
-    {
-      field: "DMI-",
-      headerName: "DMI-",
-      // headerClassName: "bg-blue-500",
-      type: "number",
-      minWidth: 120,
-      flex: 1,
-    },
+    { field: "col1", headerName: "Column 1", width: 150 },
+    { field: "col2", headerName: "Column 2", width: 150 },
   ];
 
   return (
@@ -783,8 +795,7 @@ function LocCoPhieu() {
         {/* <CustomGrid data={{ columns, rows: result }} /> */}
         {/* <CustomGridTest /> */}
         <div style={{ height: 300, width: "100%" }}>
-          <DataGrid rows={result} columns={columns} />
-          hah
+          <DataGrid rows={rows} columns={columns} />
         </div>
       </div>
     </div>
