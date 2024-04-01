@@ -5,10 +5,7 @@ import { Field, Form, Formik } from "formik";
 import api from "../utils/api";
 import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
-import CustomGrid from "../components/CustomGrid";
-import CustomGridTest from "../components/CustomGridTest";
-import { DataGrid } from "@mui/x-data-grid";
-import ReactDOM from "react-dom";
+import { BarChart } from "@mui/icons-material";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -795,7 +792,18 @@ function LocCoPhieu() {
         {/* <CustomGrid data={{ columns, rows: result }} /> */}
         {/* <CustomGridTest /> */}
         <div style={{ height: 300, width: "100%" }}>
-          <DataGrid rows={rows} columns={columns} />
+          {/* <DataGrid rows={rows} columns={columns} /> */}
+          <BarChart
+            series={[
+              { data: [35, 44, 24, 34] },
+              { data: [51, 6, 49, 30] },
+              { data: [15, 25, 30, 50] },
+              { data: [60, 50, 15, 25] },
+            ]}
+            height={290}
+            xAxis={[{ data: ["Q1", "Q2", "Q3", "Q4"], scaleType: "band" }]}
+            margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+          />
         </div>
       </div>
     </div>
