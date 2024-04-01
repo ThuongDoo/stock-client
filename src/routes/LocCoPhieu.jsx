@@ -780,7 +780,7 @@ function LocCoPhieu() {
       </div>
       <div className=" h-fit ">
         {/* <CustomGrid data={{ columns, rows: result }} /> */}
-        <CustomGridTest data={{ columns, rows: result }} />
+        <CustomGridTest />
       </div>
     </div>
   );
