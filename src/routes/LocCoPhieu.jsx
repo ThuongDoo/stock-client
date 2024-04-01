@@ -6,6 +6,7 @@ import api from "../utils/api";
 import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
 import CustomGrid from "../components/CustomGrid";
+import CustomGridTest from "../components/CustomGridTest";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -778,7 +779,8 @@ function LocCoPhieu() {
         <DieuKieuLocForm />
       </div>
       <div className=" h-fit ">
-        <CustomGrid data={{ columns, rows: result }} />
+        {/* <CustomGrid data={{ columns, rows: result }} /> */}
+        <CustomGridTest data={{ columns, rows: result }} />
       </div>
     </div>
   );
