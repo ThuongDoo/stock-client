@@ -7,6 +7,7 @@ import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
 import CustomGrid from "../components/CustomGrid";
 import CustomGridTest from "../components/CustomGridTest";
+import { DataGrid } from "@mui/x-data-grid";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -780,7 +781,11 @@ function LocCoPhieu() {
       </div>
       <div className=" h-fit ">
         {/* <CustomGrid data={{ columns, rows: result }} /> */}
-        <CustomGridTest />
+        {/* <CustomGridTest /> */}
+        <div style={{ height: 300, width: "100%" }}>
+          <DataGrid rows={result} columns={columns} />
+          hah
+        </div>
       </div>
     </div>
   );
