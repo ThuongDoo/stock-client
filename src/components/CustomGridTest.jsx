@@ -1,5 +1,5 @@
+// import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
 
 const rows = [
   { id: 1, col1: "Hello", col2: "World" },
@@ -15,7 +15,8 @@ const columns = [
 export default function CustomGridTest() {
   return (
     <div style={{ height: 300, width: "100%" }}>
-      <DataGrid rows={rows} columns={columns} />
+      {/* <DataGrid rows={rows} columns={columns} /> */}
+      hah
     </div>
   );
 }
