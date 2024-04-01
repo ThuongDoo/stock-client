@@ -662,6 +662,7 @@ function LocCoPhieu() {
       headerName: "STT",
       type: "number",
       flex: 0.5, // headerClassName: "bg-blue-500",
+      minWidth: 80,
     },
     {
       field: "Ticker",
@@ -776,7 +777,7 @@ function LocCoPhieu() {
       <div className=" flex-1 bg-slate-900">
         <DieuKieuLocForm />
       </div>
-      <div className=" h-fit  ">
+      <div className=" h-fit ">
         <CustomGrid data={{ columns, rows: result }} />
       </div>
     </div>

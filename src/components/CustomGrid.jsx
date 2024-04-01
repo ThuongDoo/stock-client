@@ -86,10 +86,7 @@ function customTool(theme) {
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   border: 0,
-  color:
-    theme.palette.mode === "light"
-      ? "rgba(0,0,0,.85)"
-      : "rgba(255,255,255,0.85)",
+  color: theme.palette.mode === "light" ? "white" : "rgba(255,255,255,0.85)",
   fontFamily: [
     "-apple-system",
     "BlinkMacSystemFont",
@@ -111,6 +108,9 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     // display: "none",
     // backgroundColor: "black",
   },
+  "& .MuiDataGrid-columnHeaders .MuiDataGrid-columnHeader": {
+    backgroundColor: "black",
+  },
   "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
     borderRight: `1px solid ${
       theme.palette.mode === "light" ? "#f0f0f0" : "#303030"
@@ -121,19 +121,17 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
       theme.palette.mode === "light" ? "#f0f0f0" : "#303030"
     }`,
 
-    backgroundColor: "gray",
+    backgroundColor: "#344155",
   },
   "& .MuiDataGrid-cell": {
-    color:
-      theme.palette.mode === "light"
-        ? "rgba(0,0,0,.85)"
-        : "rgba(255,255,255,0.65)",
+    color: theme.palette.mode === "light" ? "white" : "rgba(255,255,255,0.65)",
   },
   "& .MuiPaginationItem-root": {
     backgroundColor: "white",
 
     borderRadius: 0,
   },
+  "% .MuiDataGrid-footerContainer": { backgroundColor: "blue" },
   ...customCheckbox(theme),
   ...customTool(theme),
 }));
@@ -192,6 +190,9 @@ export default function CustomGrid({ data }) {
   return (
     <div style={{ height: 400, width: "100%" }}>
       <StyledDataGrid
+        sx={{
+          "& .MuiDataGrid-footerContainer": { backgroundColor: "#0F172A" },
+        }}
         initialState={{
           columns: {
             columnVisibilityModel: {
@@ -205,7 +206,6 @@ export default function CustomGrid({ data }) {
             },
           },
         }}
-        checkboxSelection
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
         pageSizeOptions={[PAGE_SIZE]}
