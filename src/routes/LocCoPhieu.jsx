@@ -5,6 +5,7 @@ import { Field, Form, Formik } from "formik";
 import api from "../utils/api";
 import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
+import CustomGrid from "../components/CustomGrid";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -378,6 +379,19 @@ function LocCoPhieu() {
     ],
   };
 
+  const updateResult = (data) => {
+    const tempData = data.map((item, index) => {
+      return {
+        ...item,
+        id: index + 1,
+        "Tang/Giam": Number(item["Tang/Giam"]),
+        "Tang/Giam (%)": Number(item["Tang/Giam (%)"]),
+      };
+    });
+    console.log(tempData);
+    setResult(tempData);
+  };
+
   const flattenedFilters = Object.values(filterValue).flatMap((group) =>
     group.flatMap((filterGroup) => filterGroup.filter)
   );
@@ -388,7 +402,7 @@ function LocCoPhieu() {
     if (obj.option === 0) {
       objectFilters[obj.name] = {
         ...obj,
-        condition: ">",
+        condition: ">=",
         value: "",
         isChecked: false,
       };
@@ -427,14 +441,14 @@ function LocCoPhieu() {
       socket.emit("updateFilterRequest", filters);
     });
     socket.on("updateFilter", (newData) => {
-      setResult(newData.data);
+      updateResult(newData.data);
     });
 
     const fetchData = async () => {
       await api
         .post(`/stock/filter`, filters)
         .then((res) => {
-          setResult(res.data);
+          updateResult(res.data);
         })
         .catch((err) => console.log(err));
     };
@@ -642,6 +656,110 @@ function LocCoPhieu() {
       </Formik>
     );
   };
+  const columns = [
+    {
+      field: "id",
+      headerName: "STT",
+      type: "number",
+      flex: 0.5, // headerClassName: "bg-blue-500",
+    },
+    {
+      field: "Ticker",
+      headerName: "Ma CK",
+      // headerClassName: "bg-blue-500",
+      flex: 1,
+      minWidth: 120,
+    },
+    {
+      field: "San",
+      headerName: "San",
+      minWidth: 120,
+      flex: 1,
+      // headerClassName: "bg-blue-500",
+    },
+    {
+      field: "Giahientai",
+      headerName: "Gia",
+      type: "number",
+      // headerClassName: "bg-blue-500",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "Tang/Giam",
+      headerName: "+/-",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "Tang/Giam (%)",
+      headerName: "%",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      // hideable: false,
+      minWidth: 120,
+      // filterable: false,
+      flex: 1,
+    },
+    {
+      field: "Volume",
+      headerName: "KL Giao dich",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "RSRating",
+      headerName: "RS Rating",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "RS-O'neil",
+      headerName: "RS O'neil",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "RSI",
+      headerName: "RSI(14)",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "ADX",
+      headerName: "ADX(14)",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "DMI ",
+      headerName: "DMI+",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "DMI-",
+      headerName: "DMI-",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      flex: 1,
+    },
+  ];
 
   return (
     // <div className=" flex items-center justify-center w-full h-full">
@@ -655,47 +773,11 @@ function LocCoPhieu() {
           <FilterComponent data={filterValue} label="PTKT" />
         )
       )}
-      <div className="   h-1/2 bg-slate-900">
+      <div className=" flex-1 bg-slate-900">
         <DieuKieuLocForm />
       </div>
-      <div className="  h-1/2  flex-grow overflow-auto">
-        <div>
-          <table className=" dark:text-white relative w-full   ">
-            <thead className=" bg-slate-900 sticky top-0">
-              <tr className=" ">
-                <th className=" px-4 py-2">STT</th>
-                <th className=" px-4 py-2">Mã</th>
-                <th className=" px-4 py-2">Sàn</th>
-                <th className=" px-4 py-2">Giá</th>
-                <th className=" px-4 py-2">+/-</th>
-                <th className=" px-4 py-2">%</th>
-                <th className=" px-4 py-2">Volume</th>
-              </tr>
-            </thead>
-            <tbody
-              className="bg-grey-light divide-y "
-              // style={{ height: "50vh" }}
-            >
-              {result?.map((stock, index) => (
-                <tr
-                  key={index}
-                  className={` ${
-                    index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
-                  }  border border-slate-700 `}
-                >
-                  <td>{index + 1}</td>
-                  <td>{stock?.Ticker}</td>
-                  <td>{stock?.San}</td>
-                  <td>{stock?.Giahientai}</td>
-                  <td>{stock["Tang/Giam"]}</td>
-
-                  <td>{stock["Tang/Giam (%)"]}</td>
-                  <td>{stock?.Volume}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className=" h-fit  ">
+        <CustomGrid data={{ columns, rows: result }} />
       </div>
     </div>
   );
