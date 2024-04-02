@@ -7,70 +7,39 @@ import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
 import { BarChart } from "@mui/icons-material";
 import CustomGridTest from "../components/CustomGridTest";
+import CustomGrid from "../components/CustomGrid";
+import CustomTable from "../components/CustomTable";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../slices/userSlice";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
   // const [checkedFilter, setCheckedFilter] = useState([]);
   const [checkedFilter, setCheckedFilter] = useState([]);
   const [result, setResult] = useState([]);
-  let stockData = {
-    ADX: "33.80",
-    Beta: "1.01",
-    Bienloinhuangop: "1.11",
-    Bienloinhuanhoatdong: "1.39",
-    BookValuePerShare: "22.97",
-    ChamdaiduoiBB: "0",
-    ChamdaitrenBB: "1",
-    DMI: "32.34",
-    "DMI-": "16.61",
-    DTtrenCP: "215.85",
-    "Date/Time": "2024-03-21",
-    "Dividend Yield (%)": "1.82",
-    EPS: "2.21",
-    "Free-Float": "108523192.00",
-    GiaCaoNhat52W: "0",
-    GiaThapHon52W: "0",
-    Giahientai: "38.40",
-    GiatriGD: "89752322048",
-    LNGtrenCP: "12.00",
-    MA10: "1",
-    MA15: "1",
-    MA20: "1",
-    MA50: "1",
-    MA100: "1",
-    MA200: "1",
-    MACD: "0.63",
-    MACDcatlen: "0",
-    MACDcatxuong: "0",
-    MACDnamduoi: "0",
-    MACDnamtren: "1",
-    MFI: "79.64",
-    NoSupply: "0",
-    OCF: "1696520077312.00",
-    "P/B": "1.67",
-    "P/CF": "0.03",
-    "P/E": "17.35",
-    "P/S": "0.18",
-    PPSEPA: "0",
-    "Phan loai Cp": "Co phieu",
-    Pivotspocket: "0",
-    "ROA (%)": "3.67",
-    "ROE (%)": "9.87",
-    "RS-O'neil": "19",
-    RSI: "65.68",
-    RSRating: "93.02",
-    San: "HSX",
-    Shakeoutconfirmed: "0",
-    Sideway: "1",
-    "Tang/Giam": "0.95",
-    "Tang/Giam (%)": "2.54",
-    TangtruongLNhangquy: "-45.12",
-    Tangtruongdoanhthutheoquy: "-9.80",
-    Ticker: "PLX",
-    Trend: "0",
-    TyleCPluuhanh: "1270592256.00",
-    Volume: "2337300",
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userLogout = async () => {
+    await api
+      .get("/user/logout")
+      .then((res) => {
+        dispatch(logout());
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
   };
+  useEffect(() => {
+    const fetchDate = async () => {
+      await api
+        .get("/user/protected")
+        .then((res) => console.log("success"))
+        .catch((err) => {
+          userLogout();
+        });
+    };
+    fetchDate();
+  }, [buttonClicked, result]);
 
   const filterValue = {
     PTCB: [
@@ -389,7 +358,6 @@ function LocCoPhieu() {
         "Tang/Giam (%)": Number(item["Tang/Giam (%)"]),
       };
     });
-    console.log(tempData);
     setResult(tempData);
   };
 
@@ -431,6 +399,7 @@ function LocCoPhieu() {
       }
     }
     setFilters(newFilter);
+    console.log("setfire");
   }, [checkedFilter]);
 
   useEffect(() => {
@@ -446,6 +415,7 @@ function LocCoPhieu() {
     });
 
     const fetchData = async () => {
+      console.log("fetch");
       await api
         .post(`/stock/filter`, filters)
         .then((res) => {
@@ -453,7 +423,6 @@ function LocCoPhieu() {
         })
         .catch((err) => console.log(err));
     };
-    console.log("fetch");
     fetchData();
 
     return () => {
@@ -657,116 +626,126 @@ function LocCoPhieu() {
       </Formik>
     );
   };
-  // const columns = [
-  //   {
-  //     field: "id",
-  //     headerName: "STT",
-  //     type: "number",
-  //     flex: 0.5, // headerClassName: "bg-blue-500",
-  //     minWidth: 80,
-  //   },
-  //   {
-  //     field: "Ticker",
-  //     headerName: "Ma CK",
-  //     // headerClassName: "bg-blue-500",
-  //     flex: 1,
-  //     minWidth: 120,
-  //   },
-  //   {
-  //     field: "San",
-  //     headerName: "San",
-  //     minWidth: 120,
-  //     flex: 1,
-  //     // headerClassName: "bg-blue-500",
-  //   },
-  //   {
-  //     field: "Giahientai",
-  //     headerName: "Gia",
-  //     type: "number",
-  //     // headerClassName: "bg-blue-500",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "Tang/Giam",
-  //     headerName: "+/-",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "Tang/Giam (%)",
-  //     headerName: "%",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     // hideable: false,
-  //     minWidth: 120,
-  //     // filterable: false,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "Volume",
-  //     headerName: "KL Giao dich",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "RSRating",
-  //     headerName: "RS Rating",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "RS-O'neil",
-  //     headerName: "RS O'neil",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "RSI",
-  //     headerName: "RSI(14)",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "ADX",
-  //     headerName: "ADX(14)",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "DMI ",
-  //     headerName: "DMI+",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  //   {
-  //     field: "DMI-",
-  //     headerName: "DMI-",
-  //     // headerClassName: "bg-blue-500",
-  //     type: "number",
-  //     minWidth: 120,
-  //     flex: 1,
-  //   },
-  // ];
+  const columns = [
+    {
+      field: "id",
+      headerName: "STT",
+      type: "number",
+      flex: 0.5, // headerClassName: "bg-blue-500",
+      minWidth: 80,
+      visible: true,
+    },
+    {
+      field: "Ticker",
+      headerName: "Ma CK",
+      // headerClassName: "bg-blue-500",
+      flex: 1,
+      minWidth: 120,
+      visible: true,
+    },
+    {
+      field: "San",
+      headerName: "San",
+      minWidth: 120,
+      flex: 1,
+      // headerClassName: "bg-blue-500",
+      visible: true,
+    },
+    {
+      field: "Giahientai",
+      headerName: "Gia",
+      type: "number",
+      // headerClassName: "bg-blue-500",
+      minWidth: 120,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "Tang/Giam",
+      headerName: "+/-",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "Tang/Giam (%)",
+      headerName: "%",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      // hideable: false,
+      minWidth: 120,
+      visible: true,
+      // filterable: false,
+      flex: 1,
+    },
+    {
+      field: "Volume",
+      headerName: "KL Giao dich",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "RSRating",
+      headerName: "RS Rating",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      visible: false,
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "RS-O'neil",
+      headerName: "RS O'neil",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      visible: false,
+      flex: 1,
+    },
+    {
+      field: "RSI",
+      headerName: "RSI(14)",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      visible: false,
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "ADX",
+      headerName: "ADX(14)",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      visible: false,
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "DMI ",
+      headerName: "DMI+",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      visible: false,
+      minWidth: 120,
+      flex: 1,
+    },
+    {
+      field: "DMI-",
+      headerName: "DMI-",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 120,
+      visible: false,
+      flex: 1,
+    },
+  ];
 
   return (
-    // <div className=" flex items-center justify-center w-full h-full">
-    //   <h1>Tính năng sắp ra mắt</h1>
-    // </div>
     <div className=" flex flex-col h-screen p-2 gap-y-2">
       {buttonClicked === 1 ? (
         <FilterComponent data={filterValue} label="PTCB" />
@@ -778,13 +757,8 @@ function LocCoPhieu() {
       <div className=" flex-1 bg-slate-900">
         <DieuKieuLocForm />
       </div>
-      <div className=" h-fit ">
-        {/* <CustomGrid data={{ columns, rows: result }} /> */}
-        {/* <CustomGridTest /> */}
-        <div style={{ height: 300, width: "100%" }}>
-          {/* <DataGrid rows={rows} columns={columns} /> */}
-          <CustomGridTest />
-        </div>
+      <div className=" h-1/2 ">
+        <CustomTable rows={result} columns={columns} />
       </div>
     </div>
   );

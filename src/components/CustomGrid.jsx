@@ -197,10 +197,10 @@ export default function CustomGrid({ data }) {
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
         pageSizeOptions={[PAGE_SIZE]}
-        // slots={{
-        //   pagination: CustomPagination,
-        //   toolbar: CustomToolbar,
-        // }}
+        slots={{
+          pagination: CustomPagination,
+          toolbar: CustomToolbar,
+        }}
         {...data}
         disableColumnFilter
         disableColumnMenu
