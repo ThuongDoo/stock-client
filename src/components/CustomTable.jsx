@@ -12,7 +12,6 @@ const CustomTable = ({
     field: null,
     direction: null,
   });
-  const [currentPage, setCurrentPage] = useState(1);
   const [visibleColumns, setVisibleColumns] = useState(() =>
     columns.map((column) => ({
       ...column,
@@ -50,102 +49,7 @@ const CustomTable = ({
     return sortableRows;
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentRows = sortedRows().slice(startIndex, endIndex);
-
-  const pageCount = Math.ceil(sortedRows().length / itemsPerPage);
-
-  const changePage = (page) => {
-    setCurrentPage(page);
-  };
-
-  const renderPagination = () => {
-    const pageNumbers = [];
-    const totalPages = Math.ceil(sortedRows().length / itemsPerPage);
-
-    if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(
-          <button
-            key={i}
-            className={`px-3 py-1 mx-1 border border-gray-400 ${
-              currentPage === i ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => changePage(i)}
-          >
-            {i}
-          </button>
-        );
-      }
-    } else {
-      const startPage = Math.max(
-        1,
-        currentPage - Math.floor(maxVisiblePages / 2)
-      );
-      const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(
-          <button
-            key={i}
-            className={`px-3 py-1 mx-1 border border-gray-400 ${
-              currentPage === i ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => changePage(i)}
-          >
-            {i}
-          </button>
-        );
-      }
-
-      if (startPage > 1) {
-        pageNumbers.unshift(
-          <button
-            key={1}
-            className={`px-3 py-1 mx-1 border border-gray-400 bg-gray-200`}
-            onClick={() => changePage(1)}
-          >
-            1
-          </button>
-        );
-        if (startPage > 2) {
-          pageNumbers.unshift(
-            <button
-              key={"prev-ellipsis"}
-              className={`px-3 py-1 mx-1 border border-gray-400 bg-gray-200 cursor-default`}
-            >
-              ...
-            </button>
-          );
-        }
-      }
-
-      if (endPage < totalPages) {
-        if (endPage < totalPages - 1) {
-          pageNumbers.push(
-            <button
-              key={"next-ellipsis"}
-              className={`px-3 py-1 mx-1 border border-gray-400 bg-gray-200 cursor-default`}
-            >
-              ...
-            </button>
-          );
-        }
-        pageNumbers.push(
-          <button
-            key={totalPages}
-            className={`px-3 py-1 mx-1 border border-gray-400 bg-gray-200`}
-            onClick={() => changePage(totalPages)}
-          >
-            {totalPages}
-          </button>
-        );
-      }
-    }
-
-    return pageNumbers;
-  };
+  const currentRows = sortedRows();
 
   const toggleColumnVisibility = (field) => {
     const updatedColumns = visibleColumns.map((column) =>
@@ -215,14 +119,17 @@ const CustomTable = ({
 
   return (
     <div className=" text-blue-500 flex flex-col h-full gap-y-2">
-      <div className=" flex items-center justify-between">
+      <div className=" flex items-center">
         <button
           className=" text-blue-500 px-4 py-1 "
           onClick={() => setIsManageModalOpen(true)}
         >
           Manage Columns
         </button>
-        <div className="flex justify-center">{renderPagination()}</div>
+        <h1 className="">
+          <span>{currentRows.length}</span>
+          <span> CP Thoã điều kiện</span>
+        </h1>
       </div>
       <div className=" overflow-scroll">
         <table className=" w-full border-collapse border ">
@@ -235,7 +142,9 @@ const CustomTable = ({
                     column.visible && (
                       <td
                         key={colIndex}
-                        className="border border-gray-400 px-4 py-2 whitespace-nowrap"
+                        className={`border border-gray-400 px-4 py-2 whitespace-nowrap ${
+                          column.type === "number" ? "text-right" : "text-left"
+                        }`}
                       >
                         {row[column.field]}
                       </td>
