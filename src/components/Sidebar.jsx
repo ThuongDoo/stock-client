@@ -32,22 +32,23 @@ function Sidebar() {
       .catch((err) => console.log(err));
   };
   const handleSideBar = (tab) => {
-    if (tab.name === "buy-sell") {
-      const fetchDate = async () => {
-        await api
-          .get("/user/protected")
-          .then((res) => {
-            console.log("success");
-            navigate(tab.name);
-          })
-          .catch((err) => {
-            userLogout();
-          });
-      };
-      fetchDate();
-    } else {
-      navigate(tab.name);
-    }
+    // if (tab.name === "buy-sell") {
+    //   const fetchDate = async () => {
+    //     await api
+    //       .get("/user/protected")
+    //       .then((res) => {
+    //         console.log("success");
+    //         navigate(tab.name);
+    //       })
+    //       .catch((err) => {
+    //         userLogout();
+    //       });
+    //   };
+    //   fetchDate();
+    // } else {
+    //   navigate(tab.name);
+    // }
+    navigate(tab.name);
   };
   const handleMenuClick = async (value) => {
     if (value === "logout") {

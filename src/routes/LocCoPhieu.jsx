@@ -447,11 +447,11 @@ function LocCoPhieu() {
             }
           }}
         ></div>
-        <div className=" bg-slate-900  absolute w-3/4 h-3/4 flex flex-col rounded-xl  drop-shadow-glow">
+        <div className=" dark:bg-slate-900 bg-neutral-200 text-black dark:text-white  absolute w-3/4 h-3/4 flex flex-col rounded-xl  drop-shadow-glow">
           <div className=" flex justify-between items-center  px-3 py-1 border-b border-slate-700 ">
             <h1>{label}</h1>
             <button
-              className=" flex hover:bg-gray-500"
+              className=" flex hover:bg-blue-500"
               onClick={() => {
                 setButtonClicked(0);
                 if (tempValue.length > 0) {
@@ -459,7 +459,7 @@ function LocCoPhieu() {
                 }
               }}
             >
-              <CloseIcon sx={{ fontSize: 20, color: "white" }} />
+              <CloseIcon sx={{ fontSize: 20 }} />
             </button>
           </div>
           <div className=" overflow-y-scroll m-3">
@@ -493,10 +493,10 @@ function LocCoPhieu() {
       <Formik initialValues={data} onSubmit={handleSubmit} enableReinitialize>
         {({ submitForm, handleChange, values }) => (
           <Form className=" flex flex-col h-full">
-            <div className=" flex px-4 py-1 text-blue-500 gap-x-4">
+            <div className=" flex flex-col sm:flex-row px-4 py-1 text-blue-500 gap-x-4 gap-y-2">
               <h1 className=" text-left font-semibold">Điều kiện lọc</h1>
 
-              <div className="  flex gap-x-4 justify-end items-center">
+              <div className="  flex gap-x-4 items-center">
                 <button
                   onClick={() => {
                     setButtonClicked(1);
@@ -531,12 +531,12 @@ function LocCoPhieu() {
                     key={item.name}
                     className=" flex w-full justify-between  items-center gap-x-2 text-sm px-2"
                   >
-                    <div className=" flex items-center w-full bg-slate-800 px-2 py-1 rounded-md">
+                    <div className=" flex items-center w-full dark:bg-slate-800 bg-white px-2 py-1 rounded-md">
                       <h1 className=" w-1/3 text-left font-semibold">
                         {item.displayName}
                       </h1>
                       {item.option === 0 ? (
-                        <div className=" text-black flex gap-x-3">
+                        <div className=" dark:text-white text-black flex gap-x-3">
                           <Field
                             onChange={(e) => {
                               handleChange(e);
@@ -544,7 +544,7 @@ function LocCoPhieu() {
                             }}
                             as="select"
                             name={`${item.name}.condition`}
-                            className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
+                            className=" dark:bg-slate-900 bg-white  border border-slate-600 rounded-md px-2 py-0.5"
                           >
                             <option value=">=">Lớn hơn</option>
                             <option value="<=">Bé hơn</option>
@@ -560,7 +560,7 @@ function LocCoPhieu() {
                                 onChange={(e) => {
                                   handleChange(e);
                                 }}
-                                className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
+                                className=" dark:bg-slate-900 bg-white  border border-slate-600 rounded-md px-2 py-0.5"
                               />
                               <Field
                                 name={`${item.name}.value2`}
@@ -568,7 +568,7 @@ function LocCoPhieu() {
                                 onChange={(e) => {
                                   handleChange(e);
                                 }}
-                                className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
+                                className=" dark:bg-slate-900 bg-white  border border-slate-600 rounded-md px-2 py-0.5"
                               />
                             </div>
                           ) : (
@@ -582,7 +582,7 @@ function LocCoPhieu() {
                                 onChange={(e) => {
                                   handleChange(e);
                                 }}
-                                className=" bg-slate-900 text-white border border-slate-600 rounded-md px-2 py-0.5"
+                                className=" dark:bg-slate-900 bg-white  border border-slate-600 rounded-md px-2 py-0.5"
                               />
                               <datalist id={item.name}>
                                 {item.suggest.map((suggestItem) => (
@@ -618,8 +618,8 @@ function LocCoPhieu() {
                       )}
                     </div>
                     <CloseIcon
-                      sx={{ color: "white", fontSize: 20 }}
-                      className=" hover:bg-blue-500 rounded-sm"
+                      sx={{ fontSize: 20 }}
+                      className=" hover:bg-blue-500 rounded-sm dark:text-white text-black"
                       onClick={() => {
                         handleDelete(item.name);
                       }}
@@ -760,7 +760,7 @@ function LocCoPhieu() {
           <FilterComponent data={filterValue} label="PTKT" />
         )
       )}
-      <div className=" h-1/2 bg-slate-900">
+      <div className=" h-1/2 dark:bg-slate-900 bg-neutral-200">
         <DieuKieuLocForm />
       </div>
       <div className=" h-1/2 ">

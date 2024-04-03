@@ -66,7 +66,7 @@ const CustomTable = ({
             column.visible && (
               <th
                 key={index}
-                className={`border border-gray-400 px-4 py-2 bg-gray-100 cursor-pointer`}
+                className={`border border-gray-400 px-4 py-2 dark:bg-gray-900 bg-white cursor-pointer`}
                 onClick={() => handleSort(column.field)}
                 style={{ minWidth: column.minWidth + "px" }}
               >
@@ -120,14 +120,14 @@ const CustomTable = ({
 
   return (
     <div className=" text-blue-500 flex flex-col h-full gap-y-2">
-      <div className=" flex items-center">
+      <div className=" flex sm:items-center flex-col sm:flex-row gap-y-2 gap-x-4 px-4 py-1">
         <button
-          className=" text-blue-500 px-4 py-1 hover:text-white"
+          className=" text-blue-500  hover:dark:text-white hover:text-black text-left"
           onClick={() => setIsManageModalOpen(true)}
         >
           Manage Columns
         </button>
-        <h1 className="">
+        <h1 className=" text-left">
           <span>{currentRows.length}</span>
           <span> CP Thoã điều kiện</span>
         </h1>
@@ -137,7 +137,12 @@ const CustomTable = ({
           {renderTableHeader()}
           <tbody>
             {currentRows.map((row, rowIndex) => (
-              <tr key={rowIndex}>
+              <tr
+                key={rowIndex}
+                className={`${
+                  rowIndex % 2 === 1 && "dark:bg-slate-700 bg-neutral-200"
+                }`}
+              >
                 {visibleColumns.map(
                   (column, colIndex) =>
                     column.visible && (

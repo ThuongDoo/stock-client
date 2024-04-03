@@ -44,7 +44,7 @@ function SearchBar({ suggestionData, onSelect }) {
         value={searchTerm}
         onChange={handleChange}
         placeholder="Tìm kiếm CK"
-        className=" block rounded-md px-4 py-1.5 border dark:text-white dark:bg-slate-900 dark:border-slate-700 border-black w-48"
+        className=" block rounded-lg px-4 py-2 border dark:text-white dark:bg-slate-900 dark:border-slate-700 border-black w-48"
       />
       <ul
         ref={dropdownRef}

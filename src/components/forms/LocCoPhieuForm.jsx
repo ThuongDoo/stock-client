@@ -27,13 +27,11 @@ const LocCoPhieuForm = ({ data, onSubmit, checkedValues }) => {
       // enableReinitialize={true}
     >
       {({ submitForm, handleChange }) => (
-        <Form className="  text-black  ">
+        <Form className="    ">
           {data.map((group) => (
             <div key={group.group} className=" p-3 space-y-2">
-              <h3 className=" text-left text-white font-bold text-sm">
-                {group.group}
-              </h3>
-              <div className=" grid grid-cols-3 bg-slate-700 text-white p-4 gap-y-4 rounded-lg">
+              <h3 className=" text-left  font-bold text-sm">{group.group}</h3>
+              <div className=" grid grid-cols-3 dark:bg-slate-700 bg-white  p-4 gap-y-4 rounded-lg">
                 {group.filter.map((filter) => (
                   <label
                     key={filter.name}
