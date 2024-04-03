@@ -2,8 +2,30 @@ import { format } from "date-fns";
 import moment from "moment";
 import React from "react";
 import api from "../utils/api";
+import CustomTable from "./CustomTable";
 
 function UserList({ userList, onEdit }) {
+  const data = userList.map((item) => {
+    const expirationDate = moment(item.expirationDate);
+    const daysRemaining = expirationDate.diff(moment(), "days");
+    const expirationText =
+      daysRemaining >= 0
+        ? `${daysRemaining} ngày`
+        : isNaN(daysRemaining)
+        ? "null"
+        : "Đã hết hạn";
+    let expirationDateDisplay;
+    if (item.expirationDate === null) {
+      expirationDateDisplay = "null";
+    } else {
+      expirationDateDisplay = format(
+        new Date(item.expirationDate),
+        "dd-MM-yyyy HH:mm:ss"
+      );
+    }
+    return { ...item, expirationDate: expirationDateDisplay, expirationText };
+  });
+  console.log(data);
   const handleEdit = (value) => {
     onEdit(value);
   };
@@ -23,6 +45,62 @@ function UserList({ userList, onEdit }) {
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };
+  const columns = [
+    {
+      field: "name",
+      headerName: "Username",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 200,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 200,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "phone",
+      headerName: "Phone",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 200,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "role",
+      headerName: "ROle",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 200,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "expirationDate",
+      headerName: "Expiration date",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 200,
+      visible: true,
+      flex: 1,
+    },
+    {
+      field: "expirationText",
+      headerName: "Expiration date",
+      // headerClassName: "bg-blue-500",
+      type: "number",
+      minWidth: 200,
+      visible: true,
+      flex: 1,
+    },
+  ];
   return (
     <div>
       <h2>Danh sách người dùng</h2>
@@ -86,6 +164,9 @@ function UserList({ userList, onEdit }) {
         </tbody>
       </table>
     </div>
+    // <div>
+    //   <CustomTable columns={columns} rows={data} />
+    // </div>
   );
 }
 

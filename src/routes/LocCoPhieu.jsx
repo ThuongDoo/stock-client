@@ -493,7 +493,36 @@ function LocCoPhieu() {
       <Formik initialValues={data} onSubmit={handleSubmit} enableReinitialize>
         {({ submitForm, handleChange, values }) => (
           <Form className=" flex flex-col h-full">
-            <h1 className=" text-left px-2 font-semibold">Điều kiện lọc</h1>
+            <div className=" flex px-4 py-1 text-blue-500 gap-x-4">
+              <h1 className=" text-left font-semibold">Điều kiện lọc</h1>
+
+              <div className="  flex gap-x-4 justify-end items-center">
+                <button
+                  onClick={() => {
+                    setButtonClicked(1);
+                    setFilters(values);
+                  }}
+                  className=" border rounded-lg px-3 border-blue-500 hover:bg-blue-500 hover:text-white"
+                >
+                  PTCB
+                </button>
+                <button
+                  onClick={() => {
+                    setButtonClicked(2);
+                    setFilters(values);
+                  }}
+                  className=" border rounded-lg px-3 border-blue-500 hover:bg-blue-500 hover:text-white"
+                >
+                  PTKT
+                </button>
+                <button
+                  className=" border rounded-lg px-3 border-blue-500 hover:bg-blue-500 hover:text-white"
+                  type="submit"
+                >
+                  Tìm kiếm
+                </button>
+              </div>
+            </div>
             <div className=" flex-1 overflow-y-scroll space-y-0.5 py-2">
               {Object.values(data)
                 .filter((item) => item.isChecked === true)
@@ -598,29 +627,6 @@ function LocCoPhieu() {
                   </div>
                 ))}
             </div>
-            <div className="  flex gap-x-4 justify-end items-center">
-              <button
-                onClick={() => {
-                  setButtonClicked(1);
-                  setFilters(values);
-                }}
-                className=" border rounded-lg px-3"
-              >
-                PTCB
-              </button>
-              <button
-                onClick={() => {
-                  setButtonClicked(2);
-                  setFilters(values);
-                }}
-                className=" border rounded-lg px-3"
-              >
-                PTKT
-              </button>
-              <button className=" border rounded-lg px-3" type="submit">
-                Tìm kiếm
-              </button>
-            </div>
           </Form>
         )}
       </Formik>
@@ -685,7 +691,7 @@ function LocCoPhieu() {
       headerName: "KL Giao dich",
       // headerClassName: "bg-blue-500",
       type: "number",
-      minWidth: 120,
+      minWidth: 200,
       visible: true,
       flex: 1,
     },
@@ -754,7 +760,7 @@ function LocCoPhieu() {
           <FilterComponent data={filterValue} label="PTKT" />
         )
       )}
-      <div className=" flex-1 bg-slate-900">
+      <div className=" h-1/2 bg-slate-900">
         <DieuKieuLocForm />
       </div>
       <div className=" h-1/2 ">

@@ -66,8 +66,9 @@ const CustomTable = ({
             column.visible && (
               <th
                 key={index}
-                className="border border-gray-400 px-4 py-2 bg-gray-100 cursor-pointer"
+                className={`border border-gray-400 px-4 py-2 bg-gray-100 cursor-pointer`}
                 onClick={() => handleSort(column.field)}
+                style={{ minWidth: column.minWidth + "px" }}
               >
                 {column.headerName}
                 {sortConfig.field === column.field && sortConfig.direction && (
@@ -121,7 +122,7 @@ const CustomTable = ({
     <div className=" text-blue-500 flex flex-col h-full gap-y-2">
       <div className=" flex items-center">
         <button
-          className=" text-blue-500 px-4 py-1 "
+          className=" text-blue-500 px-4 py-1 hover:text-white"
           onClick={() => setIsManageModalOpen(true)}
         >
           Manage Columns
@@ -132,7 +133,7 @@ const CustomTable = ({
         </h1>
       </div>
       <div className=" overflow-scroll">
-        <table className=" w-full border-collapse border ">
+        <table className="  w-full  border-collapse border ">
           {renderTableHeader()}
           <tbody>
             {currentRows.map((row, rowIndex) => (
