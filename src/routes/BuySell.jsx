@@ -30,6 +30,8 @@ function BuySell() {
         .get("/user/protected")
         .then((res) => console.log("success"))
         .catch((err) => {
+          console.log("logout");
+          console.log(err);
           userLogout();
         });
     };

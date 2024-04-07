@@ -49,6 +49,10 @@ const CustomTable = ({
     return sortableRows;
   };
 
+  function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   const currentRows = sortedRows();
 
   const toggleColumnVisibility = (field) => {
@@ -162,7 +166,10 @@ const CustomTable = ({
                             : "text-left"
                         }`}
                       >
-                        {row[column.field]}
+                        {column.type === "right"
+                          ? formatNumberWithCommas(row[column.field])
+                          : row[column.field]}
+                        {/* {row[column.field]} */}
                       </td>
                     )
                 )}
