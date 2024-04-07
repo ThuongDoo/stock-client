@@ -66,7 +66,7 @@ const CustomTable = ({
             column.visible && (
               <th
                 key={index}
-                className={`border border-gray-400 px-4 py-2 dark:bg-gray-900 bg-white cursor-pointer`}
+                className={` px-4 py-2 dark:bg-black bg-white cursor-pointer`}
                 onClick={() => handleSort(column.field)}
                 style={{ minWidth: column.minWidth + "px" }}
               >
@@ -74,9 +74,15 @@ const CustomTable = ({
                 {sortConfig.field === column.field && sortConfig.direction && (
                   <span className="ml-2">
                     {sortConfig.direction === "ascending" ? (
-                      <ExpandLessIcon sx={{ color: "blue", fontSize: 20 }} />
+                      <ExpandLessIcon
+                        sx={{ fontSize: 20 }}
+                        className=" dark:text-white text-black"
+                      />
                     ) : (
-                      <ExpandMoreIcon sx={{ color: "blue", fontSize: 20 }} />
+                      <ExpandMoreIcon
+                        sx={{ fontSize: 20 }}
+                        className=" dark:text-white text-black"
+                      />
                     )}
                   </span>
                 )}
@@ -89,7 +95,7 @@ const CustomTable = ({
 
   const renderManageModal = () => (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-4 rounded-md w-64">
+      <div className="bg-white p-4 rounded-md w-64 text-black ">
         <h2 className="text-lg font-semibold mb-2">Manage Columns</h2>
         <ul>
           {columns.map((column, index) => (
@@ -119,28 +125,28 @@ const CustomTable = ({
   );
 
   return (
-    <div className=" text-blue-500 flex flex-col h-full gap-y-2">
+    <div className="  dark:text-white text-black flex flex-col h-full gap-y-2">
       <div className=" flex sm:items-center flex-col sm:flex-row gap-y-2 gap-x-4 px-4 py-1">
         <button
-          className=" text-blue-500  hover:dark:text-white hover:text-black text-left"
+          className="  bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded"
           onClick={() => setIsManageModalOpen(true)}
         >
-          Manage Columns
+          Thêm cột
         </button>
         <h1 className=" text-left">
-          <span>{currentRows.length}</span>
+          <span className=" font-bold">{currentRows.length}</span>
           <span> CP Thoã điều kiện</span>
         </h1>
       </div>
       <div className=" overflow-scroll">
-        <table className="  w-full  border-collapse border ">
+        <table className="  w-full  border-collapse  ">
           {renderTableHeader()}
           <tbody>
             {currentRows.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
                 className={`${
-                  rowIndex % 2 === 1 && "dark:bg-slate-700 bg-neutral-200"
+                  rowIndex % 2 === 1 && "dark:bg-slate-900 bg-neutral-200"
                 }`}
               >
                 {visibleColumns.map(
@@ -148,8 +154,12 @@ const CustomTable = ({
                     column.visible && (
                       <td
                         key={colIndex}
-                        className={`border border-gray-400 px-4 py-2 whitespace-nowrap ${
-                          column.type === "number" ? "text-right" : "text-left"
+                        className={`border border-slate-700 px-4 py-2 whitespace-nowrap ${
+                          column.type === "right"
+                            ? "text-right"
+                            : column.type === "center"
+                            ? "text-center"
+                            : "text-left"
                         }`}
                       >
                         {row[column.field]}

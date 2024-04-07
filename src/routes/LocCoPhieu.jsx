@@ -493,7 +493,7 @@ function LocCoPhieu() {
       <Formik initialValues={data} onSubmit={handleSubmit} enableReinitialize>
         {({ submitForm, handleChange, values }) => (
           <Form className=" flex flex-col h-full">
-            <div className=" flex flex-col sm:flex-row px-4 py-1 text-blue-500 gap-x-4 gap-y-2">
+            <div className=" flex flex-col sm:flex-row px-4 py-1 dark:text-white text-black  gap-x-4 gap-y-2 items-center">
               <h1 className=" text-left font-semibold">Điều kiện lọc</h1>
 
               <div className="  flex gap-x-4 items-center">
@@ -502,7 +502,7 @@ function LocCoPhieu() {
                     setButtonClicked(1);
                     setFilters(values);
                   }}
-                  className=" border rounded-lg px-3 border-blue-500 hover:bg-blue-500 hover:text-white"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded"
                 >
                   PTCB
                 </button>
@@ -511,12 +511,12 @@ function LocCoPhieu() {
                     setButtonClicked(2);
                     setFilters(values);
                   }}
-                  className=" border rounded-lg px-3 border-blue-500 hover:bg-blue-500 hover:text-white"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded"
                 >
                   PTKT
                 </button>
                 <button
-                  className=" border rounded-lg px-3 border-blue-500 hover:bg-blue-500 hover:text-white"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded"
                   type="submit"
                 >
                   Tìm kiếm
@@ -636,22 +636,23 @@ function LocCoPhieu() {
     {
       field: "id",
       headerName: "STT",
-      type: "number",
+      type: "center",
       flex: 0.5, // headerClassName: "bg-blue-500",
       minWidth: 80,
       visible: true,
     },
     {
       field: "Ticker",
-      headerName: "Ma CK",
+      headerName: "Mã",
       // headerClassName: "bg-blue-500",
+
       flex: 1,
       minWidth: 120,
       visible: true,
     },
     {
       field: "San",
-      headerName: "San",
+      headerName: "Sàn",
       minWidth: 120,
       flex: 1,
       // headerClassName: "bg-blue-500",
@@ -659,8 +660,8 @@ function LocCoPhieu() {
     },
     {
       field: "Giahientai",
-      headerName: "Gia",
-      type: "number",
+      headerName: "Giá",
+      type: "right",
       // headerClassName: "bg-blue-500",
       minWidth: 120,
       visible: true,
@@ -670,7 +671,7 @@ function LocCoPhieu() {
       field: "Tang/Giam",
       headerName: "+/-",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       minWidth: 120,
       visible: true,
       flex: 1,
@@ -679,7 +680,7 @@ function LocCoPhieu() {
       field: "Tang/Giam (%)",
       headerName: "%",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       // hideable: false,
       minWidth: 120,
       visible: true,
@@ -688,9 +689,9 @@ function LocCoPhieu() {
     },
     {
       field: "Volume",
-      headerName: "KL Giao dich",
+      headerName: "Volume",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       minWidth: 200,
       visible: true,
       flex: 1,
@@ -699,7 +700,7 @@ function LocCoPhieu() {
       field: "RSRating",
       headerName: "RS Rating",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       visible: false,
       minWidth: 120,
       flex: 1,
@@ -708,7 +709,7 @@ function LocCoPhieu() {
       field: "RS-O'neil",
       headerName: "RS O'neil",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       minWidth: 120,
       visible: false,
       flex: 1,
@@ -717,7 +718,7 @@ function LocCoPhieu() {
       field: "RSI",
       headerName: "RSI(14)",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       visible: false,
       minWidth: 120,
       flex: 1,
@@ -726,7 +727,7 @@ function LocCoPhieu() {
       field: "ADX",
       headerName: "ADX(14)",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       visible: false,
       minWidth: 120,
       flex: 1,
@@ -735,7 +736,7 @@ function LocCoPhieu() {
       field: "DMI ",
       headerName: "DMI+",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       visible: false,
       minWidth: 120,
       flex: 1,
@@ -744,7 +745,7 @@ function LocCoPhieu() {
       field: "DMI-",
       headerName: "DMI-",
       // headerClassName: "bg-blue-500",
-      type: "number",
+      type: "right",
       minWidth: 120,
       visible: false,
       flex: 1,
