@@ -14,6 +14,7 @@ import { deletedBuysell } from "../constants/deletedBuysell";
 import zalo_icon from "../images/zalo-icon.png";
 import { zaloLink } from "../constants/url";
 import ExternalPageLoader from "../components/ExternalPageLoader";
+import TradingViewWidget from "../components/TradingViewWidget";
 
 function Home() {
   return (
@@ -51,6 +52,9 @@ function Home() {
 
       <div id="about-us" className=" w-full">
         <Review />
+      </div>
+      <div className=" h-screen">
+        <TradingViewWidget />
       </div>
       <div>
         <ExternalPageLoader />

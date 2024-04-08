@@ -7,7 +7,8 @@ function ExternalPageLoader() {
   const loadExternalPage = async () => {
     try {
       // Đường link đến trang web ngoại vi
-      const externalURL = "https://example.com/external-page";
+      const externalURL =
+        "https://www.tradingview.com/chart/?symbol=HOSE%3AACB&utm_source=www.tradingview.com&utm_medium=widget&utm_campaign=chart&utm_term=HOSE%3AACB";
       // Gửi yêu cầu AJAX để lấy nội dung của trang web ngoại vi
       const response = await axios.get(externalURL);
       // Chèn nội dung vào state để render
