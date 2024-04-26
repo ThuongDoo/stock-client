@@ -1,13 +1,7 @@
-import {
-  createChart,
-  ColorType,
-  CrosshairMode,
-  LineStyle,
-  TickMarkType,
-} from "lightweight-charts";
+import { createChart, ColorType } from "lightweight-charts";
 import React, { useEffect, useRef, useState } from "react";
 import api from "../utils/api";
-import { format, getTime, parse, parseISO } from "date-fns";
+import { format, getTime, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
 import { getTheme } from "../slices/themeSlice";
 

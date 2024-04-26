@@ -207,8 +207,10 @@ const CustomTable = ({
                         ${column.onClick && "hover:underline cursor-pointer"}
                         `}
                         onClick={() => {
-                          setChosenTicker(row[column.field]);
-                          setIsChartModalOpen(true);
+                          if (column.onClick) {
+                            setChosenTicker(row[column.field]);
+                            setIsChartModalOpen(true);
+                          }
                         }}
                       >
                         {column.type === "right"
