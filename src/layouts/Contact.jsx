@@ -1,17 +1,8 @@
 import React from "react";
 import ContactForm from "../components/forms/ContactForm";
-import zaloIcon from "../images/zalo.png";
 import api from "../utils/api";
-import contactBackground from "../images/contactBackground.png";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import logo from "../images/logo.png";
-import EmailIcon from "@mui/icons-material/Email";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
 function Contact() {
-  const zaloLink = "https://zalo.me/g/cbgvag037";
-
   const handleSubmit = async (values) => {
     await api
       .post("/user/userRequest", values)

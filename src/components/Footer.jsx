@@ -1,6 +1,5 @@
 import React from "react";
 
-import zaloIcon from "../images/icons8-zalo-48.png";
 import logo from "../images/logo.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +11,11 @@ import {
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
-  const zaloLink = "https://zalo.me/0333817395";
+  const youtubeLink = "https://www.facebook.com/chungkhoanxyz?mibextid=LQQJ4d";
+  const tiktokLink =
+    "https://www.tiktok.com/@teamchungkhoanxyz?_t=8lDa8QvTDUe&_r=1";
+  const mailLink = "mailto:support@chungkhoanxyz.com";
+
   return (
     <footer className=" px-6 bg-slate-900 flex flex-col md:px-12 lg:px-24  justify-between text-white">
       <div className=" py-4 flex justify-evenly ">
@@ -43,30 +46,50 @@ const Footer = () => {
               Chí Minh
             </h1>
             <div className=" flex gap-x-4 py-2">
-              <div className=" rounded-full size-8 bg-blue-500 flex items-center justify-center">
+              <a
+                href={tiktokLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+              >
                 <FontAwesomeIcon
                   icon={faTiktok}
                   style={{ fontSize: 20, color: "black" }}
                 />
-              </div>
-              <div className=" rounded-full size-8 bg-blue-500 flex items-center justify-center">
+              </a>
+              <a
+                href={youtubeLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+              >
                 <FontAwesomeIcon
                   icon={faFacebookF}
                   style={{ fontSize: 20, color: "black" }}
                 />
-              </div>
-              <div className=" rounded-full size-8 bg-blue-500 flex items-center justify-center">
+              </a>
+              <a
+                href="URL_CỦA_BẠN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+              >
                 <FontAwesomeIcon
                   icon={faYoutube}
                   style={{ fontSize: 20, color: "black" }}
                 />
-              </div>
-              <div className=" rounded-full size-8 bg-blue-500 flex items-center justify-center">
+              </a>
+              <a
+                href={mailLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+              >
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   style={{ fontSize: 20, color: "black" }}
                 />
-              </div>
+              </a>
             </div>
           </div>
         </div>

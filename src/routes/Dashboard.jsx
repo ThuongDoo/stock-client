@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import Footer from "../components/Footer";
-import TabBar from "../components/TabBar";
-import api from "../utils/api";
 
 function Dashboard() {
   return (

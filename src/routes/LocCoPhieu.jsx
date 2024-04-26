@@ -5,9 +5,6 @@ import { Field, Form, Formik } from "formik";
 import api from "../utils/api";
 import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/socket";
-import { BarChart } from "@mui/icons-material";
-import CustomGridTest from "../components/CustomGridTest";
-import CustomGrid from "../components/CustomGrid";
 import CustomTable from "../components/CustomTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -647,7 +644,7 @@ function LocCoPhieu() {
       field: "Ticker",
       headerName: "Mã",
       // headerClassName: "bg-blue-500",
-
+      onClick: true,
       flex: 1,
       minWidth: 120,
       visible: true,
@@ -672,7 +669,6 @@ function LocCoPhieu() {
     {
       field: "Tang/Giam",
       headerName: "+/-",
-      // headerClassName: "bg-blue-500",
       type: "right",
       minWidth: 120,
       visible: true,
@@ -681,7 +677,6 @@ function LocCoPhieu() {
     {
       field: "Tang/Giam (%)",
       headerName: "%",
-      // headerClassName: "bg-blue-500",
       type: "right",
       // hideable: false,
       minWidth: 120,

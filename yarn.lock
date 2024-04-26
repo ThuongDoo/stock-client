@@ -4078,6 +4078,13 @@ debug@^3.2.7:
   dependencies:
     ms "^2.1.1"
 
+debug@~2.1.0:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.1.3.tgz#ce8ab1b5ee8fbee2bfa3b633cab93d366b63418e"
+  integrity sha512-KWau3VQmxO3YwQCjJzMPPusOtI0hx3UGsqnY7RS+QHQjUeawpOVtJvAdeTrI2Ja5DTR8KH3xaEN8c+ADbXJWeg==
+  dependencies:
+    ms "0.7.0"
+
 decimal.js@^10.2.1:
   version "10.4.3"
   resolved "https://registry.npmjs.org/decimal.js/-/decimal.js-10.4.3.tgz"
@@ -4975,6 +4982,11 @@ express@^4.17.3:
     type-is "~1.6.18"
     utils-merge "1.0.1"
     vary "~1.1.2"
+
+fancy-canvas@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fancy-canvas/-/fancy-canvas-2.1.0.tgz#44b40e40419ad8ef8304df365e4276767e918552"
+  integrity sha512-nifxXJ95JNLFR2NgRV4/MxVP45G9909wJTEKz5fg/TZS20JJZA6hfgRVh/bC9bwl2zBtBNcYPjiBE4njQHVBwQ==
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
@@ -6819,6 +6831,13 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lightweight-charts@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/lightweight-charts/-/lightweight-charts-4.1.3.tgz#467fb88a5efc3665bea64c193591cfc082d84300"
+  integrity sha512-SJacmEyx3LmT2Qsc7Kq7cEX7nEHtQv0MOlujhRlcDxhW62pG6nkBlcM52/jNqkq8B28KQeVmgOQ7zrdJ4BCPDw==
+  dependencies:
+    fancy-canvas "2.1.0"
+
 lilconfig@^2.0.3, lilconfig@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/lilconfig/-/lilconfig-2.1.0.tgz"
@@ -7109,6 +7128,11 @@ moment@^2.30.1:
   resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
 
+ms@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.0.tgz#865be94c2e7397ad8a57da6a633a6e2f30798b83"
+  integrity sha512-YmuMMkfOZzzAftlHwiQxFepJx/5rDaYi9o9QanyBCk485BRAyM/vB9XoYlZvglxE/pmAWOiQgrdoE10watiK9w==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
@@ -7140,6 +7164,11 @@ mz@^2.7.0:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
+
+nan@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-1.0.0.tgz#ae24f8850818d662fcab5acf7f3b95bfaa2ccf38"
+  integrity sha512-Wm2/nFOm2y9HtJfgOLnctGbfvF23FcQZeyUZqDD8JQG3zO5kXh3MkQKiUaA68mJiVWrOzLFkAV1u6bC8P52DJA==
 
 nanoid@^3.3.7:
   version "3.3.7"
@@ -9170,6 +9199,13 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
+ssi-fcdata@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ssi-fcdata/-/ssi-fcdata-2.2.0.tgz#7e36abc15c152aaff5d4e0c1985bec724219b914"
+  integrity sha512-4QbsF967Kjyq7oP9Ag3vlIJVv0mJL813IpWLGOEfLKt3oMk7NNEEkKbfM6VcsyN/NKStbkRw0PkLm0dlROkmGw==
+  dependencies:
+    websocket "1.0.17"
+
 stable@^0.1.8:
   version "0.1.8"
   resolved "https://registry.npmjs.org/stable/-/stable-0.1.8.tgz"
@@ -9789,6 +9825,13 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
+typedarray-to-buffer@~3.0.0:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/typedarray-to-buffer/-/typedarray-to-buffer-3.0.5.tgz#842f2ca959cd96280f947bcfeee388c5404e5ec6"
+  integrity sha512-Vh51nE3sb9b8p5kivDevel4lpUqlv+vqrMKis57j0iOv4Ox6YX4Op5H2GFO4o1HzafBuOjgmB9RRUf7FeEgH2A==
+  dependencies:
+    is-typedarray "^1.0.0"
+
 unbox-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/unbox-primitive/-/unbox-primitive-1.0.2.tgz"
@@ -10111,6 +10154,15 @@ websocket-extensions@>=0.1.1:
   version "0.1.4"
   resolved "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.4.tgz"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
+
+websocket@1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/websocket/-/websocket-1.0.17.tgz#8a572afc6ec120eb41473ca517d07d932f7b6a1c"
+  integrity sha512-Vw2FZ2hzHd3lkftJ2wIFRJ7cxohyCy9g/LjcRtEJVH3eR9eVN9oseW6z34THCSwXSwUnNgnXckR6LetjY4n8Cg==
+  dependencies:
+    debug "~2.1.0"
+    nan "~1.0.0"
+    typedarray-to-buffer "~3.0.0"
 
 whatwg-encoding@^1.0.5:
   version "1.0.5"

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import StockChart from "./StockChart";
+import CloseIcon from "@mui/icons-material/Close";
 
 const CustomTable = ({
   columns,
@@ -18,6 +20,8 @@ const CustomTable = ({
     }))
   );
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
+  const [isChartModalOpen, setIsChartModalOpen] = useState(false);
+  const [chosenTicker, setChosenTicker] = useState("ACB");
 
   const handleSort = (field) => {
     let direction = "ascending";
@@ -128,6 +132,31 @@ const CustomTable = ({
     </div>
   );
 
+  const renderChartModal = () => (
+    <div className="bg-gray-800 bg-opacity-30 flex justify-center top-0 left-0 items-center fixed h-full w-full z-50 ">
+      <div
+        className=" w-full h-full"
+        onClick={() => {
+          setIsChartModalOpen(false);
+        }}
+      ></div>
+      <div className="dark:bg-slate-900 bg-neutral-200 text-black dark:text-white  absolute w-3/4 flex flex-col rounded-xl  drop-shadow-glow">
+        <div className=" flex justify-between items-center  px-3 py-1 border-b border-slate-700 ">
+          <h1>Biểu đồ kỹ thuật</h1>
+          <button
+            className=" flex hover:bg-blue-500"
+            onClick={() => setIsChartModalOpen(false)}
+          >
+            <CloseIcon sx={{ fontSize: 20 }} />
+          </button>
+        </div>
+        <div className="m-3 h-full">
+          <StockChart ticker={chosenTicker} />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="  dark:text-white text-black flex flex-col h-full gap-y-2">
       <div className=" flex sm:items-center flex-col sm:flex-row gap-y-2 gap-x-4 px-4 py-1">
@@ -164,7 +193,23 @@ const CustomTable = ({
                             : column.type === "center"
                             ? "text-center"
                             : "text-left"
-                        }`}
+                        }
+                        ${column.headerClassName}
+                        ${
+                          (column.headerName === "%" ||
+                            column.headerName === "+/-") &&
+                          (row[column.field] < 0
+                            ? "text-red-500"
+                            : row[column.field] > 0
+                            ? "text-green-500"
+                            : "text-yellow-500")
+                        }
+                        ${column.onClick && "hover:underline cursor-pointer"}
+                        `}
+                        onClick={() => {
+                          setChosenTicker(row[column.field]);
+                          setIsChartModalOpen(true);
+                        }}
                       >
                         {column.type === "right"
                           ? formatNumberWithCommas(row[column.field])
@@ -178,6 +223,7 @@ const CustomTable = ({
           </tbody>
         </table>
       </div>
+      {isChartModalOpen && renderChartModal()}
       {isManageModalOpen && renderManageModal()}
     </div>
   );

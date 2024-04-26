@@ -1,4 +1,3 @@
-import logo from "./images/logo.png";
 import "./App.css";
 import {
   Route,
@@ -9,7 +8,6 @@ import {
 import Home from "./routes/Home";
 import ErrorPage from "./routes/ErrorPage";
 import Root from "./routes/Root";
-import AboutUs from "./routes/AboutUs";
 import Dashboard from "./routes/Dashboard";
 import BangDien from "./routes/BangDien";
 import BuySell from "./routes/BuySell";
@@ -20,7 +18,6 @@ import Settings from "./routes/Settings";
 import LocCoPhieu from "./routes/LocCoPhieu";
 import Admin from "./routes/Admin";
 import Login from "./routes/Login";
-import { Helmet } from "react-helmet";
 
 function App() {
   const darkMode = useSelector(getTheme);

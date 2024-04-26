@@ -1,20 +1,14 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Introduction from "../layouts/Introduction";
 import Feature from "../layouts/Feature";
 import Review from "../layouts/Review";
 import Pricing from "../layouts/Pricing";
-import Payment from "../layouts/Payment";
-import AboutUs from "../layouts/AboutUs";
 import Contact from "../layouts/Contact";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { deletedBuysell } from "../constants/deletedBuysell";
 import zalo_icon from "../images/zalo-icon.png";
 import { zaloLink } from "../constants/url";
-import ExternalPageLoader from "../components/ExternalPageLoader";
-import TradingViewWidget from "../components/TradingViewWidget";
 
 function Home() {
   return (
@@ -52,12 +46,6 @@ function Home() {
 
       <div id="about-us" className=" w-full">
         <Review />
-      </div>
-      <div className=" h-screen">
-        <TradingViewWidget />
-      </div>
-      <div>
-        <ExternalPageLoader />
       </div>
       {/* <div id="about-us">
         <AboutUs />
