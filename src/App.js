@@ -5,19 +5,19 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Home from "./routes/Home";
-import ErrorPage from "./routes/ErrorPage";
-import Root from "./routes/Root";
-import Dashboard from "./routes/Dashboard";
-import BangDien from "./routes/BangDien";
-import BuySell from "./routes/BuySell";
-import News from "./routes/News";
+import Home from "./pages/home/Home";
+import ErrorPage from "./pages/errorPage/ErrorPage";
+import Root from "./pages/root/Root";
+import Dashboard from "./pages/dashboard/Dashboard";
+import BangDien from "./pages/bangdien/BangDien";
+import BuySell from "./pages/buysell/BuySell";
+import News from "./pages/news/News";
 import { useSelector } from "react-redux";
 import { getTheme } from "./slices/themeSlice";
-import Settings from "./routes/Settings";
-import LocCoPhieu from "./routes/LocCoPhieu";
-import Admin from "./routes/Admin";
-import Login from "./routes/Login";
+import Settings from "./pages/settings/Settings";
+import LocCoPhieu from "./pages/locCoPhieu/LocCoPhieu";
+import Admin from "./pages/admin/Admin";
+import Login from "./pages/login/Login";
 
 function App() {
   const darkMode = useSelector(getTheme);
