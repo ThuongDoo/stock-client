@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../utils/api";
+import api, { endpoints } from "../../utils/api";
 import StockBD from "./components/StockBD";
 import SearchBar from "../../components/SearchBar";
 import { SOCKET_SERVER_URL } from "../../constants/socket";
@@ -24,7 +24,7 @@ function BangDien() {
     const socket = io(SOCKET_SERVER_URL);
     const fetchTickerName = async () => {
       await api
-        .get("/stock/getAll")
+        .get(endpoints.STOCK_GET_ALL)
         .then((res) => {
           const sortData = res.data;
           sortByTickerLengthAscending(sortData);
@@ -34,7 +34,7 @@ function BangDien() {
     };
     const fetchSan = async () => {
       await api
-        .get("/stock/getSan")
+        .get(endpoints.STOCK_GET_SAN)
         .then((res) => {
           setSanData(res.data);
         })
@@ -67,7 +67,7 @@ function BangDien() {
   useEffect(() => {
     const fetchData = async () => {
       await api
-        .get(`/stock/getStockByName/${selectedStocks}`)
+        .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${selectedStocks}`)
         .then((res) => {
           setOldData(data);
 
@@ -85,7 +85,7 @@ function BangDien() {
     setSelectedStocks(value);
     const fetchData = async () => {
       await api
-        .get(`/stock/getStockByName/${value}`)
+        .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${value}`)
         .then((res) => {
           setOldData(data);
           setData(res.data);
@@ -95,10 +95,6 @@ function BangDien() {
     fetchData();
   };
   console.log("reload");
-  // console.log("san", sanData);
-  // console.log("seleted", selectedStocks);
-  // console.log("data", data);
-  //test
   return (
     <div className=" flex w-full h-full ">
       <div className=" flex flex-col flex-1 items-start">

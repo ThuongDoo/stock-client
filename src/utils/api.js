@@ -11,8 +11,8 @@ export const endpoints = {
   LOGOUT: "/auth/logout",
   LOGIN: "/auth/login",
 
-  STOCK_GET_ALL: "/stock/getAll",
-  STOCK_GET_SAN: "/stock/getSan",
+  STOCK_GET_ALL: "/stock",
+  STOCK_GET_SAN: "/stock/san",
   STOCK_GET_STOCK_BY_NAME: "/stock/getStockByName",
 
   BUYSELL: "/buysell",

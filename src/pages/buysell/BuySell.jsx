@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../utils/api";
+import api, { endpoints } from "../../utils/api";
 import { SOCKET_SERVER_URL } from "../../constants/socket";
 import { io } from "socket.io-client";
 import BuysellSearch from "./components/BuysellSearch";
@@ -17,7 +17,7 @@ function BuySell() {
 
   const userLogout = async () => {
     await api
-      .get("/user/logout")
+      .get(endpoints.LOGOUT)
       .then((res) => {
         dispatch(logout());
         navigate("/login");
@@ -32,7 +32,7 @@ function BuySell() {
         .catch((err) => {
           console.log("logout");
           console.log(err);
-          userLogout();
+          // userLogout();
         });
     };
     fetchDate();
@@ -60,7 +60,7 @@ function BuySell() {
     setIsLoading(true);
     const fetchData = async () => {
       await api
-        .get("/stock/buysell")
+        .get(endpoints.BUYSELL)
         .then((res) => {
           console.log(res.data.data);
           // console.log(res.data.realtimeData);
@@ -77,7 +77,7 @@ function BuySell() {
   const handleSearch = (value) => {
     setIsReset(false);
     console.log("value", value);
-    let url = "/stock/filterBuysell?";
+    let url = endpoints.BUYSELL + "?";
 
     // Kiểm tra và thêm thuộc tính date vào URL nếu tồn tại
     if (value.date) {

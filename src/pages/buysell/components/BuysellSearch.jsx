@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "../../../components/SearchBar";
 import DateFilter from "../../../components/DateFilter";
-import api from "../../../utils/api";
+import api, { endpoints } from "../../../utils/api";
 import SearchIcon from "@mui/icons-material/Search";
 import moment from "moment";
 
@@ -17,7 +17,7 @@ function BuysellSearch({ onSubmit, onReset }) {
     const fetchTickerName = async () => {
       console.log("reload");
       await api
-        .get("/stock/getAll")
+        .get(endpoints.STOCK_GET_ALL)
         .then((res) => {
           const sortData = res.data;
           sortByTickerLengthAscending(sortData);

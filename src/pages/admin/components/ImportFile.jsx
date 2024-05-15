@@ -176,7 +176,7 @@ const ImportFile = () => {
       const sendData = data.slice(startIdx, endIdx); // Slice the data array to get the current chunk
 
       await api
-        .post("/stock/buysell/importFile", sendData)
+        .post("/buysell/import", sendData)
         .then((res) => {
           console.log(res.data);
         })
