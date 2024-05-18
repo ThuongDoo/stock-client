@@ -1,12 +1,14 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { STRINGS } from "../../../constants/strings";
 
 const initialValues = {
   name: "",
   email: "",
   phone: "",
-  date: "",
+  roles: "STOCK1",
+  date: STRINGS.STOCK1_DATE,
 };
 
 const validationSchema = Yup.object({
@@ -17,15 +19,14 @@ const validationSchema = Yup.object({
   phone: Yup.string().required("*Vui lòng nhâp số điện thoại"),
 });
 
-const EditUserForm = ({ userData, onSubmit }) => {
-  console.log(userData);
-  initialValues.email = userData.email;
-  initialValues.name = userData.name;
-  initialValues.phone = userData.phone;
+const CreateUserForm = ({ userData, onSubmit }) => {
+  if (userData) {
+    initialValues.email = userData.email;
+    initialValues.name = userData.name;
+    initialValues.phone = userData.phone;
+  }
   const handleSubmit = (values, { setSubmitting }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
-    console.log(values);
-    values.role = "stock1";
     onSubmit(values);
     setSubmitting(false);
   };
@@ -39,7 +40,9 @@ const EditUserForm = ({ userData, onSubmit }) => {
       {({ isSubmitting }) => (
         <Form className=" flex flex-col h-full justify-between text-black gap-y-5">
           <div className=" flex flex-col items-start">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name" className=" text-white font-bold mb-1">
+              {STRINGS.NAME}
+            </label>
             <Field
               type="name"
               id="name"
@@ -54,7 +57,9 @@ const EditUserForm = ({ userData, onSubmit }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" className=" text-white font-bold mb-1">
+              {STRINGS.EMAIL}
+            </label>
             <Field
               type="email"
               id="email"
@@ -69,7 +74,9 @@ const EditUserForm = ({ userData, onSubmit }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
-            <label htmlFor="phone">Phone</label>
+            <label htmlFor="phone" className=" text-white font-bold mb-1">
+              {STRINGS.PHONE}
+            </label>
             <Field
               id="phone"
               name="phone"
@@ -83,13 +90,17 @@ const EditUserForm = ({ userData, onSubmit }) => {
             />
           </div>
           <div className=" flex flex-col items-start">
-            <label htmlFor="date">Thêm ngày</label>
+            <label htmlFor="date" className=" text-white font-bold mb-1">
+              {STRINGS.ROLE}
+            </label>
             <Field as="select" id="date" name="date">
-              <option value="">Thêm ngày</option>
-              <option value="15">Stock1</option>
-              <option value="30">Stock2</option>
-              <option value="178">Stock3</option>
-              <option value="365">Stock4</option>
+              <option value="" disabled>
+                Role
+              </option>
+              <option value={STRINGS.STOCK1_DATE}>Stock1</option>
+              <option value={STRINGS.STOCK2_DATE}>Stock2</option>
+              <option value={STRINGS.STOCK3_DATE}>Stock3</option>
+              <option value={STRINGS.STOCK4_DATE}>Stock4</option>
             </Field>
             <ErrorMessage
               name="date"
@@ -100,9 +111,9 @@ const EditUserForm = ({ userData, onSubmit }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className=" bg-yellow-500 rounded-full px-4 py-2 w-full text-white font-extrabold"
+            className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-full"
           >
-            EDIT
+            CREATE
           </button>
         </Form>
       )}
@@ -110,4 +121,4 @@ const EditUserForm = ({ userData, onSubmit }) => {
   );
 };
 
-export default EditUserForm;
+export default CreateUserForm;

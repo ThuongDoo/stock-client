@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import api, { endpoints } from "../../utils/api";
+import api, { endpoints } from "../../../utils/api";
 import StockBD from "./components/StockBD";
-import SearchBar from "../../components/SearchBar";
-import { SOCKET_SERVER_URL } from "../../constants/socket";
-import TabBar from "../../components/TabBar";
-import { CATEGORIES } from "../../constants/categories";
-import { parse, formatISO } from "date-fns";
-import DropdownList from "../../components/DropdownList";
+import SearchBar from "../../../components/SearchBar";
+import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
+import { CATEGORIES } from "../../../constants/categories";
+import DropdownList from "../../../components/DropdownList";
 import { io } from "socket.io-client";
 import BangDienHeader from "./components/BangDienHeader";
 
@@ -44,12 +42,12 @@ function BangDien() {
     socket.on("connect", () => {
       console.log("Connected to server");
     });
-    socket.on("stockUpdated", (newData) => {
+    socket.on(SOCKETS.NEW_STOCK_DATA_AVAILABLE, (newData) => {
       console.log("sendData", selectedStocks);
-      socket.emit("updateStockRequest", selectedStocks);
+      socket.emit(SOCKETS.STOCK_REQUEST, selectedStocks);
     });
 
-    socket.on("updateStock", (newData) => {
+    socket.on(SOCKETS.UPDATE_STOCK_DATA, (newData) => {
       setOldData(data);
       console.log(newData.data);
       setData(newData.data);

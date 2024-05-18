@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
-import api from "../../../utils/api";
+import api, { endpoints } from "../../../utils/api";
 import { addHours, formatISO, parse } from "date-fns";
 import { deletedBuysell } from "../../../constants/deletedBuysell";
 // Allowed extensions for input file
@@ -120,7 +120,7 @@ const filterBuysellSignal = async (data) => {
   return filterArray;
 };
 
-const ImportFile = () => {
+const ImportBuysell = () => {
   const [error, setError] = useState("");
   const [file, setFile] = useState("");
   const handleFileChange = (e) => {
@@ -176,7 +176,7 @@ const ImportFile = () => {
       const sendData = data.slice(startIdx, endIdx); // Slice the data array to get the current chunk
 
       await api
-        .post("/buysell/import", sendData)
+        .post(endpoints.BUYSELL_IMPORT, sendData)
         .then((res) => {
           console.log(res.data);
         })
@@ -225,4 +225,4 @@ const ImportFile = () => {
   );
 };
 
-export default ImportFile;
+export default ImportBuysell;

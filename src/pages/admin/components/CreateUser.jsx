@@ -1,6 +1,6 @@
 import React from "react";
 import api from "../../../utils/api";
-import CreateUserForm from "./CreateUserForm";
+import CreateUserForm from "../requestManager/CreateUserForm";
 
 function CreateUser({ userData }) {
   const handleCreateUser = async (values) => {

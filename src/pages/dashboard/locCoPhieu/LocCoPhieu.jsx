@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import LocCoPhieuForm from "./components/LocCoPhieuForm";
 import { Field, Form, Formik } from "formik";
-import api from "../../utils/api";
+import api from "../../../utils/api";
 import { io } from "socket.io-client";
-import { SOCKET_SERVER_URL } from "../../constants/socket";
-import CustomTable from "../../components/CustomTable";
+import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
+import CustomTable from "../../../components/CustomTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../slices/userSlice";
+import { logout } from "../../../slices/userSlice";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -406,10 +406,10 @@ function LocCoPhieu() {
     socket.on("connect", () => {
       console.log("Connected to server");
     });
-    socket.on("stockUpdated", (newData) => {
-      socket.emit("updateFilterRequest", filters);
+    socket.on(SOCKETS.NEW_STOCK_DATA_AVAILABLE, (newData) => {
+      socket.emit(SOCKETS.FILTERD_STOCK_REQUEST, filters);
     });
-    socket.on("updateFilter", (newData) => {
+    socket.on(SOCKETS.UPDATE_FILTERED_STOCK_DATA, (newData) => {
       updateResult(newData.data);
     });
 

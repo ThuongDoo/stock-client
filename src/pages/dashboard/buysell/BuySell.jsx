@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import api, { endpoints } from "../../utils/api";
-import { SOCKET_SERVER_URL } from "../../constants/socket";
+import api, { endpoints } from "../../../utils/api";
+import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
 import { io } from "socket.io-client";
 import BuysellSearch from "./components/BuysellSearch";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../slices/userSlice";
+import { logout } from "../../../slices/userSlice";
 import { format } from "date-fns";
 
 function BuySell() {
@@ -43,7 +43,7 @@ function BuySell() {
     socket.on("connect", () => {
       console.log("Connected to server");
     });
-    socket.on("buysell", (data) => {
+    socket.on(SOCKETS.UPDATE_BUYSELL_DATA, (data) => {
       console.log("Received data:", data);
       // Xử lý dữ liệu được nhận tại đây
       if (isReset) {

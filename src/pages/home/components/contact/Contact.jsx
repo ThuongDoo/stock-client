@@ -1,13 +1,21 @@
 import React from "react";
 import ContactForm from "./components/ContactForm";
-import api from "../../../../utils/api";
+import api, { endpoints } from "../../../../utils/api";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import { STRINGS } from "../../../../constants/strings";
 
 function Contact() {
   const handleSubmit = async (values) => {
     await api
-      .post("/user/userRequest", values)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+      .post(endpoints.USER_REQUEST, values)
+      .then((res) => {
+        console.log(res.data);
+        toast.success(STRINGS.REQUEST_CREATED);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(STRINGS.REQUEST_CREATE_FAILED);
+      });
   };
 
   return (
@@ -17,6 +25,19 @@ function Contact() {
       //   backgroundImage: `url('https://i.vnbusiness.vn/2023/08/04/-3386-1691138721_860x0.jpg')`,
       // }}
     >
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
       <img
         src="https://i.vnbusiness.vn/2023/08/04/-3386-1691138721_860x0.jpg"
         alt=""

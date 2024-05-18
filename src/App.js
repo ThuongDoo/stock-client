@@ -9,15 +9,18 @@ import Home from "./pages/home/Home";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import Root from "./pages/root/Root";
 import Dashboard from "./pages/dashboard/Dashboard";
-import BangDien from "./pages/bangdien/BangDien";
-import BuySell from "./pages/buysell/BuySell";
 import News from "./pages/news/News";
 import { useSelector } from "react-redux";
 import { getTheme } from "./slices/themeSlice";
 import Settings from "./pages/settings/Settings";
-import LocCoPhieu from "./pages/locCoPhieu/LocCoPhieu";
 import Admin from "./pages/admin/Admin";
 import Login from "./pages/login/Login";
+import BangDien from "./pages/dashboard/bangdien/BangDien";
+import BuySell from "./pages/dashboard/buysell/BuySell";
+import LocCoPhieu from "./pages/dashboard/locCoPhieu/LocCoPhieu";
+import UserManager from "./pages/admin/UserManager";
+import RequestManager from "./pages/admin/requestManager/RequestManager";
+import ImportFile from "./pages/admin/importFile/ImportFile";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -34,7 +37,11 @@ function App() {
           <Route element={<BuySell />} path="buy-sell" />
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
         </Route>
-        <Route element={<Admin />} path="/admin" />
+        <Route element={<Admin />} path="/admin">
+          <Route element={<UserManager />} path="user-manager" />
+          <Route element={<RequestManager />} path="request-manager" />
+          <Route element={<ImportFile />} path="import" />
+        </Route>
         <Route element={<Login />} path="/login" />
       </Route>
     )

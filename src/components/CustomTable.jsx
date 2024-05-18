@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import StockChart from "./StockChart";
@@ -9,6 +9,9 @@ const CustomTable = ({
   rows,
   itemsPerPage = 20,
   maxVisiblePages = 7,
+  checkboxesVisible = false,
+  manageVisible = true,
+  onCheckboxes,
 }) => {
   const [sortConfig, setSortConfig] = useState({
     field: null,
@@ -22,6 +25,26 @@ const CustomTable = ({
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [isChartModalOpen, setIsChartModalOpen] = useState(false);
   const [chosenTicker, setChosenTicker] = useState("ACB");
+
+  const [checkboxes, setCheckboxes] = useState(new Array(5).fill(false));
+
+  useEffect(() => {
+    setCheckboxes(new Array(5).fill(false));
+  }, [rows]);
+
+  // Hàm xử lý khi checkbox thay đổi trạng thái
+  const handleCheckboxChange = (index) => {
+    const newCheckboxes = [...checkboxes];
+    newCheckboxes[index] = !newCheckboxes[index];
+    onCheckboxes(newCheckboxes);
+    setCheckboxes(newCheckboxes);
+  };
+
+  const handleHeaderCheckboxChange = () => {
+    const allChecked = checkboxes.every((checkbox) => checkbox);
+    onCheckboxes(new Array(rows.length).fill(!allChecked));
+    setCheckboxes(new Array(rows.length).fill(!allChecked));
+  };
 
   const handleSort = (field) => {
     let direction = "ascending";
@@ -69,6 +92,19 @@ const CustomTable = ({
   const renderTableHeader = () => (
     <thead className=" sticky top-0">
       <tr>
+        {checkboxesVisible && (
+          <th
+            className="px-4 py-2 dark:bg-black bg-white cursor-pointer"
+            onClick={handleHeaderCheckboxChange}
+          >
+            <input
+              type="checkbox"
+              checked={checkboxes.every((checkbox) => checkbox)}
+              onChange={handleHeaderCheckboxChange}
+              className="h-4 w-4 cursor-pointer"
+            />
+          </th>
+        )}
         {visibleColumns.map(
           (column, index) =>
             column.visible && (
@@ -158,18 +194,22 @@ const CustomTable = ({
   );
 
   return (
-    <div className="  dark:text-white text-black flex flex-col h-full gap-y-2">
+    <div className="  dark:text-white text-black flex flex-col h-full ">
       <div className=" flex sm:items-center flex-col sm:flex-row gap-y-2 gap-x-4 px-4 py-1">
-        <button
-          className="  bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded"
-          onClick={() => setIsManageModalOpen(true)}
-        >
-          Thêm cột
-        </button>
-        <h1 className=" text-left">
-          <span className=" font-bold">{currentRows.length}</span>
-          <span> CP Thoã điều kiện</span>
-        </h1>
+        {manageVisible && (
+          <button
+            className="  bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded"
+            onClick={() => setIsManageModalOpen(true)}
+          >
+            Thêm cột
+          </button>
+        )}
+        {manageVisible && (
+          <h1 className=" text-left">
+            <span className=" font-bold">{currentRows.length}</span>
+            <span> CP Thoã điều kiện</span>
+          </h1>
+        )}
       </div>
       <div className=" overflow-scroll">
         <table className="  w-full  border-collapse  ">
@@ -182,6 +222,19 @@ const CustomTable = ({
                   rowIndex % 2 === 1 && "dark:bg-slate-900 bg-neutral-200"
                 }`}
               >
+                {checkboxesVisible && (
+                  <td
+                    className="border border-slate-700 px-4 py-2 whitespace-nowrap cursor-pointer"
+                    onClick={() => handleCheckboxChange(rowIndex)}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checkboxes[rowIndex] || false}
+                      onChange={() => handleCheckboxChange(rowIndex)}
+                      className="h-4 w-4 cursor-pointer"
+                    />
+                  </td>
+                )}
                 {visibleColumns.map(
                   (column, colIndex) =>
                     column.visible && (

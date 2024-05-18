@@ -20,6 +20,7 @@ const validationSchema = Yup.object({
 const ContactForm = ({ onSubmit }) => {
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
+    // alert("yêu cầu đã được gửi")
     onSubmit(values);
     setSubmitting(false);
     resetForm();
@@ -93,7 +94,6 @@ const ContactForm = ({ onSubmit }) => {
             type="submit"
             disabled={isSubmitting}
             className=" bg-orange-600 rounded-full px-4 py-2 w-full text-white font-extrabold"
-            onClick={() => alert("yêu cầu đã được gửi")}
           >
             GỬI LIÊN HỆ NGAY
           </button>
