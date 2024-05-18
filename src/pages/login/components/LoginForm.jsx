@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import api from "../../../utils/api";
+import api, { endpoints } from "../../../utils/api";
 import { useDispatch } from "react-redux";
 import { login } from "../../../slices/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ const LoginForm = () => {
     // Xử lý đăng nhập ở đây
     console.log("Đăng nhập với:", values);
     await api
-      .post("/user/login", { phone: values.phone, password: values.password })
+      .post(endpoints.LOGIN, { phone: values.phone, password: values.password })
       .then((res) => {
         console.log(res.data);
 
