@@ -1,9 +1,9 @@
 import { createChart, ColorType } from "lightweight-charts";
 import React, { useEffect, useRef, useState } from "react";
-import api from "../utils/api";
+import api from "../../../../utils/api";
 import { format, getTime, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
-import { getTheme } from "../slices/themeSlice";
+import { getTheme } from "../../../../slices/themeSlice";
 
 export const ChartComponent = (props) => {
   const {

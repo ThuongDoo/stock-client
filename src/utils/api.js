@@ -20,6 +20,9 @@ export const endpoints = {
   BUYSELL: "/buysell",
   BUYSELL_IMPORT: "/buysell/import",
 
+  OHLC_DAILY: "/ohlc/daily",
+  OHLC_INTRADAY: "/ohlc/intraday",
+
   USER: "/user",
   USER_UPDATE: "/user/updateUser",
   USER_DELETE: "/user/deleteUser",

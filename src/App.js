@@ -21,6 +21,8 @@ import LocCoPhieu from "./pages/dashboard/locCoPhieu/LocCoPhieu";
 import UserManager from "./pages/admin/UserManager";
 import RequestManager from "./pages/admin/requestManager/RequestManager";
 import ImportFile from "./pages/admin/importFile/ImportFile";
+import ImportBuysell from "./pages/admin/importFile/ImportBuysell";
+import ImportOhlc from "./pages/admin/importFile/ImportOhlc";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -40,7 +42,10 @@ function App() {
         <Route element={<Admin />} path="/admin">
           <Route element={<UserManager />} path="user-manager" />
           <Route element={<RequestManager />} path="request-manager" />
-          <Route element={<ImportFile />} path="import" />
+          <Route element={<ImportFile />} path="import">
+            <Route element={<ImportBuysell />} path="buysell" />
+            <Route element={<ImportOhlc />} path="ohlc" />
+          </Route>
         </Route>
         <Route element={<Login />} path="/login" />
       </Route>

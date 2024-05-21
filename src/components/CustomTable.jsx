@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import StockChart from "./StockChart";
+import StockChart from "../pages/dashboard/locCoPhieu/components/StockChart";
 import CloseIcon from "@mui/icons-material/Close";
 
 const CustomTable = ({

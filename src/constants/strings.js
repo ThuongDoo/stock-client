@@ -38,4 +38,7 @@ export const STRINGS = {
     "Xin lỗi, bạn không có quyền truy cập vào tài nguyên này.",
 
   NAVIGATE_LOGIN: "Quay lại trang đăng nhập",
+
+  IMPORT_CSV: "Chọn file .csv",
+  UPLOAD: "Upload",
 };

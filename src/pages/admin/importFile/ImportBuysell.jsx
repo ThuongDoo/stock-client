@@ -3,6 +3,7 @@ import Papa from "papaparse";
 import api, { endpoints } from "../../../utils/api";
 import { addHours, formatISO, parse } from "date-fns";
 import { deletedBuysell } from "../../../constants/deletedBuysell";
+import { STRINGS } from "../../../constants/strings";
 // Allowed extensions for input file
 const allowedExtensions = ["csv"];
 
@@ -204,23 +205,24 @@ const ImportBuysell = () => {
     reader.readAsText(file);
   };
   return (
-    <div className="">
-      <h1 className="">IMPORT CSV</h1>
-      <div className="">
-        <label htmlFor="csvInput" style={{ display: "block" }}>
-          Enter CSV File
-        </label>
+    <div className=" p-6 w-full ">
+      <h1 className="text-xl font-bold mb-4 text-left">IMPORT BUYSELL</h1>
+      <div className="mb-4 flex gap-3 w-full">
         <input
           onChange={handleFileChange}
           id="csvInput"
           name="file"
-          type="File"
+          type="file"
+          className="border border-gray-300 rounded px-4 py-2 w-full"
         />
-        <div>
-          <button onClick={handleParse}>UPDATE</button>
-        </div>
-        <div style={{ marginTop: "3rem" }}>{error && error}</div>
+        <button
+          onClick={handleParse}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded"
+        >
+          {STRINGS.UPLOAD}
+        </button>
       </div>
+      {error && <div className="text-red-500 text-sm">{error}</div>}
     </div>
   );
 };
