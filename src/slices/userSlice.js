@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     isLoggedIn: false,
     username: "",
-    role: null,
+    roles: null,
     expirationDate: null,
     email: null,
     phone: null,
@@ -14,7 +14,7 @@ export const userSlice = createSlice({
     login: (state, action) => {
       state.isLoggedIn = true;
       state.username = action.payload.username;
-      state.role = action.payload.role;
+      state.roles = action.payload.roles;
       state.expirationDate = action.payload.expirationDate;
       state.email = action.payload.email;
       state.phone = action.payload.phone;

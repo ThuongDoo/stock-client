@@ -8,10 +8,13 @@ import { STRINGS } from "../../constants/strings";
 import CustomModal from "../../components/CustomModal";
 import CreateUserForm from "./requestManager/CreateUserForm";
 import EditUserForm from "./requestManager/EditUserForm";
+import UnauthorizedException from "../../components/UnauthorizedException";
+import Footer from "../../components/Footer";
 
 function UserManager() {
   const [users, setUsers] = useState([]);
   const [chosenIds, setChosenIds] = useState([]);
+  const [error, setError] = useState(null);
   const [isReload, setIsReload] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
@@ -98,12 +101,13 @@ function UserManager() {
           setUsers(data);
         })
         .catch((e) => {
-          //TODO: catch error
-          console.log(e);
+          setError(e.response.status);
         });
     };
     fetchData();
   }, [isReload]);
+  console.log("reload");
+  console.log(error);
 
   const handleEdit = async (value) => {
     // onEdit(value);
@@ -134,9 +138,7 @@ function UserManager() {
         toast.success(STRINGS.DELETE_SUCCESSFULLY);
       })
       .catch((e) => {
-        console.log(e);
         toast.error(STRINGS.DELETE_FAILED);
-        //TODO: catch e
       });
   };
 
@@ -286,6 +288,7 @@ function UserManager() {
           }
         />
       )}
+      {error === 401 && <UnauthorizedException hideToastContainer />}
     </div>
   );
 }

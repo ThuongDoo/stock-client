@@ -33,4 +33,9 @@ export const STRINGS = {
   CANCEL: "CANCEL",
   YES: "Yes",
   NO: "No",
+
+  ERROR_UNAUTHORIZED:
+    "Xin lỗi, bạn không có quyền truy cập vào tài nguyên này.",
+
+  NAVIGATE_LOGIN: "Quay lại trang đăng nhập",
 };

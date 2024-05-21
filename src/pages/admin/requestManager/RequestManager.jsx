@@ -6,10 +6,12 @@ import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomModal from "../../../components/CustomModal";
 import CreateUserForm from "./CreateUserForm";
+import UnauthorizedException from "../../../components/UnauthorizedException";
 
 function RequestManager() {
   const [requests, setRequests] = useState([]);
   const [chosenIds, setChosenIds] = useState([]);
+  const [error, setError] = useState(null);
   const [isReload, setIsReload] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const notify = ({ text, onAgree }) => {
@@ -47,8 +49,7 @@ function RequestManager() {
           setRequests(res.data);
         })
         .catch((e) => {
-          console.log(e);
-          //TODO: catch error
+          setError(e.response.status);
         });
     };
     fetchData();
@@ -187,6 +188,7 @@ function RequestManager() {
           }
         />
       )}
+      {error === 401 && <UnauthorizedException hideToastContainer />}
     </div>
   );
 }

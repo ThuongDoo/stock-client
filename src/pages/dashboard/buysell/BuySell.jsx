@@ -3,40 +3,15 @@ import api, { endpoints } from "../../../utils/api";
 import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
 import { io } from "socket.io-client";
 import BuysellSearch from "./components/BuysellSearch";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../../../slices/userSlice";
 import { format } from "date-fns";
+import UnauthorizedException from "../../../components/UnauthorizedException";
 
 function BuySell() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isReset, setIsReset] = useState(true);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const userLogout = async () => {
-    await api
-      .get(endpoints.LOGOUT)
-      .then((res) => {
-        dispatch(logout());
-        navigate("/login");
-      })
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    const fetchDate = async () => {
-      await api
-        .get("/user/protected")
-        .then((res) => console.log("success"))
-        .catch((err) => {
-          console.log("logout");
-          console.log(err);
-          // userLogout();
-        });
-    };
-    fetchDate();
-  }, [data, isReset]);
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
 
@@ -67,7 +42,9 @@ function BuySell() {
           // updateData(res.data.data, res.data.realtimeData);
           setData(res.data.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(err.response.status);
+        });
     };
     if (isReset) {
       fetchData();
@@ -99,7 +76,9 @@ function BuySell() {
           console.log(res.data);
           setData(res.data.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(err.response.status);
+        });
     };
     fetchData();
   };
@@ -182,6 +161,7 @@ function BuySell() {
           <div>Không tìm thấy dữ liệu</div>
         )}
       </div>
+      {error === 401 && <UnauthorizedException />}
     </div>
   );
 }

@@ -24,6 +24,7 @@ export const endpoints = {
   USER_UPDATE: "/user/updateUser",
   USER_DELETE: "/user/deleteUser",
   USER_REQUEST: "/user/userRequest",
+  USER_SHOW_ME: "/user/showMe",
 };
 
 export default instance;

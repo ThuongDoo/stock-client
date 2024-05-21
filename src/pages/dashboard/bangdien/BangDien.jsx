@@ -7,6 +7,7 @@ import { CATEGORIES } from "../../../constants/categories";
 import DropdownList from "../../../components/DropdownList";
 import { io } from "socket.io-client";
 import BangDienHeader from "./components/BangDienHeader";
+import UnauthorizedException from "../../../components/UnauthorizedException";
 
 function sortByTickerLengthAscending(data) {
   return data.sort((a, b) => a.length - b.length);
@@ -17,6 +18,7 @@ function BangDien() {
   const [oldData, setOldData] = useState([]);
   const [sanData, setSanData] = useState([]);
   const [tickerName, setTickerName] = useState([]);
+  const [error, setError] = useState(null);
   const [selectedStocks, setSelectedStocks] = useState(CATEGORIES[0].stocks);
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
@@ -28,7 +30,9 @@ function BangDien() {
           sortByTickerLengthAscending(sortData);
           setTickerName(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(err.response.status);
+        });
     };
     const fetchSan = async () => {
       await api
@@ -36,7 +40,9 @@ function BangDien() {
         .then((res) => {
           setSanData(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(err.response.status);
+        });
     };
 
     socket.on("connect", () => {
@@ -71,7 +77,9 @@ function BangDien() {
 
           setData(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(err.response.status);
+        });
     };
     fetchData();
   }, [selectedStocks]);
@@ -88,7 +96,9 @@ function BangDien() {
           setOldData(data);
           setData(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(err.response.status);
+        });
     };
     fetchData();
   };
@@ -107,6 +117,7 @@ function BangDien() {
           <StockBD data={data} oldData={oldData} />
         </div>
       </div>
+      {/* {error === 401 && <UnauthorizedException />} */}
     </div>
   );
 }

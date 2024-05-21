@@ -5,7 +5,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import DropdownButton from "./DropdownButton";
 import { getUser, login, logout } from "../slices/userSlice";
-import api from "../utils/api";
+import api, { endpoints } from "../utils/api";
 import ListIcon from "@mui/icons-material/List";
 import logo from "../images/logo.png";
 
@@ -29,13 +29,13 @@ function Header({ style = 1 }) {
   useEffect(() => {
     const fetchData = async () => {
       await api
-        .get("/user/showMe")
+        .get(endpoints.USER_SHOW_ME)
         .then((res) => {
           console.log(res.data);
           dispatch(
             login({
               username: res.data.name,
-              role: res.data.role,
+              roles: res.data.roles,
               expirationDate: res.data.expirationDate,
               email: res.data.email,
               phone: res.data.phone,
@@ -59,7 +59,7 @@ function Header({ style = 1 }) {
     if (value === "logout") {
       dispatch(logout());
       await api
-        .get("/user/logout")
+        .get(endpoints.LOGOUT)
         .then((res) => console.log(res.data))
         .catch((err) => console.log(err));
       navigate("/");

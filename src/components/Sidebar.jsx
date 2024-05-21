@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTheme, toggleTheme } from "../slices/themeSlice";
 import DropdownButton from "./DropdownButton";
 import { logout } from "../slices/userSlice";
-import api from "../utils/api";
+import api, { endpoints } from "../utils/api";
 import logo from "../images/logo.png";
 
 function Sidebar({ sideList, iconVisible = true, menuVisible = true }) {
@@ -32,7 +32,7 @@ function Sidebar({ sideList, iconVisible = true, menuVisible = true }) {
     if (value === "logout") {
       dispatch(logout());
       await api
-        .get("/user/logout")
+        .get(endpoints.LOGOUT)
         .then((res) => console.log(res.data))
         .catch((err) => console.log(err));
       navigate("/");

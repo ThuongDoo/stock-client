@@ -6,39 +6,14 @@ import api from "../../../utils/api";
 import { io } from "socket.io-client";
 import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
 import CustomTable from "../../../components/CustomTable";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../../../slices/userSlice";
+import UnauthorizedException from "../../../components/UnauthorizedException";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
+  const [error, setError] = useState(null);
   // const [checkedFilter, setCheckedFilter] = useState([]);
   const [checkedFilter, setCheckedFilter] = useState([]);
   const [result, setResult] = useState([]);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userLogout = async () => {
-    await api
-      .get("/user/logout")
-      .then((res) => {
-        dispatch(logout());
-        navigate("/login");
-      })
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    const fetchDate = async () => {
-      await api
-        .get("/user/protected")
-        .then((res) => console.log("success"))
-        .catch((err) => {
-          console.log("logout");
-          console.log(err);
-          userLogout();
-        });
-    };
-    fetchDate();
-  }, [buttonClicked, result]);
 
   const filterValue = {
     PTCB: [
@@ -420,7 +395,9 @@ function LocCoPhieu() {
         .then((res) => {
           updateResult(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setError(err.response.status);
+        });
     };
     fetchData();
 
@@ -764,6 +741,7 @@ function LocCoPhieu() {
       <div className=" h-1/2 ">
         <CustomTable rows={result} columns={columns} />
       </div>
+      {error === 401 && <UnauthorizedException />}
     </div>
   );
 }

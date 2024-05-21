@@ -12,7 +12,7 @@ import { getUser } from "../slices/userSlice";
 export default function MyDropdownButton({ onMenuClick }) {
   // Replace this with your app logic for determining dark mode
 
-  const { isLoggedIn, username, role } = useSelector(getUser);
+  const { isLoggedIn, username, roles } = useSelector(getUser);
 
   const handleMenuClick = (value) => {
     onMenuClick(value);
@@ -22,7 +22,7 @@ export default function MyDropdownButton({ onMenuClick }) {
       <MenuButton>{username}</MenuButton>
       <Menu>
         <MenuItem onClick={() => handleMenuClick("settings")}>Cài đặt</MenuItem>
-        <div className={`${role === "admin" ? "block" : "hidden"}`}>
+        <div className={`${roles === "admin" ? "block" : "hidden"}`}>
           <MenuItem onClick={() => handleMenuClick("admin")}>Admin</MenuItem>
         </div>
         <MenuItem onClick={() => handleMenuClick("logout")}>Đăng xuất</MenuItem>
