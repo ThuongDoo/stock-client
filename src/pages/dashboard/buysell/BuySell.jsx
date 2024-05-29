@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 import BuysellSearch from "./components/BuysellSearch";
 import { format } from "date-fns";
 import UnauthorizedException from "../../../components/UnauthorizedException";
+import BuySellSkeleton from "../../../skeletons/BuySellSkeleton";
 
 function BuySell() {
   const [data, setData] = useState([]);
@@ -38,6 +39,7 @@ function BuySell() {
         .get(endpoints.BUYSELL)
         .then((res) => {
           console.log(res.data.data);
+          setIsLoading(false);
           // console.log(res.data.realtimeData);
           // updateData(res.data.data, res.data.realtimeData);
           setData(res.data.data);
@@ -53,6 +55,7 @@ function BuySell() {
 
   const handleSearch = (value) => {
     setIsReset(false);
+    setIsLoading(true);
     console.log("value", value);
     let url = endpoints.BUYSELL + "?";
 
@@ -74,6 +77,7 @@ function BuySell() {
         .get(url)
         .then((res) => {
           console.log(res.data);
+          setIsLoading(false);
           setData(res.data.data);
         })
         .catch((err) => {
@@ -92,75 +96,79 @@ function BuySell() {
           onReset={() => setIsReset(true)}
         />
       </div>
-      <div className=" max-h-[40rem]  overflow-y-auto block ">
-        {data.length > 0 ? (
-          <table className=" dark:text-white table-auto overflow-scroll w-full ">
-            <thead>
-              <tr className="">
-                <th className=" px-4 py-2">STT</th>
-                <th className=" px-4 py-2">Mã</th>
-                <th className=" px-4 py-2">Thời gian KN</th>
-                <th className=" px-4 py-2">Giá mua</th>
-                <th className=" px-4 py-2">Lãi/lỗ</th>
-                <th className=" px-4 py-2">Thời gian nắm giữ</th>
-                <th className=" px-4 py-2">Vị thế</th>
-                <th className=" px-4 py-2" colSpan={3}>
-                  Ghi chú
-                </th>
-              </tr>
-            </thead>
-            <tbody className="  ">
-              {data?.map((stock, index) => (
-                <tr
-                  key={index}
-                  className={` ${
-                    index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
-                  }  border border-slate-700 `}
-                >
-                  <td>{index + 1}</td>
-                  <td>{stock?.ticker}</td>
-                  <td>{format(stock?.knTime, "dd-MM-yyyy")}</td>
-                  <td>{stock?.buyPrice.toFixed(2)}</td>
-                  <td
-                    className={` ${
-                      stock.profit > 0
-                        ? "text-green-500"
-                        : stock.profit < 0
-                        ? "text-red-500"
-                        : "text-yellow-500"
-                    }`}
-                  >
-                    {stock?.profit + "%"}
-                  </td>
-                  <td>T + {stock?.holdingDuration}</td>
-                  <td>
-                    {stock?.status === 0
-                      ? "Bán"
-                      : stock?.status === 1
-                      ? "Mua"
-                      : stock?.status === 2
-                      ? "Nắm giữ"
-                      : "Mua mới"}
-                  </td>
-                  <td>
-                    {stock?.sellTime !== null
-                      ? format(stock?.sellTime, "dd-MM-yyyy")
-                      : ""}
-                  </td>
-                  <td>
-                    {stock?.sellPrice !== null
-                      ? stock?.sellPrice.toFixed(2)
-                      : ""}
-                  </td>
-                  <td>{stock?.risk ? stock?.risk : ""}</td>
+      {isLoading === true ? (
+        <BuySellSkeleton />
+      ) : (
+        <div className=" max-h-[40rem]  overflow-y-auto block ">
+          {data.length > 0 ? (
+            <table className=" dark:text-white table-auto overflow-scroll w-full ">
+              <thead>
+                <tr className="">
+                  <th className=" px-4 py-2">STT</th>
+                  <th className=" px-4 py-2">Mã</th>
+                  <th className=" px-4 py-2">Thời gian KN</th>
+                  <th className=" px-4 py-2">Giá mua</th>
+                  <th className=" px-4 py-2">Lãi/lỗ</th>
+                  <th className=" px-4 py-2">Thời gian nắm giữ</th>
+                  <th className=" px-4 py-2">Vị thế</th>
+                  <th className=" px-4 py-2" colSpan={3}>
+                    Ghi chú
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <div>Không tìm thấy dữ liệu</div>
-        )}
-      </div>
+              </thead>
+              <tbody className="  ">
+                {data?.map((stock, index) => (
+                  <tr
+                    key={index}
+                    className={` ${
+                      index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
+                    }  border border-slate-700 `}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{stock?.ticker}</td>
+                    <td>{format(stock?.knTime, "dd-MM-yyyy")}</td>
+                    <td>{stock?.buyPrice.toFixed(2)}</td>
+                    <td
+                      className={` ${
+                        stock.profit > 0
+                          ? "text-green-500"
+                          : stock.profit < 0
+                          ? "text-red-500"
+                          : "text-yellow-500"
+                      }`}
+                    >
+                      {stock?.profit + "%"}
+                    </td>
+                    <td>T + {stock?.holdingDuration}</td>
+                    <td>
+                      {stock?.status === 0
+                        ? "Bán"
+                        : stock?.status === 1
+                        ? "Mua"
+                        : stock?.status === 2
+                        ? "Nắm giữ"
+                        : "Mua mới"}
+                    </td>
+                    <td>
+                      {stock?.sellTime !== null
+                        ? format(stock?.sellTime, "dd-MM-yyyy")
+                        : ""}
+                    </td>
+                    <td>
+                      {stock?.sellPrice !== null
+                        ? stock?.sellPrice.toFixed(2)
+                        : ""}
+                    </td>
+                    <td>{stock?.risk ? stock?.risk : ""}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div>Không tìm thấy dữ liệu</div>
+          )}
+        </div>
+      )}
       {error === 401 && <UnauthorizedException />}
     </div>
   );

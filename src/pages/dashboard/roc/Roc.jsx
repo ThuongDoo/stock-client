@@ -3,6 +3,7 @@ import api, { endpoints } from "../../../utils/api";
 import { RocChart } from "./RocChart";
 import { format } from "date-fns";
 import { STRINGS } from "../../../constants/strings";
+import Loading from "../../../skeletons/Loading";
 
 const lineColors = [
   "#2962FF",
@@ -77,6 +78,7 @@ const formatData = async (stocks) => {
 
 function Roc() {
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       await api
@@ -85,6 +87,7 @@ function Roc() {
           const formattedTimeData = await formatData(res.data);
           const categorizedData = mergeObjectsByCategory(formattedTimeData);
           setData(categorizedData);
+          setIsLoading(false);
         })
         .catch((e) => console.log(e));
     };
@@ -94,7 +97,9 @@ function Roc() {
   console.log(data);
   return (
     <div className=" p-2  h-full">
-      {data !== null && (
+      {isLoading === true ? (
+        <Loading />
+      ) : (
         <div className=" flex h-full">
           <div className=" flex-1 h-full">
             <RocChart data={data} />

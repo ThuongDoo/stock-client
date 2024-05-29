@@ -7,6 +7,8 @@ import { io } from "socket.io-client";
 import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
 import CustomTable from "../../../components/CustomTable";
 import UnauthorizedException from "../../../components/UnauthorizedException";
+import LocCoPhieuSkeleton from "../../../skeletons/LocCoPhieuSkeleton";
+import Loading from "../../../skeletons/Loading";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -14,6 +16,7 @@ function LocCoPhieu() {
   // const [checkedFilter, setCheckedFilter] = useState([]);
   const [checkedFilter, setCheckedFilter] = useState([]);
   const [result, setResult] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const filterValue = {
     PTCB: [
@@ -333,6 +336,7 @@ function LocCoPhieu() {
       };
     });
     setResult(tempData);
+    setIsLoading(false);
   };
 
   const flattenedFilters = Object.values(filterValue).flatMap((group) =>
@@ -390,6 +394,7 @@ function LocCoPhieu() {
 
     const fetchData = async () => {
       console.log("fetch");
+      setIsLoading(true);
       await api
         .post(`/stock/filter`, filters)
         .then((res) => {
@@ -739,7 +744,11 @@ function LocCoPhieu() {
         <DieuKieuLocForm />
       </div>
       <div className=" h-1/2 ">
-        <CustomTable rows={result} columns={columns} />
+        {isLoading === true ? (
+          <Loading />
+        ) : (
+          <CustomTable rows={result} columns={columns} />
+        )}
       </div>
       {error === 401 && <UnauthorizedException />}
     </div>

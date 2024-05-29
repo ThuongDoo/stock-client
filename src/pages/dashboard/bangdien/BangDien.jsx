@@ -8,6 +8,8 @@ import DropdownList from "../../../components/DropdownList";
 import { io } from "socket.io-client";
 import BangDienHeader from "./components/BangDienHeader";
 import UnauthorizedException from "../../../components/UnauthorizedException";
+import BangDienHeaderSkeleton from "../../../skeletons/BangDienHeaderSkeleton";
+import StockBDSkeleton from "../../../skeletons/StockBDSkeleton";
 
 function sortByTickerLengthAscending(data) {
   return data.sort((a, b) => a.length - b.length);
@@ -19,6 +21,8 @@ function BangDien() {
   const [sanData, setSanData] = useState([]);
   const [tickerName, setTickerName] = useState([]);
   const [error, setError] = useState(null);
+  const [isSanLoading, setIsSanLoading] = useState(true);
+  const [isDataLoading, setIsDataLoading] = useState(true);
   const [selectedStocks, setSelectedStocks] = useState(CATEGORIES[0].stocks);
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
@@ -38,6 +42,7 @@ function BangDien() {
       await api
         .get(endpoints.STOCK_GET_SAN)
         .then((res) => {
+          setIsSanLoading(false);
           setSanData(res.data);
         })
         .catch((err) => {
@@ -73,8 +78,7 @@ function BangDien() {
       await api
         .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${selectedStocks}`)
         .then((res) => {
-          setOldData(data);
-
+          setIsDataLoading(false);
           setData(res.data);
         })
         .catch((err) => {
@@ -89,11 +93,12 @@ function BangDien() {
 
   const handleSearch = (value) => {
     setSelectedStocks(value);
+    setIsDataLoading(true);
     const fetchData = async () => {
       await api
         .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${value}`)
         .then((res) => {
-          setOldData(data);
+          setIsDataLoading(false);
           setData(res.data);
         })
         .catch((err) => {
@@ -102,22 +107,29 @@ function BangDien() {
     };
     fetchData();
   };
-  console.log("reload");
+  console.log(data);
   return (
     <div className=" flex w-full h-full ">
       <div className=" flex flex-col flex-1 items-start">
         <div className=" w-full">
-          <BangDienHeader data={sanData} />
+          {isSanLoading === true ? (
+            <BangDienHeaderSkeleton />
+          ) : (
+            <BangDienHeader data={sanData} />
+          )}
         </div>
         <div className=" p-4 flex flex-col gap-y-4 md:flex-row md:gap-y-0 gap-x-4">
           <SearchBar onSelect={handleSearch} suggestionData={tickerName} />
           <DropdownList list={CATEGORIES} onClick={handleDataFromSideBar} />
         </div>
         <div className=" w-full flex-1">
-          <StockBD data={data} oldData={oldData} />
+          {isDataLoading === true ? (
+            <StockBDSkeleton />
+          ) : (
+            <StockBD data={data} oldData={oldData} />
+          )}
         </div>
       </div>
-      {/* {error === 401 && <UnauthorizedException />} */}
     </div>
   );
 }
