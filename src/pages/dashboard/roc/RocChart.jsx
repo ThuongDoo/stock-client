@@ -70,7 +70,8 @@ export const RocChart = (props) => {
       const line = chart.addLineSeries({ color });
       line.setData(item.data);
       line.applyOptions({
-        lineWidth: 1,
+        lineWidth: 2,
+        priceLineVisible: false,
       });
       line.priceScale().applyOptions({
         scaleMargins: {

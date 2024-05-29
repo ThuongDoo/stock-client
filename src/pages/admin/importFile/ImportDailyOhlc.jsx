@@ -137,8 +137,7 @@ function ImportDailyOhlc() {
         header: true,
       });
       const newData = await formatData(csv?.data);
-      console.log(newData);
-      // updateData(newData);
+      updateData(newData);
     };
     reader.readAsText(file);
   };

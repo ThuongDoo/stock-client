@@ -16,7 +16,7 @@ export const endpoints = {
   STOCK_GET_SAN: "/stock/san",
   STOCK_GET_STOCK_BY_NAME: "/stock/getStockByName",
   STOCK_FILTER: "/stock/filter",
-  ROC: "/stock/roc",
+  ROC: "/ohlc/roc",
 
   BUYSELL: "/buysell",
   BUYSELL_IMPORT: "/buysell/import",

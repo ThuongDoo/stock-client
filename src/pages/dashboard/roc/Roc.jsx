@@ -18,6 +18,8 @@ const lineColors = [
   "#33A1FF",
 ];
 
+const buttonArray = ["6m", "1y", "2y", "5y"];
+
 const getRandomColorHex = () => {
   // Sinh ngẫu nhiên các giá trị cho các thành phần màu RGB
   const r = Math.floor(Math.random() * 256); // Giá trị màu đỏ
@@ -51,13 +53,24 @@ const mergeObjectsByCategory = (arrayOfObjects) => {
 
   // Chuyển đổi mergedObjects thành mảng
   const resultArray = Object.entries(mergedObjects).map(
-    ([category, data], index) => ({
-      category,
-      displayName: data[0].displayName,
-      data,
-      // color: lineColors[index],
-      color: getRandomColorHex(),
-    })
+    ([category, data], index) => {
+      const calculateRoc = (oldData, newData) => {
+        return ((newData - oldData) / oldData) * 100;
+      };
+      const newData = data.map((row, index) => {
+        return {
+          time: row.time,
+          value: calculateRoc(row.value, data[0].value),
+        };
+      });
+      return {
+        category,
+        displayName: data[0].displayName,
+        data: newData,
+        // color: lineColors[index],
+        color: getRandomColorHex(),
+      };
+    }
   );
 
   return resultArray;
@@ -79,20 +92,21 @@ const formatData = async (stocks) => {
 function Roc() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [timeRange, setTimeRange] = useState("6m");
   useEffect(() => {
     const fetchData = async () => {
       await api
-        .get(endpoints.ROC)
+        .get(endpoints.ROC + `/${timeRange}`)
         .then(async (res) => {
           const formattedTimeData = await formatData(res.data);
           const categorizedData = mergeObjectsByCategory(formattedTimeData);
-          setData(categorizedData);
           setIsLoading(false);
+          setData(categorizedData);
         })
         .catch((e) => console.log(e));
     };
     fetchData();
-  }, []);
+  }, [timeRange]);
 
   console.log(data);
   return (
@@ -100,7 +114,20 @@ function Roc() {
       {isLoading === true ? (
         <Loading />
       ) : (
-        <div className=" flex h-full">
+        <div className=" flex h-full relative">
+          <div className=" absolute top-5 left-10 z-50 flex gap-x-3">
+            {buttonArray.map((item, index) => (
+              <button
+                key={index}
+                className={`${
+                  timeRange === item ? "bg-black" : "bg-blue-500"
+                } hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded-md`}
+                onClick={() => setTimeRange(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
           <div className=" flex-1 h-full">
             <RocChart data={data} />
           </div>
