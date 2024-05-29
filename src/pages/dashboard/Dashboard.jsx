@@ -10,6 +10,7 @@ function Dashboard() {
     { name: "bang-dien", displayName: "Bảng điện", icon: DashboardIcon },
     { name: "buy-sell", displayName: "Tín hiệu", icon: FilterAltIcon },
     { name: "loc-co-phieu", displayName: "Lọc cổ phiếu", icon: ContrastIcon },
+    { name: "roc", displayName: "ROC", icon: ContrastIcon },
   ];
   return (
     <div className=" dark:bg-black bg-white ">

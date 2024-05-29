@@ -99,7 +99,7 @@ export const OhlcChart = (props) => {
         timeVisible: true,
       },
     });
-    chart.timeScale().fitContent();
+    // chart.timeScale().fitContent();
 
     const newSeries = chart.addCandlestickSeries({
       upColor: "#26a69a",

@@ -22,7 +22,10 @@ import UserManager from "./pages/admin/UserManager";
 import RequestManager from "./pages/admin/requestManager/RequestManager";
 import ImportFile from "./pages/admin/importFile/ImportFile";
 import ImportBuysell from "./pages/admin/importFile/ImportBuysell";
-import ImportOhlc from "./pages/admin/importFile/ImportOhlc";
+import ImportDailyOhlc from "./pages/admin/importFile/ImportDailyOhlc";
+import ImportIntradayOhlc from "./pages/admin/importFile/ImportIntraDayOhlc";
+import ImportROC from "./pages/admin/importFile/ImportROC";
+import Roc from "./pages/dashboard/roc/Roc";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -38,13 +41,16 @@ function App() {
           <Route element={<BangDien />} path="bang-dien" />
           <Route element={<BuySell />} path="buy-sell" />
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
+          <Route element={<Roc />} path="roc" />
         </Route>
         <Route element={<Admin />} path="/admin">
           <Route element={<UserManager />} path="user-manager" />
           <Route element={<RequestManager />} path="request-manager" />
           <Route element={<ImportFile />} path="import">
             <Route element={<ImportBuysell />} path="buysell" />
-            <Route element={<ImportOhlc />} path="ohlc" />
+            <Route element={<ImportDailyOhlc />} path="daily-ohlc" />
+            <Route element={<ImportIntradayOhlc />} path="intraday-ohlc" />
+            <Route element={<ImportROC />} path="roc" />
           </Route>
         </Route>
         <Route element={<Login />} path="/login" />

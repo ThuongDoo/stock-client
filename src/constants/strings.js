@@ -40,5 +40,11 @@ export const STRINGS = {
   NAVIGATE_LOGIN: "Quay lại trang đăng nhập",
 
   IMPORT_CSV: "Chọn file .csv",
+  IMPORT_DAILY_OHLC: "Import Daily OHLC",
+  IMPORT_INTRADAY_OHLC: "Import Intraday OHLC",
+  IMPORT_BUYSELL: "Import BuySell",
+  IMPORT_ROC: "Import ROC",
   UPLOAD: "Upload",
+
+  ROC_CATEGORIES: "/THUY_SAN,THEP,DAU_KHI,BDS_KCN",
 };

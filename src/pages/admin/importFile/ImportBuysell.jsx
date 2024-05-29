@@ -206,7 +206,9 @@ const ImportBuysell = () => {
   };
   return (
     <div className=" p-6 w-full ">
-      <h1 className="text-xl font-bold mb-4 text-left">IMPORT BUYSELL</h1>
+      <h1 className="text-xl font-bold mb-4 text-left">
+        {STRINGS.IMPORT_BUYSELL}
+      </h1>
       <div className="mb-4 flex gap-3 w-full">
         <input
           onChange={handleFileChange}
