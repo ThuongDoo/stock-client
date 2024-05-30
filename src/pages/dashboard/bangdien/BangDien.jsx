@@ -42,8 +42,8 @@ function BangDien() {
       await api
         .get(endpoints.STOCK_GET_SAN)
         .then((res) => {
-          setIsSanLoading(false);
           setSanData(res.data);
+          setIsSanLoading(false);
         })
         .catch((err) => {
           setError(err.response.status);
@@ -78,8 +78,8 @@ function BangDien() {
       await api
         .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${selectedStocks}`)
         .then((res) => {
-          setIsDataLoading(false);
           setData(res.data);
+          setIsDataLoading(false);
         })
         .catch((err) => {
           setError(err.response.status);
@@ -98,8 +98,8 @@ function BangDien() {
       await api
         .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${value}`)
         .then((res) => {
-          setIsDataLoading(false);
           setData(res.data);
+          setIsDataLoading(false);
         })
         .catch((err) => {
           setError(err.response.status);

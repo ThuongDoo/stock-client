@@ -1,5 +1,6 @@
 import "./App.css";
 import {
+  Navigate,
   Route,
   RouterProvider,
   createBrowserRouter,
@@ -24,7 +25,6 @@ import ImportFile from "./pages/admin/importFile/ImportFile";
 import ImportBuysell from "./pages/admin/importFile/ImportBuysell";
 import ImportDailyOhlc from "./pages/admin/importFile/ImportDailyOhlc";
 import ImportIntradayOhlc from "./pages/admin/importFile/ImportIntraDayOhlc";
-import ImportROC from "./pages/admin/importFile/ImportROC";
 import Roc from "./pages/dashboard/roc/Roc";
 
 function App() {
@@ -50,10 +50,10 @@ function App() {
             <Route element={<ImportBuysell />} path="buysell" />
             <Route element={<ImportDailyOhlc />} path="daily-ohlc" />
             <Route element={<ImportIntradayOhlc />} path="intraday-ohlc" />
-            <Route element={<ImportROC />} path="roc" />
           </Route>
         </Route>
         <Route element={<Login />} path="/login" />
+        <Route path="*" element={<Navigate to="/" replace />}></Route>
       </Route>
     )
   );

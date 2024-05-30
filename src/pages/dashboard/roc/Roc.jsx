@@ -4,18 +4,19 @@ import { RocChart } from "./RocChart";
 import { format } from "date-fns";
 import { STRINGS } from "../../../constants/strings";
 import Loading from "../../../skeletons/Loading";
+import sizeof from "object-sizeof";
 
 const lineColors = [
-  "#2962FF",
-  "#26a69a",
-  "#ef5350",
-  "#FF33A1",
-  "#33FFF6",
-  "#FFAA33",
-  "#A133FF",
-  "#33FFAA",
-  "#FFA833",
-  "#33A1FF",
+  "#F16889",
+  "#D2294D",
+  "#D3B6F4",
+  "#1DDAE4",
+  "#0906DE",
+  "#B0FDF5",
+  "#6542DC",
+  "#B40ADB",
+  "#49C75F",
+  "#FEAFA0",
 ];
 
 const buttonArray = ["6m", "1y", "2y", "5y"];
@@ -94,12 +95,15 @@ function Roc() {
   const [isLoading, setIsLoading] = useState(true);
   const [timeRange, setTimeRange] = useState("6m");
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       await api
         .get(endpoints.ROC + `/${timeRange}`)
         .then(async (res) => {
+          console.log(res.data);
           const formattedTimeData = await formatData(res.data);
           const categorizedData = mergeObjectsByCategory(formattedTimeData);
+          console.log(categorizedData);
           setIsLoading(false);
           setData(categorizedData);
         })
@@ -132,8 +136,8 @@ function Roc() {
             <RocChart data={data} />
           </div>
           <div className=" flex flex-col justify-between">
-            {data.map((item) => (
-              <div className="flex items-center">
+            {data.map((item, index) => (
+              <div className="flex items-center" key={index}>
                 <div
                   style={{ backgroundColor: item.color }}
                   className=" w-2 h-2 rounded-full"

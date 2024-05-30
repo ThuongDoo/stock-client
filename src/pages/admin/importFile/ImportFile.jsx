@@ -15,11 +15,6 @@ function ImportFile() {
       displayName: "INTRADAY OHLC",
       icon: FilterAltIcon,
     },
-    {
-      name: "roc",
-      displayName: "ROC",
-      icon: FilterAltIcon,
-    },
   ];
   return (
     <div className=" flex h-full">
