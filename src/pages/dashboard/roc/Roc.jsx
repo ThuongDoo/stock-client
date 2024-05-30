@@ -38,56 +38,46 @@ const getRandomColorHex = () => {
   return hexColor;
 };
 
-const mergeObjectsByCategory = (arrayOfObjects) => {
-  const mergedObjects = {};
-
-  // Lặp qua mảng các object
-  arrayOfObjects.forEach((object) => {
-    // Nếu đã có category tương ứng trong mergedObjects, thêm object vào mảng đó
-    if (mergedObjects.hasOwnProperty(object.category)) {
-      mergedObjects[object.category].push(object);
-    } else {
-      // Nếu chưa có, tạo một mảng mới chứa object và lưu vào mergedObjects
-      mergedObjects[object.category] = [object];
-    }
-  });
-
-  // Chuyển đổi mergedObjects thành mảng
-  const resultArray = Object.entries(mergedObjects).map(
-    ([category, data], index) => {
-      const calculateRoc = (oldData, newData) => {
-        return ((newData - oldData) / oldData) * 100;
-      };
-      const newData = data.map((row, index) => {
-        return {
-          time: row.time,
-          value: calculateRoc(row.value, data[0].value),
-        };
-      });
-      return {
-        category,
-        displayName: data[0].displayName,
-        data: newData,
-        // color: lineColors[index],
-        color: getRandomColorHex(),
-      };
-    }
-  );
-
-  return resultArray;
-};
-
 const formatData = async (stocks) => {
-  const tempData = await stocks.map((item) => {
-    const inputDate = item.time;
-    const formattedDate = format(inputDate, "yyyy-MM-dd");
+  const groupedData = {};
 
-    return {
-      ...item,
+  // Lặp qua từng đối tượng trong mảng data
+  stocks.forEach((obj) => {
+    // Kiểm tra xem đã có đối tượng cho category này chưa
+    if (!groupedData[obj.category]) {
+      // Nếu chưa có, tạo một mảng mới để lưu trữ các đối tượng
+      groupedData[obj.category] = {
+        category: obj.category,
+        displayName: obj.displayName,
+        color: getRandomColorHex(),
+        data: [],
+      };
+    }
+    // Giữ lại chỉ các trường "time" và "value"
+    const formattedDate = format(new Date(obj.time), "yyyy-MM-dd");
+    const { value } = obj;
+    const calculateRoc = (oldData, newData) => {
+      return ((newData - oldData) / oldData) * 100;
+    };
+
+    let newValue = value;
+    if (groupedData[obj.category].data.length > 0) {
+      newValue = calculateRoc(groupedData[obj.category].data[0].value, value);
+    }
+    // Thêm đối tượng mới vào mảng của category tương ứng
+    groupedData[obj.category].data.push({
       time: formattedDate,
+      value: newValue,
+    });
+  });
+  const resultArray = Object.entries(groupedData).map((item, index) => {
+    // console.log(item);
+    item[1].data[0].value = 0;
+    return {
+      ...item[1],
     };
   });
-  return tempData;
+  return resultArray;
 };
 
 function Roc() {
@@ -100,19 +90,15 @@ function Roc() {
       await api
         .get(endpoints.ROC + `/${timeRange}`)
         .then(async (res) => {
-          console.log(res.data);
-          const formattedTimeData = await formatData(res.data);
-          const categorizedData = mergeObjectsByCategory(formattedTimeData);
-          console.log(categorizedData);
+          const formattedData = await formatData(res.data);
           setIsLoading(false);
-          setData(categorizedData);
+          setData(formattedData);
         })
         .catch((e) => console.log(e));
     };
     fetchData();
   }, [timeRange]);
 
-  console.log(data);
   return (
     <div className=" p-2  h-full">
       {isLoading === true ? (

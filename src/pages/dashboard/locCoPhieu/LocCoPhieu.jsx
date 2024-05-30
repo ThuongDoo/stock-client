@@ -398,6 +398,7 @@ function LocCoPhieu() {
       await api
         .post(`/stock/filter`, filters)
         .then((res) => {
+          console.log("load");
           updateResult(res.data);
         })
         .catch((err) => {

@@ -27,12 +27,14 @@ function BangDien() {
   useEffect(() => {
     const socket = io(SOCKET_SERVER_URL);
     const fetchTickerName = async () => {
+      setIsDataLoading(true);
       await api
         .get(endpoints.STOCK_GET_ALL)
         .then((res) => {
           const sortData = res.data;
           sortByTickerLengthAscending(sortData);
           setTickerName(res.data);
+          setIsDataLoading(false);
         })
         .catch((err) => {
           setError(err.response.status);
