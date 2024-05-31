@@ -26,6 +26,8 @@ import ImportBuysell from "./pages/admin/importFile/ImportBuysell";
 import ImportDailyOhlc from "./pages/admin/importFile/ImportDailyOhlc";
 import ImportIntradayOhlc from "./pages/admin/importFile/ImportIntraDayOhlc";
 import Roc from "./pages/dashboard/roc/Roc";
+import MarkerManager from "./pages/admin/market/MarkerManager";
+import ImportMarket from "./pages/admin/market/ImportMarket";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -50,6 +52,9 @@ function App() {
             <Route element={<ImportBuysell />} path="buysell" />
             <Route element={<ImportDailyOhlc />} path="daily-ohlc" />
             <Route element={<ImportIntradayOhlc />} path="intraday-ohlc" />
+          </Route>
+          <Route element={<MarkerManager />} path="market">
+            <Route element={<ImportMarket />} path="import" />
           </Route>
         </Route>
         <Route element={<Login />} path="/login" />

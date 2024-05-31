@@ -11,6 +11,7 @@ function Admin() {
     { name: "user-manager", displayName: "Users", icon: DashboardIcon },
     { name: "request-manager", displayName: "Requests", icon: FilterAltIcon },
     { name: "import", displayName: "Import", icon: ContrastIcon },
+    { name: "market", displayName: "Market", icon: ContrastIcon },
   ];
   return (
     <div className=" bg-black flex flex-col min-h-screen w-screen gap-y-2">

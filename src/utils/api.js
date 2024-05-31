@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://chungkhoanxyz.com/backend/api/v1",
-  // baseURL: "http://localhost:3000/api/v1",
+  // baseURL: "https://chungkhoanxyz.com/backend/api/v1",
+  baseURL: "http://localhost:3000/api/v1",
 
   withCredentials: true,
 });
@@ -31,6 +31,8 @@ export const endpoints = {
   USER_DELETE: "/user/deleteUser",
   USER_REQUEST: "/user/userRequest",
   USER_SHOW_ME: "/user/showMe",
+
+  MARKET_IMPORT: "/market/import",
 };
 
 export default instance;

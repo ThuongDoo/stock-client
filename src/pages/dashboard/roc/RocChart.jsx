@@ -53,6 +53,8 @@ export const RocChart = (props) => {
       timeScale: {
         timeVisible: true,
       },
+      handleScroll: false,
+      handleScale: false,
     });
 
     // chart.timeScale().fitContent();

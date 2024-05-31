@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { STRINGS } from "../../../constants/strings";
 import Loading from "../../../skeletons/Loading";
 import sizeof from "object-sizeof";
+import TimelineSlider from "../../../components/TimelineSlider";
 
 const lineColors = [
   "#F16889",
@@ -99,6 +100,12 @@ function Roc() {
     fetchData();
   }, [timeRange]);
 
+  const handleTimeline = (value1, value2) => {
+    console.log("hhha");
+    console.log(value1);
+    console.log(value2);
+  };
+
   return (
     <div className=" p-2  h-full">
       {isLoading === true ? (
@@ -120,6 +127,7 @@ function Roc() {
           </div>
           <div className=" flex-1 h-full">
             <RocChart data={data} />
+            <TimelineSlider onChange={handleTimeline} />
           </div>
           <div className=" flex flex-col justify-between">
             {data.map((item, index) => (
