@@ -53,7 +53,7 @@ function StockBD({ data, oldData }) {
     }
   };
   return (
-    <div className="  w-full h-full ">
+    <div className="  w-full h-full bg-blue-500">
       {data.length > 0 ? (
         <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6  max-h-[24rem] overflow-y-scroll">
           {data?.map((stock, index) => (

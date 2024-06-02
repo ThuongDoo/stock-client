@@ -30,11 +30,17 @@ import MarkerManager from "./pages/admin/market/MarkerManager";
 import ImportMarket from "./pages/admin/market/ImportMarket";
 import TestBangDien from "./pages/dashboard/bangdien/TestBangDien";
 import Academic from "./pages/dashboard/academic/Academic";
+import { useEffect } from "react";
+import { socket } from "./utils/socket";
 
 function App() {
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+  }, []);
+
   const darkMode = useSelector(getTheme);
-  console.log(darkMode);
-  console.log("reloa");
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Root />} errorElement={<ErrorPage />}>
@@ -42,8 +48,8 @@ function App() {
         <Route element={<Settings />} path="/settings" />
         <Route element={<News />} path="/tin-tuc" />
         <Route element={<Dashboard />} path="/dashboard">
-          <Route element={<BangDien />} path="bang-dien" />
-          {/* <Route element={<TestBangDien />} path="bang-dien" /> */}
+          {/* <Route element={<BangDien />} path="bang-dien" /> */}
+          <Route element={<TestBangDien />} path="bang-dien" />
           <Route element={<BuySell />} path="buy-sell" />
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
           <Route element={<Roc />} path="roc" />

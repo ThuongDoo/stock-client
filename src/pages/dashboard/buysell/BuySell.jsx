@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api, { endpoints } from "../../../utils/api";
-import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
-import { io } from "socket.io-client";
 import BuysellSearch from "./components/BuysellSearch";
 import { format } from "date-fns";
 import UnauthorizedException from "../../../components/UnauthorizedException";
 import BuySellSkeleton from "../../../skeletons/BuySellSkeleton";
+import { EVENTS, socket } from "../../../utils/socket";
 
 function BuySell() {
   const [data, setData] = useState([]);
@@ -14,12 +13,7 @@ function BuySell() {
   const [isReset, setIsReset] = useState(true);
 
   useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL);
-
-    socket.on("connect", () => {
-      console.log("Connected to server");
-    });
-    socket.on(SOCKETS.UPDATE_BUYSELL_DATA, (data) => {
+    socket.on(EVENTS.UPDATE_BUYSELL_DATA, (data) => {
       console.log("Received data:", data);
       // Xử lý dữ liệu được nhận tại đây
       if (isReset) {
@@ -28,7 +22,7 @@ function BuySell() {
     });
 
     return () => {
-      socket.disconnect();
+      socket.off(EVENTS.UPDATE_BUYSELL_DATA);
     };
   }, [isReset]);
 

@@ -64,7 +64,6 @@ function Sidebar({
         <div className=" py-3">
           <TabBar
             tabs={sideList}
-            style={1}
             onTabClick={handleSideBar}
             hideDisplayName={hideDisplayName}
           />

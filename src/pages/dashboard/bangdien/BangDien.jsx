@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import api, { endpoints } from "../../../utils/api";
 import StockBD from "./components/StockBD";
 import SearchBar from "../../../components/SearchBar";
-import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
 import { CATEGORIES } from "../../../constants/categories";
 import DropdownList from "../../../components/DropdownList";
-import { io } from "socket.io-client";
 import BangDienHeader from "./components/BangDienHeader";
 import UnauthorizedException from "../../../components/UnauthorizedException";
 import BangDienHeaderSkeleton from "../../../skeletons/BangDienHeaderSkeleton";
 import StockBDSkeleton from "../../../skeletons/StockBDSkeleton";
+import { EVENTS, socket } from "../../../utils/socket";
 
 function sortByTickerLengthAscending(data) {
   return data.sort((a, b) => a.length - b.length);
@@ -25,7 +24,6 @@ function BangDien() {
   const [isDataLoading, setIsDataLoading] = useState(true);
   const [selectedStocks, setSelectedStocks] = useState(CATEGORIES[0].stocks);
   useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL);
     const fetchTickerName = async () => {
       setIsDataLoading(true);
       await api
@@ -52,15 +50,12 @@ function BangDien() {
         });
     };
 
-    socket.on("connect", () => {
-      console.log("Connected to server");
-    });
-    socket.on(SOCKETS.NEW_STOCK_DATA_AVAILABLE, (newData) => {
+    socket.on(EVENTS.NEW_STOCK_DATA_AVAILABLE, (newData) => {
       console.log("sendData", selectedStocks);
-      socket.emit(SOCKETS.STOCK_REQUEST, selectedStocks);
+      socket.emit(EVENTS.STOCK_REQUEST, selectedStocks);
     });
 
-    socket.on(SOCKETS.UPDATE_STOCK_DATA, (newData) => {
+    socket.on(EVENTS.UPDATE_STOCK_DATA, (newData) => {
       setOldData(data);
       console.log(newData.data);
       setData(newData.data);
@@ -71,7 +66,8 @@ function BangDien() {
     fetchSan();
 
     return () => {
-      socket.disconnect();
+      socket.off(EVENTS.NEW_STOCK_DATA_AVAILABLE);
+      socket.off(EVENTS.UPDATE_STOCK_DATA);
     };
   }, [selectedStocks]);
 

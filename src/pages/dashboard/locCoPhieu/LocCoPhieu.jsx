@@ -3,12 +3,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import LocCoPhieuForm from "./components/LocCoPhieuForm";
 import { Field, Form, Formik } from "formik";
 import api from "../../../utils/api";
-import { io } from "socket.io-client";
-import { SOCKETS, SOCKET_SERVER_URL } from "../../../constants/socket";
 import CustomTable from "../../../components/CustomTable";
 import UnauthorizedException from "../../../components/UnauthorizedException";
 import LocCoPhieuSkeleton from "../../../skeletons/LocCoPhieuSkeleton";
 import Loading from "../../../skeletons/Loading";
+import { EVENTS, socket } from "../../../utils/socket";
 
 function LocCoPhieu() {
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -381,14 +380,10 @@ function LocCoPhieu() {
   }, [checkedFilter]);
 
   useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL);
-    socket.on("connect", () => {
-      console.log("Connected to server");
+    socket.on(EVENTS.NEW_STOCK_DATA_AVAILABLE, (newData) => {
+      socket.emit(EVENTS.FILTERD_STOCK_REQUEST, filters);
     });
-    socket.on(SOCKETS.NEW_STOCK_DATA_AVAILABLE, (newData) => {
-      socket.emit(SOCKETS.FILTERD_STOCK_REQUEST, filters);
-    });
-    socket.on(SOCKETS.UPDATE_FILTERED_STOCK_DATA, (newData) => {
+    socket.on(EVENTS.UPDATE_FILTERED_STOCK_DATA, (newData) => {
       updateResult(newData.data);
     });
 
@@ -408,7 +403,8 @@ function LocCoPhieu() {
     fetchData();
 
     return () => {
-      socket.disconnect();
+      socket.off(EVENTS.NEW_STOCK_DATA_AVAILABLE);
+      socket.off(EVENTS.UPDATE_FILTERED_STOCK_DATA);
     };
   }, [filters, checkedFilter]);
 
