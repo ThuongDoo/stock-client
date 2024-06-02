@@ -53,35 +53,39 @@ function StockBD({ data, oldData }) {
     }
   };
   return (
-    <div className=" container mx-auto h-full ">
+    <div className="  w-full h-full ">
       {data.length > 0 ? (
-        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  max-h-[24rem] overflow-y-scroll">
+        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6  max-h-[24rem] overflow-y-scroll">
           {data?.map((stock, index) => (
             <div
               key={index}
-              className={` flex-col m-2 justify-between text-black h-fit  rounded-lg px-2 ${getColorClass(
+              className={`  flex-col m-2 justify-between text-black h-fit  rounded-lg px-2 ${getColorClass(
                 stock?.["Tang/Giam (%)"]
               )}`}
             >
               <div className=" flex justify-between">
-                <p>{stock?.Ticker}</p>
-                <p>{stock?.Giahientai}</p>
-                <p>{formatNumber(stock?.Volume)}</p>
+                <p className=" text-lg">{stock?.Ticker}</p>
+                <p className=" text-lg">{stock?.Giahientai}</p>
                 <p
-                // className={`${
-                //   stock?.["Tang/Giam (%)"] > 0
-                //     ? "text-green-900"
-                //     : "text-red-500"
-                // }`}
+                  // className={`${
+                  //   stock?.["Tang/Giam (%)"] > 0
+                  //     ? "text-green-900"
+                  //     : "text-red-500"
+                  // }`}
+                  className=" text-lg"
                 >
                   {stock?.["Tang/Giam (%)"]}%
                 </p>
               </div>
               <div className=" flex justify-between">
                 {/* <p>{stock?.["Tang/Giam"]}</p> */}
-                <div className=" flex justify-between w-full">
-                  <p>Gia tri GD: </p>
-                  <p>{formatNumber(stock?.GiatriGD)}</p>
+
+                <div className=" flex w-full justify-between">
+                  <p className=" text-sm">KL: {formatNumber(stock?.Volume)}</p>
+
+                  <p className=" text-sm">
+                    GT: {formatNumber(stock?.GiatriGD)}
+                  </p>
                 </div>
               </div>
             </div>

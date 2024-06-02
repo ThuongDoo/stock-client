@@ -126,10 +126,14 @@ function Roc() {
             ))}
           </div>
           <div className=" flex-1 h-full">
-            <RocChart data={data} />
-            <TimelineSlider onChange={handleTimeline} />
+            <div className=" h-5/6">
+              <RocChart data={data} />
+            </div>
+            <div className=" h-1/6">
+              <TimelineSlider onChange={handleTimeline} />
+            </div>
           </div>
-          <div className=" flex flex-col justify-between">
+          <div className=" flex flex-col justify-between h-4/6">
             {data.map((item, index) => (
               <div className="flex items-center" key={index}>
                 <div

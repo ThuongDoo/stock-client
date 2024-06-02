@@ -11,7 +11,12 @@ import { logout } from "../slices/userSlice";
 import api, { endpoints } from "../utils/api";
 import logo from "../images/logo.png";
 
-function Sidebar({ sideList, iconVisible = true, menuVisible = true }) {
+function Sidebar({
+  sideList,
+  iconVisible = true,
+  menuVisible = true,
+  hideDisplayName = false,
+}) {
   const darkMode = useSelector(getTheme);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,10 +54,10 @@ function Sidebar({ sideList, iconVisible = true, menuVisible = true }) {
         {iconVisible && (
           <div
             onClick={() => navigate("/")}
-            className=" cursor-pointer py-10 flex justify-center items-center"
+            className=" cursor-pointer py-10 flex justify-center items-center px-2"
           >
             {/* <h1 className=" text-3xl font-extrabold">XYZ TEAM</h1> */}
-            <img src={logo} alt="" className=" size-10 md:size-20" />
+            <img src={logo} alt="" className=" size-10 md:size-14" />
           </div>
         )}
 
@@ -61,12 +66,12 @@ function Sidebar({ sideList, iconVisible = true, menuVisible = true }) {
             tabs={sideList}
             style={1}
             onTabClick={handleSideBar}
-            hideDisplayName
+            hideDisplayName={hideDisplayName}
           />
         </div>
       </div>
       {menuVisible && (
-        <div className=" flex flex-col md:flex-row items-center gap-x-3 p-3 border-t border-slate-700 dark:bg-slate-900 bg-neutral-100">
+        <div className=" items-center  p-3 border-t border-slate-700 dark:bg-slate-900 bg-neutral-100">
           <button onClick={() => dispatch(toggleTheme())}>
             {darkMode ? (
               <DarkModeIcon sx={{ color: "white", fontSize: 30 }} />
@@ -75,10 +80,10 @@ function Sidebar({ sideList, iconVisible = true, menuVisible = true }) {
             )}
           </button>
           {/* <h1>Do Manh Thuong</h1> */}
-          <DropdownButton
+          {/* <DropdownButton
             onMenuClick={handleMenuClick}
             username={"Do Manh Thuong"}
-          />
+          /> */}
         </div>
       )}
     </div>

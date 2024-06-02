@@ -11,15 +11,16 @@ function Dashboard() {
     { name: "buy-sell", displayName: "Tín hiệu", icon: FilterAltIcon },
     { name: "loc-co-phieu", displayName: "Lọc cổ phiếu", icon: ContrastIcon },
     { name: "roc", displayName: "ROC", icon: ContrastIcon },
+    { name: "academic", displayName: "Academic", icon: ContrastIcon },
   ];
   return (
     <div className=" dark:bg-black bg-white ">
       <div className=" flex h-full  min-h-screen w-screen  ">
         <Navigate to="bang-dien" replace={true} />
-        <div className=" w-2/12 ">
-          <Sidebar sideList={sideList} />
+        <div className=" ">
+          <Sidebar sideList={sideList} hideDisplayName={true} />
         </div>
-        <div className=" w-10/12  ">
+        <div className=" w-full  ">
           <Outlet />
         </div>
       </div>

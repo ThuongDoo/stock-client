@@ -47,17 +47,20 @@ export const RocChart = (props) => {
       },
       width: chartContainerRef.current.clientWidth,
       grid: {
-        vertLines: { color: darkMode ? "#444" : "#D6DCDE" },
+        // vertLines: { color: darkMode ? "#444" : "#D6DCDE" },
+        vertLines: { visible: false },
+
         horzLines: { color: darkMode ? "#444" : "#D6DCDE" },
       },
       timeScale: {
         timeVisible: true,
+        barSpacing: 10,
       },
       handleScroll: false,
       handleScale: false,
     });
 
-    // chart.timeScale().fitContent();
+    chart.timeScale().fitContent();
 
     // const newSeries = chart.addAreaSeries({
     //   lineColor,

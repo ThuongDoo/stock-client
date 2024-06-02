@@ -28,6 +28,8 @@ import ImportIntradayOhlc from "./pages/admin/importFile/ImportIntraDayOhlc";
 import Roc from "./pages/dashboard/roc/Roc";
 import MarkerManager from "./pages/admin/market/MarkerManager";
 import ImportMarket from "./pages/admin/market/ImportMarket";
+import TestBangDien from "./pages/dashboard/bangdien/TestBangDien";
+import Academic from "./pages/dashboard/academic/Academic";
 
 function App() {
   const darkMode = useSelector(getTheme);
@@ -41,9 +43,11 @@ function App() {
         <Route element={<News />} path="/tin-tuc" />
         <Route element={<Dashboard />} path="/dashboard">
           <Route element={<BangDien />} path="bang-dien" />
+          {/* <Route element={<TestBangDien />} path="bang-dien" /> */}
           <Route element={<BuySell />} path="buy-sell" />
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
           <Route element={<Roc />} path="roc" />
+          <Route element={<Academic />} path="academic" />
         </Route>
         <Route element={<Admin />} path="/admin">
           <Route element={<UserManager />} path="user-manager" />

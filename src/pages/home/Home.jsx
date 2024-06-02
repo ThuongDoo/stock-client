@@ -47,9 +47,9 @@ function Home() {
       <div id="about-us" className=" w-full">
         <AboutUs />
       </div>
-      <div id="pricing" className=" w-full">
+      {/* <div id="pricing" className=" w-full">
         <Pricing />
-      </div>
+      </div> */}
       <div id="contact">
         <Contact />
       </div>
