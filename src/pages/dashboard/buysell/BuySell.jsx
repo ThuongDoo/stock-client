@@ -5,12 +5,15 @@ import { format } from "date-fns";
 import UnauthorizedException from "../../../components/UnauthorizedException";
 import BuySellSkeleton from "../../../skeletons/BuySellSkeleton";
 import { EVENTS, socket } from "../../../utils/socket";
+import SecurityDetail from "../../../components/SecurityDetail";
 
 function BuySell() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isReset, setIsReset] = useState(true);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedSecurity, setSelectedSecurity] = useState(null);
 
   useEffect(() => {
     socket.on(EVENTS.UPDATE_BUYSELL_DATA, (data) => {
@@ -81,6 +84,11 @@ function BuySell() {
     fetchData();
   };
 
+  const handleSelect = (value) => {
+    setIsOpenModal(true);
+    setSelectedSecurity(value);
+  };
+
   console.log("reset", isReset);
   return (
     <div className=" flex flex-col px-4 py-4 gap-y-4">
@@ -116,7 +124,8 @@ function BuySell() {
                     key={index}
                     className={` ${
                       index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
-                    }  border border-slate-700 `}
+                    }  border border-slate-700 cursor-pointer `}
+                    onClick={() => handleSelect(stock.ticker)}
                   >
                     <td>{index + 1}</td>
                     <td>{stock?.ticker}</td>
@@ -164,6 +173,12 @@ function BuySell() {
         </div>
       )}
       {error === 401 && <UnauthorizedException />}
+      {isOpenModal && (
+        <SecurityDetail
+          symbol={selectedSecurity}
+          onClose={() => setIsOpenModal(false)}
+        />
+      )}
     </div>
   );
 }

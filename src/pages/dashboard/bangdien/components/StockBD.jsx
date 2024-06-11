@@ -1,20 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import SecurityDetail from "../../../../components/SecurityDetail";
+import formatNumber from "../../../../utils/formatNumber";
 
-function formatNumber(num) {
-  if (num >= 1e9) {
-    return (num / 1e9).toFixed(1) + " B";
-  }
-  if (num >= 1e6) {
-    return (num / 1e6).toFixed(1) + " M";
-  }
-  if (num >= 1e3) {
-    return (num / 1e3).toFixed(1) + " K";
-  }
-  return num;
-}
-
-function StockBD({ data, oldData }) {
-  data.sort((a, b) => b["Tang/Giam (%)"] - a["Tang/Giam (%)"]);
+function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedSecurity, setSelectedSecurity] = useState({});
+  const [isReload, setIsReload] = useState(false);
   const getColorClass = (value) => {
     if (value >= 6.7) {
       return "bg-customeStock17";
@@ -52,39 +43,54 @@ function StockBD({ data, oldData }) {
       return "bg-customeStock1";
     }
   };
+  if (isAsc === false) {
+    data.sort((a, b) => a.RatioChange - b.RatioChange);
+  } else {
+    data.sort((a, b) => b.RatioChange - a.RatioChange);
+  }
+
+  const handleReload = async (value) => {
+    setIsReload(!isReload);
+  };
+
+  useEffect(() => {
+    onReload(true);
+  }, [isReload]);
+
   return (
-    <div className="  w-full h-full bg-blue-500">
+    <div className="  w-full h-full  ">
       {data.length > 0 ? (
-        <div className="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6  max-h-[24rem] overflow-y-scroll">
+        <div
+          className={`  grid ${
+            cols > 0
+              ? "grid-cols-[col]"
+              : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          }  h-full overflow-y-scroll gap-2 auto-rows-min`}
+        >
           {data?.map((stock, index) => (
             <div
               key={index}
-              className={`  flex-col m-2 justify-between text-black h-fit  rounded-lg px-2 ${getColorClass(
-                stock?.["Tang/Giam (%)"]
+              className={` cursor-pointer flex-col justify-between text-black h-fit  rounded-lg px-2 ${getColorClass(
+                stock?.RatioChange
               )}`}
+              onClick={() => {
+                setSelectedSecurity(stock);
+                setIsOpenModal(true);
+              }}
             >
               <div className=" flex justify-between">
-                <p className=" text-lg">{stock?.Ticker}</p>
-                <p className=" text-lg">{stock?.Giahientai}</p>
-                <p
-                  // className={`${
-                  //   stock?.["Tang/Giam (%)"] > 0
-                  //     ? "text-green-900"
-                  //     : "text-red-500"
-                  // }`}
-                  className=" text-lg"
-                >
-                  {stock?.["Tang/Giam (%)"]}%
-                </p>
+                <p className=" text-lg">{stock?.Symbol}</p>
+                <p className=" text-lg">{stock?.LastPrice / 1000}</p>
+                <p className=" text-lg">{stock?.RatioChange}%</p>
               </div>
               <div className=" flex justify-between">
-                {/* <p>{stock?.["Tang/Giam"]}</p> */}
-
                 <div className=" flex w-full justify-between">
-                  <p className=" text-sm">KL: {formatNumber(stock?.Volume)}</p>
+                  <p className=" text-sm">
+                    KL: {formatNumber(stock?.TotalVol, 1)}
+                  </p>
 
                   <p className=" text-sm">
-                    GT: {formatNumber(stock?.GiatriGD)}
+                    GT: {formatNumber(stock?.TotalVal, 1)}
                   </p>
                 </div>
               </div>
@@ -93,6 +99,13 @@ function StockBD({ data, oldData }) {
         </div>
       ) : (
         <div className=" text-center">Không tìm thấy dữ liệu</div>
+      )}
+      {isOpenModal && (
+        <SecurityDetail
+          symbol={selectedSecurity.Symbol}
+          onClose={() => setIsOpenModal(false)}
+          onReload={handleReload}
+        />
       )}
     </div>
   );

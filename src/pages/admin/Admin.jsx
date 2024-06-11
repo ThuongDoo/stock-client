@@ -12,6 +12,7 @@ function Admin() {
     { name: "request-manager", displayName: "Requests", icon: FilterAltIcon },
     { name: "import", displayName: "Import", icon: ContrastIcon },
     { name: "market", displayName: "Market", icon: ContrastIcon },
+    { name: "category", displayName: "Category", icon: ContrastIcon },
   ];
   return (
     <div className=" bg-black flex flex-col min-h-screen w-screen gap-y-2">

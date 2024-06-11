@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { getTheme } from "../slices/themeSlice";
+import Tooltip from "./Tooltip";
 
 function TabBar({
   tabs,
@@ -11,7 +12,10 @@ function TabBar({
 }) {
   const defaultStyle = {
     fontSize: "1.25rem",
-    button: { padding: "0.75rem" },
+    button: {
+      padding: "0.75rem",
+      onActive: { backgroundColor: "#3b82f6" },
+    },
   };
 
   const deepClone = (obj) => {
@@ -42,31 +46,45 @@ function TabBar({
   };
   const darkMode = useSelector(getTheme);
 
-  console.log(mergedStyle);
-  console.log(hideDisplayName);
   return (
     <div
       style={mergedStyle}
       className={` flex  ${isHorizontal === false && "flex-col"}`}
     >
       {tabs?.map((tab, index) => (
-        <button
+        <div
+          className=" flex-1 cursor-pointer"
           onClick={() => handleTabChange(tab)}
           key={index}
-          style={mergedStyle.button}
-          className={`${
-            activeTab === tab.name ? "bg-blue-500" : ""
-          } flex flex-1 items-center gap-x-3 justify-center ${
-            tab.icon ? hideDisplayName === false && "md:justify-start" : ""
-          }  `}
         >
-          {tab.icon && (
-            <tab.icon
-              sx={{ color: darkMode ? "white" : "black", fontSize: 30 }}
-            />
-          )}
-          {hideDisplayName === false && <h1>{tab?.displayName}</h1>}
-        </button>
+          <Tooltip
+            children={
+              <div
+                className={`flex  gap-x-3 items-center justify-center  ${
+                  tab.icon
+                    ? hideDisplayName === false && "md:justify-start"
+                    : ""
+                }  `}
+                style={{
+                  ...mergedStyle.button,
+                  ...(activeTab === tab.name
+                    ? mergedStyle.button.onActive
+                    : {}),
+                  // boxShadow:
+                  //   activeTab === tab.name ? "inset 0 -4px 0 0 white" : "none",
+                }}
+              >
+                {tab.icon && (
+                  <tab.icon
+                    sx={{ color: darkMode ? "white" : "black", fontSize: 30 }}
+                  />
+                )}
+                {hideDisplayName === false && <h1>{tab?.displayName}</h1>}
+              </div>
+            }
+            description={tab.displayName}
+          />
+        </div>
       ))}
     </div>
   );

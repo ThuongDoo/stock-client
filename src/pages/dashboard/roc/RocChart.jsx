@@ -6,6 +6,7 @@ import { getTheme } from "../../../slices/themeSlice";
 export const RocChart = (props) => {
   const {
     data,
+    chosenData,
     colors: {
       backgroundColor = "white",
       lineColor = "#2962FF",
@@ -58,6 +59,25 @@ export const RocChart = (props) => {
       },
       handleScroll: false,
       handleScale: false,
+      crosshair: {
+        // Change mode from default 'magnet' to 'normal'.
+        // Allows the crosshair to move freely without snapping to datapoints
+        // mode: CrosshairMode.Normal,
+
+        // Vertical crosshair line (showing Date in Label)
+        vertLine: {
+          // width: 8,
+          // color: "blue",
+          // style: LineStyle.Solid,
+          labelBackgroundColor: "white",
+        },
+
+        // Horizontal crosshair line (showing Price in Label)
+        horzLine: {
+          // color: "#9B7DFF",
+          labelBackgroundColor: "white",
+        },
+      },
     });
 
     chart.timeScale().fitContent();
@@ -71,20 +91,22 @@ export const RocChart = (props) => {
 
     const lineSeries = [];
     data.forEach((item, index) => {
-      const color = item.color; // Lấy màu ngẫu nhiên cho mỗi dòng đồ thị
-      const line = chart.addLineSeries({ color });
-      line.setData(item.data);
-      line.applyOptions({
-        lineWidth: 2,
-        priceLineVisible: false,
-      });
-      line.priceScale().applyOptions({
-        scaleMargins: {
-          top: 0.1, // leave some space for the legend
-          bottom: 0.1,
-        },
-      });
-      lineSeries.push(line); // Lưu trữ đối tượng dòng đồ thị vào mảng lineSeries
+      if (chosenData[index]) {
+        const color = item.color; // Lấy màu ngẫu nhiên cho mỗi dòng đồ thị
+        const line = chart.addLineSeries({ color });
+        line.setData(item.data);
+        line.applyOptions({
+          lineWidth: 2,
+          priceLineVisible: false,
+        });
+        line.priceScale().applyOptions({
+          scaleMargins: {
+            top: 0.1, // leave some space for the legend
+            bottom: 0.1,
+          },
+        });
+        lineSeries.push(line); // Lưu trữ đối tượng dòng đồ thị vào mảng lineSeries
+      }
     });
     window.addEventListener("resize", handleResize);
 
@@ -100,7 +122,8 @@ export const RocChart = (props) => {
     textColor,
     areaTopColor,
     areaBottomColor,
+    chosenData,
   ]);
 
-  return <div className=" h-full" ref={chartContainerRef} />;
+  return <div className=" h-full w-full" ref={chartContainerRef} />;
 };

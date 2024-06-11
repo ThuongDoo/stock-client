@@ -31,8 +31,14 @@ export const endpoints = {
   USER_DELETE: "/user/deleteUser",
   USER_REQUEST: "/user/userRequest",
   USER_SHOW_ME: "/user/showMe",
+  USER_SECURITY: "/user/security",
 
   MARKET_IMPORT: "/market/import",
+
+  SSI_SECURITY: "/ssi/security",
+
+  CATEGORY_UPDATE: "category/update",
+  CATEGORY: "category",
 };
 
 export default instance;

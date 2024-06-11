@@ -40,22 +40,22 @@ const TimelineSlider = ({ onChange }) => {
   }, []);
 
   return (
-    <div className="max-w-lg mx-auto my-12 ">
+    <div className="max-w-lg mx-auto ">
       <Slider
         styles={{
           handle: {
-            height: 30, // Chiều cao của handle
-            width: 24, // Chiều rộng của handle
+            height: 21, // Chiều cao của handle
+            width: 30, // Chiều rộng của handle
             borderRadius: "4px", // Độ cong của góc handle để tạo thành hình chữ nhật
             backgroundColor: "grey",
-            accentColor: "green",
-            color: "green",
-            borderColor: "green",
-            outlineColor: "green",
+            accentColor: "grey",
+            color: "grey",
+            borderColor: "grey",
+            outlineColor: "grey",
+            opacity: 100,
           },
-
-          rail: { height: 20 },
-          track: { height: 20, backgroundColor: "green" },
+          rail: { height: 10 },
+          track: { height: 10 },
         }}
         style={{ height: 10 }}
         range

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-function SearchBar({ suggestionData, onSelect }) {
+function SearchBar({ suggestionData, onSelect, placeholder = "Tìm kiểm" }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -22,7 +22,7 @@ function SearchBar({ suggestionData, onSelect }) {
   const handleChange = (event) => {
     const value = event.target.value;
     setSearchTerm(value);
-    onSelect(value);
+    // onSelect(value);
     // Tính toán các gợi ý dựa trên giá trị tìm kiếm
     // Ở đây, bạn có thể lấy dữ liệu từ API hoặc từ một danh sách dữ liệu cố định
     const suggestions = suggestionData.filter((item) =>
@@ -32,25 +32,25 @@ function SearchBar({ suggestionData, onSelect }) {
   };
 
   const handleSelectSuggestion = (suggestion) => {
-    setSearchTerm(suggestion);
+    setSearchTerm("");
     setSuggestions([]);
     onSelect(suggestion);
   };
 
   return (
-    <div className=" relative max-w-xs">
+    <div className=" relative h-full w-full">
       <input
         type="text"
         value={searchTerm}
         onChange={handleChange}
-        placeholder="Tìm kiếm CK"
-        className=" block rounded-lg px-4 py-2 border dark:text-white dark:bg-slate-900 dark:border-slate-700 border-black w-48"
+        placeholder={placeholder}
+        className=" block rounded-lg px-4 h-full w-full border dark:text-white dark:bg-slate-900 dark:border-slate-700 border-black"
       />
       <ul
         ref={dropdownRef}
         className={`absolute w-full z-50 ${
           suggestions.length > 0 && searchTerm !== "" ? "block" : "hidden"
-        } bg-gray-500 border rounded-md`}
+        } bg-gray-500 border rounded-md overflow-y-scroll max-h-96`}
       >
         {suggestions.map((suggestion, index) => (
           <li
@@ -58,7 +58,7 @@ function SearchBar({ suggestionData, onSelect }) {
             onClick={() => {
               handleSelectSuggestion(suggestion);
             }}
-            className=" text-white cursor-pointer hover:bg-red-500"
+            className=" text-white cursor-pointer hover:bg-blue-500 bg-slate-800"
           >
             {suggestion}
           </li>

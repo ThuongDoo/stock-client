@@ -10,7 +10,7 @@ function CustomModal({ onClose, children, label = "label" }) {
           onClose(true);
         }}
       ></div>
-      <div className=" dark:bg-slate-900 bg-neutral-200 text-black dark:text-white  absolute w-3/4 h-3/4 flex flex-col rounded-xl  drop-shadow-glow">
+      <div className=" dark:bg-slate-900 bg-neutral-200 text-black dark:text-white  absolute w-fit  h-3/4 flex flex-col rounded-xl  drop-shadow-glow">
         <div className=" flex justify-between items-center  px-3 py-1 border-b border-slate-700 ">
           <h1>{label}</h1>
           <button
@@ -22,7 +22,7 @@ function CustomModal({ onClose, children, label = "label" }) {
             <CloseIcon sx={{ fontSize: 20 }} />
           </button>
         </div>
-        <div className=" overflow-y-scroll m-3">{children}</div>
+        <div className=" overflow-y-scroll m-3 flex-grow h-0">{children}</div>
       </div>
     </div>
   );

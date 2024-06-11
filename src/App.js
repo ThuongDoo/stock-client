@@ -28,10 +28,10 @@ import ImportIntradayOhlc from "./pages/admin/importFile/ImportIntraDayOhlc";
 import Roc from "./pages/dashboard/roc/Roc";
 import MarkerManager from "./pages/admin/market/MarkerManager";
 import ImportMarket from "./pages/admin/market/ImportMarket";
-import TestBangDien from "./pages/dashboard/bangdien/TestBangDien";
 import Academic from "./pages/dashboard/academic/Academic";
 import { useEffect } from "react";
 import { socket } from "./utils/socket";
+import CategoryManager from "./pages/admin/category/CategoryManager";
 
 function App() {
   useEffect(() => {
@@ -48,8 +48,7 @@ function App() {
         <Route element={<Settings />} path="/settings" />
         <Route element={<News />} path="/tin-tuc" />
         <Route element={<Dashboard />} path="/dashboard">
-          {/* <Route element={<BangDien />} path="bang-dien" /> */}
-          <Route element={<TestBangDien />} path="bang-dien" />
+          <Route element={<BangDien />} path="bang-dien" />
           <Route element={<BuySell />} path="buy-sell" />
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
           <Route element={<Roc />} path="roc" />
@@ -66,6 +65,7 @@ function App() {
           <Route element={<MarkerManager />} path="market">
             <Route element={<ImportMarket />} path="import" />
           </Route>
+          <Route element={<CategoryManager />} path="category" />
         </Route>
         <Route element={<Login />} path="/login" />
         <Route path="*" element={<Navigate to="/" replace />}></Route>

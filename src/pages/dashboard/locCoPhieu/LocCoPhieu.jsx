@@ -737,10 +737,10 @@ function LocCoPhieu() {
           <FilterComponent data={filterValue} label="PTKT" />
         )
       )}
-      <div className=" h-1/2 dark:bg-slate-900 bg-neutral-200">
+      <div className=" h-1/3 dark:bg-slate-900 bg-neutral-200">
         <DieuKieuLocForm />
       </div>
-      <div className=" h-1/2 ">
+      <div className=" h-2/3 ">
         {isLoading === true ? (
           <Loading />
         ) : (

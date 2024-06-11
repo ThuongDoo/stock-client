@@ -1,131 +1,73 @@
 import React, { useEffect, useState } from "react";
-import api, { endpoints } from "../../../utils/api";
-import StockBD from "./components/StockBD";
-import SearchBar from "../../../components/SearchBar";
-import { CATEGORIES } from "../../../constants/categories";
-import DropdownList from "../../../components/DropdownList";
 import BangDienHeader from "./components/BangDienHeader";
-import UnauthorizedException from "../../../components/UnauthorizedException";
-import BangDienHeaderSkeleton from "../../../skeletons/BangDienHeaderSkeleton";
-import StockBDSkeleton from "../../../skeletons/StockBDSkeleton";
-import { EVENTS, socket } from "../../../utils/socket";
-
-function sortByTickerLengthAscending(data) {
-  return data.sort((a, b) => a.length - b.length);
-}
+import TabBar from "../../../components/TabBar";
+import BangDienStockBoard from "./components/BangDienStockBoard";
+import Favorite from "./components/Favorite";
+import api, { endpoints } from "../../../utils/api";
 
 function BangDien() {
-  const [data, setData] = useState([]);
-  const [oldData, setOldData] = useState([]);
-  const [sanData, setSanData] = useState([]);
-  const [tickerName, setTickerName] = useState([]);
-  const [error, setError] = useState(null);
-  const [isSanLoading, setIsSanLoading] = useState(true);
-  const [isDataLoading, setIsDataLoading] = useState(true);
-  const [selectedStocks, setSelectedStocks] = useState(CATEGORIES[0].stocks);
-  useEffect(() => {
-    const fetchTickerName = async () => {
-      setIsDataLoading(true);
-      await api
-        .get(endpoints.STOCK_GET_ALL)
-        .then((res) => {
-          const sortData = res.data;
-          sortByTickerLengthAscending(sortData);
-          setTickerName(res.data);
-          setIsDataLoading(false);
-        })
-        .catch((err) => {
-          setError(err.response.status);
-        });
-    };
-    const fetchSan = async () => {
-      await api
-        .get(endpoints.STOCK_GET_SAN)
-        .then((res) => {
-          setSanData(res.data);
-          setIsSanLoading(false);
-        })
-        .catch((err) => {
-          setError(err.response.status);
-        });
-    };
+  const [categories, setCategories] = useState([]);
+  const [securities, setSecurities] = useState([]);
 
-    socket.on(EVENTS.NEW_STOCK_DATA_AVAILABLE, (newData) => {
-      console.log("sendData", selectedStocks);
-      socket.emit(EVENTS.STOCK_REQUEST, selectedStocks);
-    });
-
-    socket.on(EVENTS.UPDATE_STOCK_DATA, (newData) => {
-      setOldData(data);
-      console.log(newData.data);
-      setData(newData.data);
-      setSanData(newData.sanData);
-    });
-
-    fetchTickerName();
-    fetchSan();
-
-    return () => {
-      socket.off(EVENTS.NEW_STOCK_DATA_AVAILABLE);
-      socket.off(EVENTS.UPDATE_STOCK_DATA);
-    };
-  }, [selectedStocks]);
+  const indexList = [
+    { name: "ALL", displayName: "TẤT CẢ" },
+    { name: "VNIndex", displayName: "VNINDEX" },
+    { name: "VN30", displayName: "VN30" },
+    { name: "HNXIndex", displayName: "HNX" },
+    { name: "HNX30", displayName: "HNX30" },
+    { name: "HNXUpcomIndex", displayName: "UPCOM" },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
       await api
-        .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${selectedStocks}`)
+        .get(endpoints.CATEGORY)
         .then((res) => {
-          setData(res.data);
-          setIsDataLoading(false);
+          const data = res.data.map((categoryItem) => {
+            const securityData = categoryItem.Securities.map((securityItem) => {
+              return securityItem.Symbol;
+            }).join(",");
+            return {
+              id: categoryItem.id,
+              name: categoryItem.name,
+              securities: securityData,
+            };
+          });
+          data.unshift({ id: "", name: "TẤT CẢ" });
+          setCategories(data);
         })
-        .catch((err) => {
-          setError(err.response.status);
+        .catch((e) => {
+          console.log(e);
         });
     };
-    fetchData();
-  }, [selectedStocks]);
-  const handleDataFromSideBar = (category) => {
-    setSelectedStocks(category.stocks);
-  };
-
-  const handleSearch = (value) => {
-    setSelectedStocks(value);
-    setIsDataLoading(true);
-    const fetchData = async () => {
+    const fetchSecurities = async () => {
       await api
-        .get(endpoints.STOCK_GET_STOCK_BY_NAME + `/${value}`)
+        .get(endpoints.SSI_SECURITY)
         .then((res) => {
-          setData(res.data);
-          setIsDataLoading(false);
+          setSecurities(res.data.data);
         })
-        .catch((err) => {
-          setError(err.response.status);
-        });
+        .catch((e) => console.log(e));
     };
+    fetchSecurities();
+
     fetchData();
-  };
-  console.log(data);
+  }, []);
+
   return (
-    <div className=" flex w-full h-full ">
-      <div className=" flex flex-col flex-1 items-start">
-        <div className=" w-full">
-          {isSanLoading === true ? (
-            <BangDienHeaderSkeleton />
-          ) : (
-            <BangDienHeader data={sanData} />
-          )}
+    <div className=" flex flex-col h-screen p-4 gap-y-4 ">
+      <div className=" ">
+        <BangDienHeader data={indexList} />
+      </div>
+      <div className=" flex w-full flex-grow h-0 gap-x-4">
+        <div className=" w-1/5 bg-slate-800 p-2 rounded-lg">
+          <Favorite categories={categories} securities={securities} />
         </div>
-        <div className=" p-4 flex flex-col gap-y-4 md:flex-row md:gap-y-0 gap-x-4">
-          <SearchBar onSelect={handleSearch} suggestionData={tickerName} />
-          <DropdownList list={CATEGORIES} onClick={handleDataFromSideBar} />
-        </div>
-        <div className=" w-full flex-1">
-          {isDataLoading === true ? (
-            <StockBDSkeleton />
-          ) : (
-            <StockBD data={data} oldData={oldData} />
-          )}
+        <div className=" w-4/5 bg-slate-800 p-2 rounded-lg">
+          <BangDienStockBoard
+            tabs={indexList}
+            categories={categories}
+            securities={securities}
+          />
         </div>
       </div>
     </div>

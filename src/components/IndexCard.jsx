@@ -5,14 +5,13 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SquareIcon from "@mui/icons-material/Square";
 
 function IndexCard({ data }) {
-  // const a = 50000;
-  // const b = a.toLocaleString(",");
-  // console.log("local", b);
   return (
-    <div className=" flex flex-col  bg-slate-900 px-3 py-2 rounded-lg text-sm">
+    <div className=" flex flex-col  bg-slate-800 px-3 py-2 rounded-lg text-sm">
       <div className=" flex items-start justify-between text-base">
-        <h1 className=" font-semibold">{data.IndexId}</h1>
-        <h1 className=" font-semibold">{data.IndexValue}</h1>
+        <h1 className=" font-semibold">{data.IndexName}</h1>
+        <h1 className=" font-semibold">
+          {formatNumber(data.IndexValue, 2, 10000000)}
+        </h1>
       </div>
       <div className=" flex items-end justify-between">
         <h1>{formatNumber(data.AllValue)}</h1>

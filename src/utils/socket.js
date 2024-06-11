@@ -14,4 +14,12 @@ export const EVENTS = {
   FILTERD_STOCK_REQUEST: "filterd_stock_request",
   SSI_MI_REQUEST: "ssi_mi_request",
   SSI_MI_UPDATE: "ssi_mi_update",
+  SSI_TRADE_REQUEST: "ssi_trade_request",
+  SSI_TRADE_UPDATE: "ssi_trade_update",
+  SSI_FAVORITE_REQUEST: "ssi_favorite_request",
+  SSI_FAVORITE_UPDATE: "ssi_favorite_update",
+  SSI_X_REQUEST: "ssi_x_request",
+  SSI_X_UPDATE: "ssi_x_update",
+  SSI_R_REQUEST: "ssi_r_request",
+  SSI_R_UPDATE: "ssi_r_update",
 };

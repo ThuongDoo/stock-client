@@ -1,4 +1,9 @@
-import { createChart, ColorType } from "lightweight-charts";
+import {
+  createChart,
+  ColorType,
+  LineStyle,
+  CrosshairMode,
+} from "lightweight-charts";
 import React, { useEffect, useRef, useState } from "react";
 import api, { endpoints } from "../../../../utils/api";
 import { format, getTime, parseISO } from "date-fns";
@@ -42,28 +47,19 @@ export const OhlcChart = (props) => {
     return tempData;
   };
 
-  function getArraySizeInMB(arr) {
-    // Chuyển mảng thành chuỗi JSON
-    let jsonString = JSON.stringify(arr);
-    // Tính kích thước của chuỗi JSON (đơn vị bytes)
-    let bytes = new Blob([jsonString]).size;
-    // Chuyển đổi kích thước thành MB và làm tròn đến 2 chữ số thập phân
-    let megabytes = bytes / (1024 * 1024);
-    return megabytes.toFixed(2) + " MB";
-  }
   useEffect(() => {
     const fetchData = async () => {
-      const endpoint =
-        smallestTimeFrame === "1d"
-          ? endpoints.OHLC_DAILY
-          : smallestTimeFrame === "1m" && endpoints.OHLC_INTRADAY;
+      // const endpoint =
+      //   smallestTimeFrame === "1d"
+      //     ? endpoints.OHLC_DAILY
+      //     : smallestTimeFrame === "1m" && endpoints.OHLC_INTRADAY;
       await api
-        .get(endpoint + `?ticker=${ticker}`)
+        .get(endpoints.OHLC_DAILY + `?ticker=${ticker}`)
         .then(async (res) => {
           console.log(res.data);
-          const tempData = await formatData(res.data, smallestTimeFrame);
-          console.log(tempData);
-          setMarket(res.data[0].market);
+          const tempData = await formatData(res.data.data, "1d");
+          // console.log();
+          setMarket(res.data.data[0].market);
           setData(tempData);
         })
         .catch((e) => console.log(e));
@@ -90,13 +86,32 @@ export const OhlcChart = (props) => {
         textColor: darkMode ? "white" : textColor,
       },
       width: chartContainerRef.current.clientWidth,
-      height: 300,
+      height: chartContainerRef.current.clientHeight,
       grid: {
         vertLines: { color: darkMode ? "#444" : "#D6DCDE" },
         horzLines: { color: darkMode ? "#444" : "#D6DCDE" },
       },
       timeScale: {
         timeVisible: true,
+      },
+      crosshair: {
+        // Change mode from default 'magnet' to 'normal'.
+        // Allows the crosshair to move freely without snapping to datapoints
+        // mode: CrosshairMode.Normal,
+
+        // Vertical crosshair line (showing Date in Label)
+        vertLine: {
+          // width: 8,
+          // color: "blue",
+          // style: LineStyle.Solid,
+          labelBackgroundColor: "white",
+        },
+
+        // Horizontal crosshair line (showing Price in Label)
+        horzLine: {
+          // color: "#9B7DFF",
+          labelBackgroundColor: "white",
+        },
       },
     });
     // chart.timeScale().fitContent();
@@ -124,36 +139,29 @@ export const OhlcChart = (props) => {
     setSetsmallestTimeFrame(timeFrame);
   };
 
-  console.log(getArraySizeInMB(data));
-
   return (
-    <div>
-      <div className=" flex justify-between items-center">
-        <h1 className=" font-bold pb-3">
-          {ticker} {market !== null && ":"} {market}
-        </h1>
-        <div className=" space-x-3">
-          <button
-            onClick={() => handleChangeTimeframe("1m")}
-            disabled={smallestTimeFrame === "1m"}
-            className={` p-1 w-12 rounded-md text-white ${
-              smallestTimeFrame === "1m" ? "bg-blue-700 " : "bg-blue-500 "
-            }`}
-          >
-            1m
-          </button>
-          <button
-            onClick={() => handleChangeTimeframe("1d")}
-            disabled={smallestTimeFrame === "1d"}
-            className={` p-1 w-12 rounded-md text-white ${
-              smallestTimeFrame === "1d" ? "bg-blue-700 " : "bg-blue-500 "
-            }`}
-          >
-            1d
-          </button>
-        </div>
+    <div className=" h-full relative">
+      <div className=" flex justify-between items-center absolute top-0 left-0 z-50 space-x-3">
+        <button
+          onClick={() => handleChangeTimeframe("1m")}
+          disabled={smallestTimeFrame === "1m"}
+          className={` p-1 w-12 rounded-md text-white ${
+            smallestTimeFrame === "1m" ? "bg-blue-700 " : "bg-blue-500 "
+          }`}
+        >
+          1m
+        </button>
+        <button
+          onClick={() => handleChangeTimeframe("1d")}
+          disabled={smallestTimeFrame === "1d"}
+          className={` p-1 w-12 rounded-md text-white ${
+            smallestTimeFrame === "1d" ? "bg-blue-700 " : "bg-blue-500 "
+          }`}
+        >
+          1d
+        </button>
       </div>
-      <div ref={chartContainerRef} />
+      <div ref={chartContainerRef} className=" h-full" />
     </div>
   );
 };

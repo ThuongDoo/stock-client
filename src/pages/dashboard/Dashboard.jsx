@@ -18,7 +18,11 @@ function Dashboard() {
       <div className=" flex h-full  min-h-screen w-screen  ">
         <Navigate to="bang-dien" replace={true} />
         <div className=" ">
-          <Sidebar sideList={sideList} hideDisplayName={true} />
+          <Sidebar
+            sideList={sideList}
+            hideDisplayName={true}
+            menuVisible={false}
+          />
         </div>
         <div className=" w-full  ">
           <Outlet />

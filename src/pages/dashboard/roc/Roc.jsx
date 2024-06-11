@@ -6,6 +6,8 @@ import { STRINGS } from "../../../constants/strings";
 import Loading from "../../../skeletons/Loading";
 import sizeof from "object-sizeof";
 import TimelineSlider from "../../../components/TimelineSlider";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategory, setCategory } from "../../../slices/categorySlice";
 
 const lineColors = [
   "#F16889",
@@ -52,6 +54,7 @@ const formatData = async (stocks) => {
         displayName: obj.displayName,
         color: getRandomColorHex(),
         data: [],
+        isChosen: true,
       };
     }
     // Giữ lại chỉ các trường "time" và "value"
@@ -71,25 +74,43 @@ const formatData = async (stocks) => {
       value: newValue,
     });
   });
-  const resultArray = Object.entries(groupedData).map((item, index) => {
-    // console.log(item);
-    item[1].data[0].value = 0;
-    return {
-      ...item[1],
-    };
-  });
+  const resultArray = Object.entries(groupedData)
+    .map((item, index) => {
+      // console.log(item);
+      item[1].data[0].value = 0;
+      return {
+        ...item[1],
+      };
+    })
+    .sort((a, b) => {
+      const nameA = a.category.toUpperCase(); // Chuyển tên thành chữ hoa để so sánh
+      const nameB = b.category.toUpperCase(); // Chuyển tên thành chữ hoa để so sánh
+      console.log(nameA);
+      return (nameA ?? "") < (nameB ?? "")
+        ? -1
+        : (nameA ?? "") > (nameB ?? "")
+        ? 1
+        : 0;
+    });
+
   return resultArray;
 };
 
 function Roc() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [timeRange, setTimeRange] = useState("6m");
+  const [timeRange, setTimeRange] = useState([]);
+  const chosenCategories = useSelector(getCategory);
+  const dispatch = useDispatch();
   useEffect(() => {
+    console.log(timeRange);
+  }, [timeRange]);
+
+  const updateData = (startTime, endTime) => {
     setIsLoading(true);
     const fetchData = async () => {
       await api
-        .get(endpoints.ROC + `/${timeRange}`)
+        .get(endpoints.ROC + `/?startDate=${startTime}&endDate=${endTime}`)
         .then(async (res) => {
           const formattedData = await formatData(res.data);
           setIsLoading(false);
@@ -98,54 +119,55 @@ function Roc() {
         .catch((e) => console.log(e));
     };
     fetchData();
-  }, [timeRange]);
+  };
 
   const handleTimeline = (value1, value2) => {
-    console.log("hhha");
-    console.log(value1);
-    console.log(value2);
+    const newTimeRange = [value1, value2];
+    setTimeRange(newTimeRange);
+    updateData(value1, value2);
+  };
+
+  const handleCheckboxChange = (index) => {
+    const newChosenData = [...chosenCategories];
+    newChosenData[index] = !newChosenData[index];
+    dispatch(setCategory(newChosenData));
   };
 
   return (
-    <div className=" p-2  h-full">
+    <div className=" p-2 h-full flex flex-col gap-y-2">
       {isLoading === true ? (
-        <Loading />
+        <div className=" flex-1">
+          <Loading />
+        </div>
       ) : (
-        <div className=" flex h-full relative">
-          <div className=" absolute top-5 left-10 z-50 flex gap-x-3">
-            {buttonArray.map((item, index) => (
-              <button
-                key={index}
-                className={`${
-                  timeRange === item ? "bg-black" : "bg-blue-500"
-                } hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded-md`}
-                onClick={() => setTimeRange(item)}
-              >
-                {item}
-              </button>
-            ))}
+        <div className=" flex flex-1 gap-x-2">
+          <div className=" flex-1 ">
+            <RocChart data={data} chosenData={chosenCategories} />
           </div>
-          <div className=" flex-1 h-full">
-            <div className=" h-5/6">
-              <RocChart data={data} />
-            </div>
-            <div className=" h-1/6">
-              <TimelineSlider onChange={handleTimeline} />
-            </div>
-          </div>
-          <div className=" flex flex-col justify-between h-4/6">
+          <div className=" flex flex-col ">
             {data.map((item, index) => (
-              <div className="flex items-center" key={index}>
+              <label
+                className="flex items-center gap-x-2 hover:bg-white hover:text-black flex-1 px-2"
+                key={index}
+              >
+                <input
+                  type="checkbox"
+                  checked={chosenCategories[index]}
+                  onChange={() => handleCheckboxChange(index)}
+                ></input>
                 <div
                   style={{ backgroundColor: item.color }}
                   className=" w-2 h-2 rounded-full"
                 ></div>
                 <h1 className=" text-xs text-left">{item.displayName}</h1>
-              </div>
+              </label>
             ))}
           </div>
         </div>
       )}
+      <div className=" ">
+        <TimelineSlider onChange={handleTimeline} />
+      </div>
     </div>
   );
 }

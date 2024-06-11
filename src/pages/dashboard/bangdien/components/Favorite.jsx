@@ -1,0 +1,107 @@
+import React, { useEffect, useState } from "react";
+import { endpoints } from "../../../../utils/api";
+import api from "../../../../utils/api";
+import { EVENTS, socket } from "../../../../utils/socket";
+import StockBD from "./StockBD";
+import SortIcon from "@mui/icons-material/Sort";
+import SearchBar from "../../../../components/SearchBar";
+import { useSelector } from "react-redux";
+import { getUser } from "../../../../slices/userSlice";
+import CachedIcon from "@mui/icons-material/Cached";
+
+function Favorite({ categories, securities }) {
+  const [isAsc, setIsAsc] = useState(false);
+  const [mySecurities, setMySecurities] = useState(null);
+  const [isReload, setIsReload] = useState(false);
+  const [stockBoardData, setStockBoardData] = useState([]);
+  const user = useSelector(getUser);
+  const [symbols, setSymbols] = useState([]);
+  useEffect(() => {
+    const formattedSymbols = securities.map((item) => item.Symbol);
+    setSymbols(formattedSymbols);
+
+    const fetchData = async () => {
+      await api
+        .get(endpoints.USER_SECURITY + `/${user.phone}`)
+        .then((res) => {
+          const myData = res.data.data
+            .map((item) => {
+              return item.Symbol;
+            })
+            .join(",");
+          setMySecurities(myData);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    fetchData();
+    return () => {};
+  }, [isReload, securities]);
+
+  useEffect(() => {
+    socket.emit(EVENTS.SSI_FAVORITE_REQUEST, mySecurities);
+    socket.on(EVENTS.SSI_FAVORITE_UPDATE, (tradeData) => {
+      try {
+        const newData = JSON.parse(tradeData.data);
+        setStockBoardData(newData);
+      } catch (error) {}
+    });
+    return () => {
+      socket.off(EVENTS.SSI_FAVORITE_UPDATE);
+    };
+  }, [mySecurities]);
+
+  const handleSearch = async (value) => {
+    console.log("hihi");
+    await api
+      .post(endpoints.USER_SECURITY + `/${user.phone}/${value}`)
+      .then((res) => {
+        setIsReload(!isReload);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleReload = (value) => {
+    setIsReload(!isReload);
+  };
+  return (
+    <div className="flex flex-col h-full gap-y-2">
+      <div className=" flex items-center justify-between gap-x-2">
+        <button onClick={() => setIsAsc(!isAsc)} className="">
+          <SortIcon
+            sx={{
+              color: "white",
+              fontSize: 28,
+              transform: isAsc === false && "scaleY(-1)",
+              // backgroundColor: "blue",
+            }}
+          />
+        </button>
+        <button onClick={() => setIsReload(!isReload)}>
+          <CachedIcon sx={{ color: "white", fontSize: 28 }} />
+        </button>
+        <h1 className=" ">THEO DÕI</h1>
+        <div className=" h-full w-20">
+          <SearchBar
+            onSelect={handleSearch}
+            suggestionData={symbols}
+            placeholder="Thêm"
+          />
+        </div>
+      </div>
+      <div className=" flex-grow h-0">
+        <StockBD
+          data={stockBoardData}
+          isAsc={isAsc}
+          cols={1}
+          onReload={handleReload}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default Favorite;

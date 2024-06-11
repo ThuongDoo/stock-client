@@ -47,4 +47,7 @@ export const STRINGS = {
   UPLOAD: "Upload",
 
   ROC_CATEGORIES: "/THUY_SAN,THEP,DAU_KHI,BDS_KCN",
+
+  FAVORITE_ADD: "Thêm cổ phiếu thành công",
+  FAVORITE_DELETE: "Bỏ theo dõi thành công",
 };
