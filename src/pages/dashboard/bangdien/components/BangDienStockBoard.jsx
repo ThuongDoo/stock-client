@@ -17,12 +17,18 @@ const formatIndexSecurities = (data) => {
   return formattedData;
 };
 
-function BangDienStockBoard({ tabs, categories, securities }) {
+function BangDienStockBoard({
+  tabs,
+  categories,
+  securities,
+  onReload = () => {},
+}) {
   const [indexSecurities, setIndexSecurities] = useState({});
   const [symbols, setSymbols] = useState([]);
   const [chosenSecurities, setChosenSecurities] = useState(null);
   const [stockBoardData, setStockBoardData] = useState([]);
   const [isAsc, setIsAsc] = useState(false);
+  const [isReload, setIsReload] = useState(false);
   const indexIds = tabs
     .slice(1)
     .map((item) => {
@@ -78,6 +84,10 @@ function BangDienStockBoard({ tabs, categories, securities }) {
     };
   }, [chosenSecurities]);
 
+  useEffect(() => {
+    onReload(isReload);
+  }, [isReload]);
+
   const handleTabBar = (tab) => {
     setChosenSecurities(indexSecurities[tab.name]);
   };
@@ -88,6 +98,10 @@ function BangDienStockBoard({ tabs, categories, securities }) {
 
   const handleCategoryChange = (value) => {
     setChosenSecurities(value.securities);
+  };
+
+  const handleReload = (value) => {
+    setIsReload(!isReload);
   };
 
   return (
@@ -123,7 +137,7 @@ function BangDienStockBoard({ tabs, categories, securities }) {
         </div>
       </div>
       <div className=" flex-grow h-0">
-        <StockBD data={stockBoardData} isAsc={isAsc} />
+        <StockBD data={stockBoardData} isAsc={isAsc} onReload={handleReload} />
       </div>
     </div>
   );

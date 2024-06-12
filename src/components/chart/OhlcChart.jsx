@@ -5,10 +5,31 @@ import {
   CrosshairMode,
 } from "lightweight-charts";
 import React, { useEffect, useRef, useState } from "react";
-import api, { endpoints } from "../../../../utils/api";
+import api, { endpoints } from "../../utils/api";
 import { format, getTime, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
-import { getTheme } from "../../../../slices/themeSlice";
+import { getTheme } from "../../slices/themeSlice";
+
+const formatData = async (data, type) => {
+  const tempData = await data.map((item) => {
+    const inputDate = item.time;
+    let formattedDate;
+    if (type === "1m") {
+      formattedDate = getTime(parseISO(inputDate)) / 1000;
+    } else {
+      formattedDate = format(inputDate, "yyyy-MM-dd");
+    }
+    return {
+      ...item,
+      open: item.open / 1000,
+      high: item.high / 1000,
+      low: item.low / 1000,
+      close: item.close / 1000,
+      time: formattedDate,
+    };
+  });
+  return tempData;
+};
 
 export const OhlcChart = (props) => {
   const {
@@ -27,25 +48,7 @@ export const OhlcChart = (props) => {
   const chartContainerRef = useRef();
 
   const [data, setData] = useState([]);
-  const [market, setMarket] = useState();
   const [smallestTimeFrame, setSetsmallestTimeFrame] = useState("1d");
-
-  const formatData = async (data, type) => {
-    const tempData = await data.map((item) => {
-      const inputDate = item.time;
-      let formattedDate;
-      if (type === "1m") {
-        formattedDate = getTime(parseISO(inputDate)) / 1000;
-      } else {
-        formattedDate = format(inputDate, "yyyy-MM-dd");
-      }
-      return {
-        ...item,
-        time: formattedDate,
-      };
-    });
-    return tempData;
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,10 +59,7 @@ export const OhlcChart = (props) => {
       await api
         .get(endpoints.OHLC_DAILY + `?ticker=${ticker}`)
         .then(async (res) => {
-          console.log(res.data);
           const tempData = await formatData(res.data.data, "1d");
-          // console.log();
-          setMarket(res.data.data[0].market);
           setData(tempData);
         })
         .catch((e) => console.log(e));

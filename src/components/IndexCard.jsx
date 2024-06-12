@@ -6,14 +6,14 @@ import SquareIcon from "@mui/icons-material/Square";
 
 function IndexCard({ data }) {
   return (
-    <div className=" flex flex-col  bg-slate-800 px-3 py-2 rounded-lg text-sm">
+    <div className=" flex flex-col  bg-slate-800 px-3 py-2 rounded-lg text-sm min-w-60 text-nowrap ">
       <div className=" flex items-start justify-between text-base">
         <h1 className=" font-semibold">{data.IndexName}</h1>
         <h1 className=" font-semibold">
           {formatNumber(data.IndexValue, 2, 10000000)}
         </h1>
       </div>
-      <div className=" flex items-end justify-between">
+      <div className=" flex items-end justify-between gap-2">
         <h1>{formatNumber(data.AllValue)}</h1>
         <div
           className={`${

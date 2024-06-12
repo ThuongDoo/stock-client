@@ -8,6 +8,7 @@ import api, { endpoints } from "../../../utils/api";
 function BangDien() {
   const [categories, setCategories] = useState([]);
   const [securities, setSecurities] = useState([]);
+  const [isReload, setisReload] = useState(false);
 
   const indexList = [
     { name: "ALL", displayName: "TẤT CẢ" },
@@ -51,7 +52,11 @@ function BangDien() {
     fetchSecurities();
 
     fetchData();
-  }, []);
+  }, [isReload]);
+
+  const handleReload = () => {
+    setisReload(!isReload);
+  };
 
   return (
     <div className=" flex flex-col h-screen p-4 gap-y-4 ">
@@ -67,6 +72,7 @@ function BangDien() {
             tabs={indexList}
             categories={categories}
             securities={securities}
+            onReload={handleReload}
           />
         </div>
       </div>

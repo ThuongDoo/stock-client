@@ -19,8 +19,6 @@ const Tooltip = ({ children, description }) => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  console.log(description);
-  console.log(tooltipStyle);
 
   return (
     <div

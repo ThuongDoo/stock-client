@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import TabBar from "./TabBar";
 import { EVENTS, socket } from "../utils/socket";
 import formatNumber from "../utils/formatNumber";
-import MucGiaChart from "./MucGiaChart";
+import MucGiaChart from "./chart/MucGiaChart";
 import api, { endpoints } from "../utils/api";
-import { OhlcChart } from "../pages/dashboard/locCoPhieu/components/OhlcChart";
+import { OhlcChart } from "./chart/OhlcChart";
 
 function OverviewTab({ symbol }) {
   const [xData, setXData] = useState({});
@@ -73,7 +73,6 @@ function OverviewTab({ symbol }) {
 export default OverviewTab;
 
 function TongQuan({ xData }) {
-  console.log(xData);
   const symbol = xData.Symbol;
   const data = [
     { name: "Tham chiếu", data: xData?.RefPrice / 1000 },

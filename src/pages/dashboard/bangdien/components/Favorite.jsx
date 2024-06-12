@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { endpoints } from "../../../../utils/api";
 import api from "../../../../utils/api";
 import { EVENTS, socket } from "../../../../utils/socket";
@@ -16,6 +16,8 @@ function Favorite({ categories, securities }) {
   const [stockBoardData, setStockBoardData] = useState([]);
   const user = useSelector(getUser);
   const [symbols, setSymbols] = useState([]);
+  const emitInterval = useRef(null);
+
   useEffect(() => {
     const formattedSymbols = securities.map((item) => item.Symbol);
     setSymbols(formattedSymbols);
@@ -40,15 +42,24 @@ function Favorite({ categories, securities }) {
   }, [isReload, securities]);
 
   useEffect(() => {
-    socket.emit(EVENTS.SSI_FAVORITE_REQUEST, mySecurities);
     socket.on(EVENTS.SSI_FAVORITE_UPDATE, (tradeData) => {
       try {
         const newData = JSON.parse(tradeData.data);
         setStockBoardData(newData);
       } catch (error) {}
     });
+    const emitTradeRequest = () => {
+      socket.emit(EVENTS.SSI_FAVORITE_REQUEST, mySecurities);
+    };
+    emitTradeRequest();
+
+    // Start the interval for emitting the request
+    emitInterval.current = setInterval(emitTradeRequest, 2000);
     return () => {
       socket.off(EVENTS.SSI_FAVORITE_UPDATE);
+      if (emitInterval.current) {
+        clearInterval(emitInterval.current);
+      }
     };
   }, [mySecurities]);
 

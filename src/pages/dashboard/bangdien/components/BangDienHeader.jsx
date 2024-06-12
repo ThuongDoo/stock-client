@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EVENTS, socket } from "../../../../utils/socket";
 import IndexCard from "../../../../components/IndexCard";
 
@@ -21,21 +21,33 @@ function BangDienHeader({ data }) {
       return item.name;
     })
     .join(",");
+
+  const emitInterval = useRef(null);
+
   useEffect(() => {
-    socket.emit(EVENTS.SSI_MI_REQUEST, indexIds);
     socket.on(EVENTS.SSI_MI_UPDATE, (indexData) => {
       try {
         const changedIndex = changeIndexName(JSON.parse(indexData.data), data);
         setIndexData(changedIndex);
       } catch (error) {}
     });
+    const emitTradeRequest = () => {
+      socket.emit(EVENTS.SSI_MI_REQUEST, indexIds);
+    };
+    emitTradeRequest();
+
+    // Start the interval for emitting the request
+    emitInterval.current = setInterval(emitTradeRequest, 2000);
     return () => {
       socket.off(EVENTS.SSI_MI_UPDATE);
+      if (emitInterval.current) {
+        clearInterval(emitInterval.current);
+      }
     };
   }, []);
   return (
-    <div className=" w-full h-full">
-      <div className="  items-center grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-5 gap-x-2 lg:gap-x-6">
+    <div className=" w-full h-full overflow-x-scroll">
+      <div className="  items-center justify-between flex gap-x-6 ">
         {indexData?.map((item, index) => (
           <div key={index} className="">
             <IndexCard data={item} />
