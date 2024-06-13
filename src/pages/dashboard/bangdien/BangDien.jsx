@@ -59,13 +59,13 @@ function BangDien() {
   };
 
   return (
-    <div className=" flex flex-col h-screen p-4 gap-y-4 ">
+    <div className=" flex flex-col h-screen p-4 gap-y-4 w-full">
       <div className=" ">
         <BangDienHeader data={indexList} />
       </div>
       <div className=" flex w-full flex-grow h-0 gap-x-4">
         <div className=" w-1/5 bg-slate-800 p-2 rounded-lg">
-          <Favorite categories={categories} securities={securities} />
+          <Favorite securities={securities} />
         </div>
         <div className=" w-4/5 bg-slate-800 p-2 rounded-lg">
           <BangDienStockBoard

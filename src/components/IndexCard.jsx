@@ -6,7 +6,7 @@ import SquareIcon from "@mui/icons-material/Square";
 
 function IndexCard({ data }) {
   return (
-    <div className=" flex flex-col  bg-slate-800 px-3 py-2 rounded-lg text-sm min-w-60 text-nowrap ">
+    <div className=" flex flex-col  px-3 py-2 text-sm min-w-60 text-nowrap ">
       <div className=" flex items-start justify-between text-base">
         <h1 className=" font-semibold">{data.IndexName}</h1>
         <h1 className=" font-semibold">

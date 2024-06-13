@@ -46,14 +46,17 @@ function BangDienHeader({ data }) {
     };
   }, []);
   return (
-    <div className=" w-full h-full overflow-x-scroll">
-      <div className="  items-center justify-between flex gap-x-6 ">
-        {indexData?.map((item, index) => (
-          <div key={index} className="">
+    <div className="flex items-center justify-evenly w-full h-full overflow-x-scroll">
+      {indexData?.map((item, index) => (
+        <React.Fragment key={index}>
+          <div className=" ">
             <IndexCard data={item} />
           </div>
-        ))}
-      </div>
+          {index < indexData.length - 1 && (
+            <div className=" h-2/3 min-w-0.5 bg-slate-700 "></div>
+          )}
+        </React.Fragment>
+      ))}
     </div>
   );
 }

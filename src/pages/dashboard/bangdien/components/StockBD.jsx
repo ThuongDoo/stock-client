@@ -79,17 +79,19 @@ function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
               }}
             >
               <div className=" flex justify-between">
-                <p className=" text-lg">{stock?.Symbol}</p>
-                <p className=" text-lg">{stock?.LastPrice / 1000}</p>
-                <p className=" text-lg">{stock?.RatioChange}%</p>
+                <p className=" text-lg ">{stock?.Symbol}</p>
+                <p className=" text-lg ">
+                  {formatNumber(stock?.LastPrice / 1000, 2)}
+                </p>
+                <p className=" text-lg ">{stock?.RatioChange}%</p>
               </div>
               <div className=" flex justify-between">
                 <div className=" flex w-full justify-between">
-                  <p className=" text-sm">
+                  <p className=" text-sm ">
                     KL: {formatNumber(stock?.TotalVol, 1)}
                   </p>
 
-                  <p className=" text-sm">
+                  <p className=" text-sm ">
                     GT: {formatNumber(stock?.TotalVal, 1)}
                   </p>
                 </div>

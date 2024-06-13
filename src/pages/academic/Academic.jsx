@@ -1,7 +1,7 @@
 import React from "react";
 
 function Academic() {
-  return <div>Academic</div>;
+  return <div className=" h-screen w-screen text-black">Academic</div>;
 }
 
 export default Academic;

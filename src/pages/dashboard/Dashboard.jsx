@@ -11,20 +11,20 @@ function Dashboard() {
     { name: "buy-sell", displayName: "Tín hiệu", icon: FilterAltIcon },
     { name: "loc-co-phieu", displayName: "Lọc cổ phiếu", icon: ContrastIcon },
     { name: "roc", displayName: "ROC", icon: ContrastIcon },
-    { name: "academic", displayName: "Academic", icon: ContrastIcon },
+    { name: "/academic", displayName: "Academic", icon: ContrastIcon },
   ];
   return (
     <div className=" dark:bg-black bg-white ">
       <div className=" flex h-full  min-h-screen w-screen  ">
         <Navigate to="bang-dien" replace={true} />
-        <div className=" ">
+        <div className="">
           <Sidebar
             sideList={sideList}
             hideDisplayName={true}
             menuVisible={false}
           />
         </div>
-        <div className=" w-full  ">
+        <div className=" flex-grow">
           <Outlet />
         </div>
       </div>

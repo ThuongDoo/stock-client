@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import StockChart from "../pages/dashboard/locCoPhieu/components/StockChart";
-import CloseIcon from "@mui/icons-material/Close";
+import SecurityDetail from "./SecurityDetail";
 
 const CustomTable = ({
   columns,
   rows,
-  itemsPerPage = 20,
-  maxVisiblePages = 7,
   checkboxesVisible = false,
   manageVisible = true,
   onCheckboxes,
@@ -168,33 +165,8 @@ const CustomTable = ({
     </div>
   );
 
-  const renderChartModal = () => (
-    <div className="bg-gray-800 bg-opacity-30 flex justify-center top-0 left-0 items-center fixed h-full w-full z-50 ">
-      <div
-        className=" w-full h-full"
-        onClick={() => {
-          setIsChartModalOpen(false);
-        }}
-      ></div>
-      <div className="dark:bg-slate-900 bg-neutral-200 text-black dark:text-white  absolute w-3/4 flex flex-col rounded-xl  drop-shadow-glow">
-        <div className=" flex justify-between items-center  px-3 py-1 border-b border-slate-700 ">
-          <h1>Biểu đồ kỹ thuật</h1>
-          <button
-            className=" flex hover:bg-blue-500"
-            onClick={() => setIsChartModalOpen(false)}
-          >
-            <CloseIcon sx={{ fontSize: 20 }} />
-          </button>
-        </div>
-        <div className="m-3 h-full">
-          <StockChart ticker={chosenTicker} />
-        </div>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="  dark:text-white text-black flex flex-col h-full ">
+    <div className="  dark:text-white text-black flex flex-col h-full">
       <div className=" flex sm:items-center flex-col sm:flex-row gap-y-2 gap-x-4 px-4 py-1">
         {manageVisible && (
           <button
@@ -278,7 +250,12 @@ const CustomTable = ({
           </tbody>
         </table>
       </div>
-      {isChartModalOpen && renderChartModal()}
+      {isChartModalOpen && (
+        <SecurityDetail
+          symbol={chosenTicker}
+          onClose={() => setIsChartModalOpen(false)}
+        />
+      )}
       {isManageModalOpen && renderManageModal()}
     </div>
   );

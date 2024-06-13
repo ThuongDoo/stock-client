@@ -28,10 +28,10 @@ import ImportIntradayOhlc from "./pages/admin/importFile/ImportIntraDayOhlc";
 import Roc from "./pages/dashboard/roc/Roc";
 import MarkerManager from "./pages/admin/market/MarkerManager";
 import ImportMarket from "./pages/admin/market/ImportMarket";
-import Academic from "./pages/dashboard/academic/Academic";
 import { useEffect } from "react";
 import { socket } from "./utils/socket";
 import CategoryManager from "./pages/admin/category/CategoryManager";
+import Academic from "./pages/academic/Academic";
 
 function App() {
   useEffect(() => {
@@ -68,6 +68,7 @@ function App() {
           <Route element={<CategoryManager />} path="category" />
         </Route>
         <Route element={<Login />} path="/login" />
+        <Route element={<Academic />} path="/academic" />
         <Route path="*" element={<Navigate to="/" replace />}></Route>
       </Route>
     )

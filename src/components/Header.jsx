@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTheme, toggleTheme } from "../slices/themeSlice";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import DropdownButton from "./DropdownButton";
+import { getTheme } from "../slices/themeSlice";
 import { getUser, login, logout } from "../slices/userSlice";
 import api, { endpoints } from "../utils/api";
 import ListIcon from "@mui/icons-material/List";
 import logo from "../images/logo.png";
 
-import {
-  Link,
-  NavLink,
-  Navigate,
-  redirect,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MyDropdownButton from "./MyDropdownButton";
 import MyHeaderDropdownHidden from "./MyHeaderDropdownHidden";
 

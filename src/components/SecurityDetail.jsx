@@ -5,8 +5,6 @@ import AddIcon from "@mui/icons-material/Add";
 import TabBar from "./TabBar";
 import { useSelector } from "react-redux";
 import { getUser } from "../slices/userSlice";
-import { EVENTS, socket } from "../utils/socket";
-import formatNumber from "../utils/formatNumber";
 import OverviewTab from "./OverviewTab";
 import SignalTab from "./SignalTab";
 import RemoveIcon from "@mui/icons-material/Remove";

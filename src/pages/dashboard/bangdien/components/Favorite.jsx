@@ -7,11 +7,10 @@ import SortIcon from "@mui/icons-material/Sort";
 import SearchBar from "../../../../components/SearchBar";
 import { useSelector } from "react-redux";
 import { getUser } from "../../../../slices/userSlice";
-import CachedIcon from "@mui/icons-material/Cached";
 
-function Favorite({ categories, securities }) {
+function Favorite({ securities }) {
   const [isAsc, setIsAsc] = useState(false);
-  const [mySecurities, setMySecurities] = useState(null);
+  const [mySecurities, setMySecurities] = useState([]);
   const [isReload, setIsReload] = useState(false);
   const [stockBoardData, setStockBoardData] = useState([]);
   const user = useSelector(getUser);
@@ -49,7 +48,8 @@ function Favorite({ categories, securities }) {
       } catch (error) {}
     });
     const emitTradeRequest = () => {
-      socket.emit(EVENTS.SSI_FAVORITE_REQUEST, mySecurities);
+      if (mySecurities.length > 0)
+        socket.emit(EVENTS.SSI_FAVORITE_REQUEST, mySecurities);
     };
     emitTradeRequest();
 
@@ -90,9 +90,6 @@ function Favorite({ categories, securities }) {
               // backgroundColor: "blue",
             }}
           />
-        </button>
-        <button onClick={() => setIsReload(!isReload)}>
-          <CachedIcon sx={{ color: "white", fontSize: 28 }} />
         </button>
         <h1 className=" ">THEO DÕI</h1>
         <div className=" h-full w-20">

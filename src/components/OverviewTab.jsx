@@ -3,7 +3,6 @@ import TabBar from "./TabBar";
 import { EVENTS, socket } from "../utils/socket";
 import formatNumber from "../utils/formatNumber";
 import MucGiaChart from "./chart/MucGiaChart";
-import api, { endpoints } from "../utils/api";
 import { OhlcChart } from "./chart/OhlcChart";
 
 function OverviewTab({ symbol }) {
