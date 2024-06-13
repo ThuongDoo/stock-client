@@ -112,7 +112,9 @@ function Roc() {
       await api
         .get(endpoints.ROC + `/?startDate=${startTime}&endDate=${endTime}`)
         .then(async (res) => {
+          console.log(res.data);
           const formattedData = await formatData(res.data);
+
           setIsLoading(false);
           setData(formattedData);
         })

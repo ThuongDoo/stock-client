@@ -42,7 +42,7 @@ function BuySell() {
           setData(res.data.data);
         })
         .catch((err) => {
-          setError(err.response.status);
+          setError(err?.response?.status);
         });
     };
     if (isReset) {
@@ -78,7 +78,7 @@ function BuySell() {
           setData(res.data.data);
         })
         .catch((err) => {
-          setError(err.response.status);
+          setError(err?.response?.status);
         });
     };
     fetchData();

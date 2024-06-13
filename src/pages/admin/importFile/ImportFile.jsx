@@ -9,12 +9,6 @@ import { Navigate, Outlet } from "react-router-dom";
 function ImportFile() {
   const sideList = [
     { name: "buysell", displayName: "Buysell", icon: DashboardIcon },
-    { name: "daily-ohlc", displayName: "DAILY OHLC", icon: FilterAltIcon },
-    {
-      name: "intraday-ohlc",
-      displayName: "INTRADAY OHLC",
-      icon: FilterAltIcon,
-    },
   ];
   return (
     <div className=" flex h-full">
