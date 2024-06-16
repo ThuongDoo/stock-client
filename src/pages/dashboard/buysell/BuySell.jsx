@@ -17,7 +17,6 @@ function BuySell() {
 
   useEffect(() => {
     socket.on(EVENTS.UPDATE_BUYSELL_DATA, (data) => {
-      console.log("Received data:", data);
       // Xử lý dữ liệu được nhận tại đây
       if (isReset) {
         setData(data.data);
@@ -35,10 +34,7 @@ function BuySell() {
       await api
         .get(endpoints.BUYSELL)
         .then((res) => {
-          console.log(res.data.data);
           setIsLoading(false);
-          // console.log(res.data.realtimeData);
-          // updateData(res.data.data, res.data.realtimeData);
           setData(res.data.data);
         })
         .catch((err) => {
@@ -89,7 +85,6 @@ function BuySell() {
     setSelectedSecurity(value);
   };
 
-  console.log("reset", isReset);
   return (
     <div className=" flex flex-col px-4 py-4 gap-y-4">
       <div className=" flex justify-between">

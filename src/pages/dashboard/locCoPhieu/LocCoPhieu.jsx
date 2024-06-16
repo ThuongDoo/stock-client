@@ -397,7 +397,7 @@ function LocCoPhieu() {
           updateResult(res.data);
         })
         .catch((err) => {
-          setError(err.response.status);
+          setError(err?.response?.status);
         });
     };
     fetchData();
