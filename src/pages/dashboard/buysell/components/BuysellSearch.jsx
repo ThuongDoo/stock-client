@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../../../../components/SearchBar";
 import DateFilter from "../../../../components/DateFilter";
 import api, { endpoints } from "../../../../utils/api";
-import SearchIcon from "@mui/icons-material/Search";
 import moment from "moment";
 
 function sortByTickerLengthAscending(data) {
@@ -11,8 +10,6 @@ function sortByTickerLengthAscending(data) {
 
 function BuysellSearch({ onSubmit, onReset }) {
   const [tickerName, setTickerName] = useState([]);
-  const [selectedTicker, setSelectedTicker] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
   useEffect(() => {
     const fetchTickerName = async () => {
       console.log("reload");
@@ -29,18 +26,11 @@ function BuysellSearch({ onSubmit, onReset }) {
   }, []);
 
   const handleSearchBar = (value) => {
-    setSelectedTicker(value);
+    onSubmit({ ticker: value });
   };
 
   const handleDateFilter = (value) => {
-    setSelectedDate(value);
-  };
-
-  const handleSubmit = () => {
-    onSubmit({
-      date: moment(selectedDate).toISOString(),
-      ticker: selectedTicker,
-    });
+    onSubmit({ date: moment(value).toISOString() });
   };
 
   const handleReset = () => {
@@ -57,15 +47,8 @@ function BuysellSearch({ onSubmit, onReset }) {
       </div>
       <div className=" flex gap-x-3">
         <button
-          onClick={() => handleSubmit()}
-          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          <SearchIcon sx={{ color: "white", fontSize: 20 }} />
-          Tìm kiếm
-        </button>
-        <button
           onClick={() => handleReset()}
-          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
         >
           RESET
         </button>

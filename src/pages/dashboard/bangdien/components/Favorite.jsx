@@ -8,19 +8,15 @@ import SearchBar from "../../../../components/SearchBar";
 import { useSelector } from "react-redux";
 import { getUser } from "../../../../slices/userSlice";
 
-function Favorite({ securities }) {
+function Favorite() {
   const [isAsc, setIsAsc] = useState(false);
   const [mySecurities, setMySecurities] = useState([]);
   const [isReload, setIsReload] = useState(false);
   const [stockBoardData, setStockBoardData] = useState([]);
   const user = useSelector(getUser);
-  const [symbols, setSymbols] = useState([]);
   const emitInterval = useRef(null);
 
   useEffect(() => {
-    const formattedSymbols = securities.map((item) => item.Symbol);
-    setSymbols(formattedSymbols);
-
     const fetchData = async () => {
       await api
         .get(endpoints.USER_SECURITY + `/${user.phone}`)
@@ -38,7 +34,7 @@ function Favorite({ securities }) {
     };
     fetchData();
     return () => {};
-  }, [isReload, securities]);
+  }, [isReload]);
 
   useEffect(() => {
     socket.on(EVENTS.SSI_FAVORITE_UPDATE, (tradeData) => {
@@ -91,13 +87,9 @@ function Favorite({ securities }) {
             }}
           />
         </button>
-        <h1 className=" ">THEO DÕI</h1>
+        <h1 className="">THEO DÕI</h1>
         <div className=" h-full w-20">
-          <SearchBar
-            onSelect={handleSearch}
-            suggestionData={symbols}
-            placeholder="Thêm"
-          />
+          <SearchBar onSelect={handleSearch} placeholder="Thêm" />
         </div>
       </div>
       <div className=" flex-grow h-0">

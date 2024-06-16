@@ -17,14 +17,8 @@ const formatIndexSecurities = (data) => {
   return formattedData;
 };
 
-function BangDienStockBoard({
-  tabs,
-  categories,
-  securities,
-  onReload = () => {},
-}) {
+function BangDienStockBoard({ tabs, categories, onReload = () => {} }) {
   const [indexSecurities, setIndexSecurities] = useState({});
-  const [symbols, setSymbols] = useState([]);
   const [chosenSecurities, setChosenSecurities] = useState(null);
   const [stockBoardData, setStockBoardData] = useState([]);
   const [isAsc, setIsAsc] = useState(false);
@@ -55,11 +49,6 @@ function BangDienStockBoard({
 
     return () => {};
   }, []);
-
-  useEffect(() => {
-    const formattedSymbols = securities.map((item) => item.Symbol);
-    setSymbols(formattedSymbols);
-  }, [securities]);
 
   useEffect(() => {
     socket.on(EVENTS.SSI_TRADE_UPDATE, (tradeData) => {
@@ -106,8 +95,8 @@ function BangDienStockBoard({
 
   return (
     <div className="flex flex-col h-full gap-y-2">
-      <div className=" flex items-center gap-x-2">
-        <button onClick={() => setIsAsc(!isAsc)} className="">
+      <div className=" flex items-center gap-x-2 overflow-x-scroll">
+        <button onClick={() => setIsAsc(!isAsc)} className=" ">
           <SortIcon
             sx={{
               color: "white",
@@ -117,13 +106,13 @@ function BangDienStockBoard({
             }}
           />
         </button>
-        <div className=" w-3/5">
+        <div className=" lg:w-3/5">
           <TabBar
             tabs={tabs}
             isHorizontal
             onTabClick={handleTabBar}
             style={{
-              fontSize: "1rem",
+              // fontSize: "1rem",
               button: {
                 padding: "2px",
                 onActive: { boxShadow: "inset 0 -4px 0 0 white" },
@@ -131,9 +120,9 @@ function BangDienStockBoard({
             }}
           />
         </div>
-        <div className=" flex h-full gap-x-5">
+        <div className=" flex h-full lg:gap-x-5 min-w-56">
           <DropdownList list={categories} onClick={handleCategoryChange} />
-          <SearchBar onSelect={handleSearch} suggestionData={symbols} />
+          <SearchBar onSelect={handleSearch} />
         </div>
       </div>
       <div className=" flex-grow h-0">

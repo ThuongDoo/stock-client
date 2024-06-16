@@ -31,7 +31,7 @@ function DateFilter({ onChange }) {
         // showMonthYearDropdown
         showYearDropdown
         showMonthDropdown
-        className=" border rounded-lg px-2 py-2 dark:bg-slate-900 dark:border-slate-700 border-black w-48"
+        className=" border rounded-lg px-4 py-2 dark:bg-slate-900 dark:border-slate-700 border-black w-48"
         todayButton={today}
         isClearable
         placeholderText="Chọn ngày"

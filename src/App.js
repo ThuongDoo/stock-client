@@ -28,6 +28,7 @@ import { useEffect } from "react";
 import { socket } from "./utils/socket";
 import CategoryManager from "./pages/admin/category/CategoryManager";
 import Academic from "./pages/academic/Academic";
+import Signup from "./pages/signup/Signup";
 
 function App() {
   useEffect(() => {
@@ -59,13 +60,14 @@ function App() {
           <Route element={<CategoryManager />} path="category" />
         </Route>
         <Route element={<Login />} path="/login" />
+        <Route element={<Signup />} path="/signup" />
         <Route element={<Academic />} path="/academic" />
         <Route path="*" element={<Navigate to="/" replace />}></Route>
       </Route>
     )
   );
   return (
-    <div className={`App ${darkMode ? "dark" : ""}`}>
+    <div className={`App ${darkMode ? "dark" : ""} text-xs md:text-base`}>
       <RouterProvider router={router} />
     </div>
   );

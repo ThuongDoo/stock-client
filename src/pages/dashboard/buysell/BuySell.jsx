@@ -49,7 +49,6 @@ function BuySell() {
   const handleSearch = (value) => {
     setIsReset(false);
     setIsLoading(true);
-    console.log("value", value);
     let url = endpoints.BUYSELL + "?";
 
     // Kiểm tra và thêm thuộc tính date vào URL nếu tồn tại

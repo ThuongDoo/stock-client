@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MyDropdownButton from "./MyDropdownButton";
 import MyHeaderDropdownHidden from "./MyHeaderDropdownHidden";
 
-function Header({ style = 1 }) {
+function Header({ hidden = false }) {
   const darkMode = useSelector(getTheme);
   const navigate = useNavigate();
   const { isLoggedIn, username } = useSelector(getUser);
@@ -39,13 +39,6 @@ function Header({ style = 1 }) {
     console.log("haha");
   }, []);
 
-  // delete
-  const handleProtected = async () => {
-    await api
-      .get("/user/protected")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  };
   const handleMenuClick = async (value) => {
     if (value === "logout") {
       dispatch(logout());
@@ -61,9 +54,8 @@ function Header({ style = 1 }) {
       console.log("admin");
     }
   };
-  console.log(darkMode);
   return (
-    <header className="   text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
+    <header className=" text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
       <nav className=" flex gap-x-3 items-center  ">
         <div className="   px-2 py-1">
           <Link to={"/"} className=" flex items-center space-x-2 pr-5">
@@ -72,91 +64,90 @@ function Header({ style = 1 }) {
           </Link>
         </div>
       </nav>
-      <div className=" block lg:hidden" onClick={() => setIsHidden(!isHidden)}>
-        <div>
-          <ListIcon sx={{ color: "white", fontSize: 30 }} />
-        </div>
-        {isHidden && (
-          <div className=" absolute bg-slate-900 right-0 top-16 flex flex-col gap-y-3 p-3 w-52  rounded-lg justify-between items-start">
-            {style === 1 ? (
-              <>
-                <a href="/#feature">Tính năng</a>
-                <a href="/#about-us">Về chúng tôi</a>
-                <a href="#contact">Liên hệ</a>
+      {!hidden && (
+        <>
+          <div className=" hidden lg:flex gap-x-4 w-full pl-5">
+            <div className=" flex gap-x-3 items-center w-full">
+              <a className=" cursor-pointer" href="/#feature">
+                Tính năng
+              </a>
+              <a className=" cursor-pointer" href="/#about-us">
+                Về chúng tôi
+              </a>
+              <a className=" cursor-pointer" href="#contact">
+                Liên hệ
+              </a>
 
-                <a href="/#pricing">Bảng giá</a>
-                <Link to={"/dashboard"}>X Products</Link>
-                {/* <button onClick={() => handleProtected()}>Protec</button> */}
-                {/* <button onClick={() => handleProtected()}>Protec</button> */}
-              </>
-            ) : (
-              <div></div>
-            )}
-            {isLoggedIn ? (
-              <MyHeaderDropdownHidden onMenuClick={handleMenuClick} />
-            ) : (
-              <>
-                <button
-                  className="  dark:hover:text-slate-500"
-                  onClick={() => navigate("/login")}
-                >
-                  Đăng nhập
-                </button>
-                <a href="/#contact" className=" ">
-                  Đăng ký
-                </a>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-
-      <div className="hidden lg:flex gap-x-3  flex-1 justify-between">
-        <div className=" flex items-center gap-x-3">
-          {style === 1 ? (
-            <>
-              <a href="/#feature">Tính năng</a>
-
-              <a href="/#about-us">Về chúng tôi</a>
-              <a href="/#contact">Liên hệ</a>
-
-              <a href="/#pricing">Bảng giá</a>
+              <a className=" cursor-pointer" href="/#pricing">
+                Bảng giá
+              </a>
               <Link to={"/dashboard"} className=" font-bold">
                 X Products
               </Link>
-              {/* <button onClick={() => handleProtected()}>Protec</button> */}
-            </>
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div className=" flex gap-x-3 justify-between items-center ">
-          {isLoggedIn ? (
-            <MyDropdownButton
-              onMenuClick={handleMenuClick}
-              username={username}
-            />
-          ) : (
-            <>
+            </div>
+            <div className=" flex gap-x-3">
               <button
-                className=" dark:text-white dark:hover:text-slate-500"
+                className="  dark:hover:text-slate-500 text-nowrap"
                 onClick={() => navigate("/login")}
               >
                 Đăng nhập
               </button>
-              <a
-                href="/#contact"
-                // className=" rounded-full border font-bold border-blue-500 px-3 py-1 text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white"
-                className=" rounded-full font-bold  px-3 py-1 bg-blue-500 text-white"
+              <button className=" text-nowrap">Đăng ký</button>
+            </div>
+          </div>
+          <div
+            className=" block lg:hidden"
+            onClick={() => setIsHidden(!isHidden)}
+          >
+            <div>
+              <ListIcon sx={{ color: "white", fontSize: 30 }} />
+            </div>
+          </div>
+          {isHidden && (
+            <div className=" lg:hidden absolute top-20 w-full bg-slate-900 rounded-lg flex flex-col right-0 z-50 ">
+              <button className=" hover:bg-white hover:text-black flex">
+                <a href="/#feature" className=" w-full p-2">
+                  Tính năng
+                </a>
+              </button>
+              <button className=" hover:bg-white hover:text-black flex">
+                <a className=" w-full  p-2" href="/#about-us">
+                  Về chúng tôi
+                </a>
+              </button>
+              <button className=" hover:bg-white hover:text-black flex">
+                <a className=" w-full  p-2" href="#contact">
+                  Liên hệ
+                </a>
+              </button>
+
+              <button className=" hover:bg-white hover:text-black flex">
+                <a className=" w-full  p-2" href="/#pricing">
+                  Bảng giá
+                </a>
+              </button>
+              <button className=" hover:bg-white hover:text-black flex">
+                <Link className=" w-full p-2" to={"/dashboard"}>
+                  X Products
+                </Link>
+              </button>
+              <button
+                className=" hover:bg-white hover:text-black p-2"
+                onClick={() => navigate("/login")}
               >
+                Đăng nhập
+              </button>
+              <button className=" hover:bg-white hover:text-black p-2">
                 Đăng ký
-              </a>
-            </>
+              </button>
+            </div>
           )}
-        </div>
-      </div>
+        </>
+      )}
     </header>
   );
 }
 
 export default Header;
+
+const HeaderTabs = () => {};

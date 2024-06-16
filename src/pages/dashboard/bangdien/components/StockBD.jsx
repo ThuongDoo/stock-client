@@ -64,7 +64,7 @@ function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
           className={`  grid ${
             cols > 0
               ? "grid-cols-[col]"
-              : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
           }  h-full overflow-y-scroll gap-2 auto-rows-min`}
         >
           {data?.map((stock, index) => (
@@ -79,11 +79,11 @@ function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
               }}
             >
               <div className=" flex justify-between">
-                <p className=" text-lg ">{stock?.Symbol}</p>
-                <p className=" text-lg ">
+                <p className=" text-base md:text-lg ">{stock?.Symbol}</p>
+                <p className=" text-base md:text-lg ">
                   {formatNumber(stock?.LastPrice / 1000, 2)}
                 </p>
-                <p className=" text-lg ">{stock?.RatioChange}%</p>
+                <p className=" text-base md:text-lg ">{stock?.RatioChange}%</p>
               </div>
               <div className=" flex justify-between">
                 <div className=" flex w-full justify-between">

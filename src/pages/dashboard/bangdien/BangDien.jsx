@@ -7,7 +7,6 @@ import api, { endpoints } from "../../../utils/api";
 
 function BangDien() {
   const [categories, setCategories] = useState([]);
-  const [securities, setSecurities] = useState([]);
   const [isReload, setisReload] = useState(false);
 
   const indexList = [
@@ -41,15 +40,6 @@ function BangDien() {
           console.log(e);
         });
     };
-    const fetchSecurities = async () => {
-      await api
-        .get(endpoints.SSI_SECURITY)
-        .then((res) => {
-          setSecurities(res.data.data);
-        })
-        .catch((e) => console.log(e));
-    };
-    fetchSecurities();
 
     fetchData();
   }, [isReload]);
@@ -64,14 +54,13 @@ function BangDien() {
         <BangDienHeader data={indexList} />
       </div>
       <div className=" flex w-full flex-grow h-0 gap-x-4">
-        <div className=" w-1/5 bg-slate-800 p-2 rounded-lg">
-          <Favorite securities={securities} />
+        <div className=" w-1/2 md:w-1/3 lg:w-1/5 bg-slate-800 p-2 rounded-lg">
+          <Favorite />
         </div>
-        <div className=" w-4/5 bg-slate-800 p-2 rounded-lg">
+        <div className=" w-1/2 md:w-2/3 lg:w-4/5 bg-slate-800 p-2 rounded-lg">
           <BangDienStockBoard
             tabs={indexList}
             categories={categories}
-            securities={securities}
             onReload={handleReload}
           />
         </div>

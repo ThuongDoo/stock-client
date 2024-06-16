@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import api, { endpoints } from "../utils/api";
 
-function SearchBar({ suggestionData, onSelect, placeholder = "Tìm kiểm" }) {
+function SearchBar({ onSelect, placeholder = "Tìm kiểm" }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [securities, setSecurities] = useState([]);
 
   const dropdownRef = useRef(null);
 
@@ -11,6 +13,22 @@ function SearchBar({ suggestionData, onSelect, placeholder = "Tìm kiểm" }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchSecurities = async () => {
+      await api
+        .get(endpoints.SSI_SECURITY)
+        .then((res) => {
+          const tempData = res.data.data.map((item) => {
+            return item.Symbol;
+          });
+          setSecurities(tempData);
+        })
+        .catch((e) => console.log(e));
+    };
+    fetchSecurities();
+    console.log("securities");
   }, []);
 
   const handleClickOutside = (event) => {
@@ -25,7 +43,7 @@ function SearchBar({ suggestionData, onSelect, placeholder = "Tìm kiểm" }) {
     // onSelect(value);
     // Tính toán các gợi ý dựa trên giá trị tìm kiếm
     // Ở đây, bạn có thể lấy dữ liệu từ API hoặc từ một danh sách dữ liệu cố định
-    const suggestions = suggestionData.filter((item) =>
+    const suggestions = securities.filter((item) =>
       item.toLowerCase().includes(value.toLowerCase())
     );
     setSuggestions(suggestions);

@@ -11,7 +11,7 @@ function TabBar({
   style: userStyle,
 }) {
   const defaultStyle = {
-    fontSize: "1.25rem",
+    // fontSize: "1.25rem",
     button: {
       padding: "0.75rem",
       onActive: { backgroundColor: "#3b82f6" },
@@ -79,7 +79,9 @@ function TabBar({
                     sx={{ color: darkMode ? "white" : "black", fontSize: 30 }}
                   />
                 )}
-                {hideDisplayName === false && <h1>{tab?.displayName}</h1>}
+                {hideDisplayName === false && (
+                  <h1 className=" text-nowrap">{tab?.displayName}</h1>
+                )}
               </div>
             }
             description={tab.displayName}

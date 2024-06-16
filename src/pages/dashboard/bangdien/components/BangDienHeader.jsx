@@ -14,95 +14,6 @@ const changeIndexName = (data, nameList) => {
 };
 
 function BangDienHeader({ data }) {
-  const tempData = [
-    {
-      IndexId: "HNXINDEX",
-      IndexValue: 243.97,
-      PriorIndexValue: 1301.51,
-      TradingDate: "14/06/2024",
-      Time: "15:02:04",
-      TotalTrade: 622871,
-      TotalQtty: 1009516769,
-      TotalValue: 2136822576902,
-      IndexName: "HNXINDEX",
-      Advances: 56,
-      NoChanges: 46,
-      Declines: 139,
-      Ceilings: 9,
-      Floors: 9,
-      Change: -4.39,
-      RatioChange: -1.77,
-      TotalQttyPt: 101120324,
-      TotalValuePt: 2596676230980,
-      Exchange: "HOSE",
-      AllQty: 1110637093,
-      AllValue: 2136822576902,
-      IndexType: "Main",
-      TradingSession: "C",
-      MarketId: null,
-      RType: "MI",
-      TotalQttyOd: 0,
-      TotalValueOd: 0,
-    },
-    {
-      IndexId: "HNX30",
-      IndexValue: 540.53,
-      PriorIndexValue: 1301.51,
-      TradingDate: "14/06/2024",
-      Time: "15:02:04",
-      TotalTrade: 622871,
-      TotalQtty: 1009516769,
-      TotalValue: 1720562769020,
-      IndexName: "HNX30",
-      Advances: 2,
-      NoChanges: 3,
-      Declines: 28,
-      Ceilings: 0,
-      Floors: 0,
-      Change: -21.6,
-      RatioChange: -1.66,
-      TotalQttyPt: 101120324,
-      TotalValuePt: 2596676230980,
-      Exchange: "HOSE",
-      AllQty: 1110637093,
-      AllValue: 1720562769020,
-      IndexType: "Main",
-      TradingSession: "C",
-      MarketId: null,
-      RType: "MI",
-      TotalQttyOd: 0,
-      TotalValueOd: 0,
-    },
-    {
-      IndexId: "VNIndex",
-      IndexValue: 98.05,
-      PriorIndexValue: 1301.51,
-      TradingDate: "14/06/2024",
-      Time: "15:02:04",
-      TotalTrade: 622871,
-      TotalQtty: 1009516769,
-      TotalValue: 26765305769020,
-      IndexName: "VNINDEX",
-      Advances: 182,
-      NoChanges: 101,
-      Declines: 195,
-      Ceilings: 47,
-      Floors: 9,
-      Change: -0.97,
-      RatioChange: -0.98,
-      TotalQttyPt: 101120324,
-      TotalValuePt: 2596676230980,
-      Exchange: "HOSE",
-      AllQty: 1110637093,
-      AllValue: 1633361000000,
-      IndexType: "Main",
-      TradingSession: "C",
-      MarketId: null,
-      RType: "MI",
-      TotalQttyOd: 0,
-      TotalValueOd: 0,
-    },
-  ];
   const [indexData, setIndexData] = useState([]);
   const indexIds = data
     .slice(1)
@@ -117,7 +28,6 @@ function BangDienHeader({ data }) {
     socket.on(EVENTS.SSI_MI_UPDATE, (indexData) => {
       try {
         const changedIndex = changeIndexName(JSON.parse(indexData.data), data);
-        changedIndex.push(...tempData);
         setIndexData(changedIndex);
       } catch (error) {}
     });
@@ -135,7 +45,6 @@ function BangDienHeader({ data }) {
       }
     };
   }, []);
-  console.log(indexData);
   return (
     <div className="flex items-center justify-evenly w-full h-full overflow-x-scroll">
       {indexData?.map((item, index) => (

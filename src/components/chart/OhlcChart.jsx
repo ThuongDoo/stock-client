@@ -123,7 +123,6 @@ export const OhlcChart = (props) => {
       wickUpColor: "#26a69a",
       wickDownColor: "#ef5350",
     });
-    // console.log(data);
     newSeries.setData(data);
 
     window.addEventListener("resize", handleResize);
