@@ -52,17 +52,23 @@ export const OhlcChart = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const endpoint =
-      //   smallestTimeFrame === "1d"
-      //     ? endpoints.OHLC_DAILY
-      //     : smallestTimeFrame === "1m" && endpoints.OHLC_INTRADAY;
-      await api
-        .get(endpoints.OHLC_DAILY + `?ticker=${ticker}`)
-        .then(async (res) => {
-          const tempData = await formatData(res.data.data, "1d");
-          setData(tempData);
-        })
-        .catch((e) => console.log(e));
+      if (smallestTimeFrame === "1d") {
+        await api
+          .get(endpoints.OHLC_DAILY + `?ticker=${ticker}`)
+          .then(async (res) => {
+            const tempData = await formatData(res.data.data, "1d");
+            setData(tempData);
+          })
+          .catch((e) => console.log(e));
+      } else {
+        await api
+          .get(endpoints.OHLC_INTRADAY + `?ticker=${ticker}`)
+          .then(async (res) => {
+            const tempData = await formatData(res.data.data, "1m");
+            setData(tempData);
+          })
+          .catch((e) => console.log(e));
+      }
     };
 
     fetchData();
@@ -114,7 +120,7 @@ export const OhlcChart = (props) => {
         },
       },
     });
-    // chart.timeScale().fitContent();
+    chart.timeScale().fitContent();
 
     const newSeries = chart.addCandlestickSeries({
       upColor: "#26a69a",

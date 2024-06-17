@@ -15,85 +15,91 @@ const Footer = () => {
   const tiktokLink =
     "https://www.tiktok.com/@teamchungkhoanxyz?_t=8lDa8QvTDUe&_r=1";
   const mailLink = "mailto:support@chungkhoanxyz.com";
-
+  const MiddleFooter = () => {
+    return (
+      <div className="   flex  items-start flex-col gap-y-2 px-1">
+        <h1 className=" text-xs sm:text-sm lg:text-lg font-bold">
+          Bạn cần hỗ trợ
+        </h1>
+        <div className=" flex flex-col items-start gap-y-1">
+          <div className=" text-left">
+            <h1 className=" text-xs sm:text-md lg:text-lg font-bold">
+              0939.600.338 (Mr. Luân)
+            </h1>
+            <h1 className=" text-xs sm:text-md lg:text-lg font-bold">
+              0936.842.309 (Mr. Phú)
+            </h1>
+          </div>
+          <h1 className=" text-xs sm:text-sm lg:text-md text-start">
+            <span className=" font-bold">Email: </span>
+            support@chungkhoanxyz.com
+          </h1>
+          <h1 className=" text-xs sm:text-sm lg:text-md text-start">
+            <span className=" font-bold">Địa chỉ: </span>
+            P2 Vinhomes Central Park, Phường 22, Quận Bình Thạnh, Thành phố Hồ
+            Chí Minh
+          </h1>
+          <div className=" flex gap-x-4 py-2">
+            <a
+              href={tiktokLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+            >
+              <FontAwesomeIcon
+                icon={faTiktok}
+                style={{ fontSize: 20, color: "black" }}
+              />
+            </a>
+            <a
+              href={youtubeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+            >
+              <FontAwesomeIcon
+                icon={faFacebookF}
+                style={{ fontSize: 20, color: "black" }}
+              />
+            </a>
+            <a
+              href="URL_CỦA_BẠN"
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+            >
+              <FontAwesomeIcon
+                icon={faYoutube}
+                style={{ fontSize: 20, color: "black" }}
+              />
+            </a>
+            <a
+              href={mailLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+            >
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                style={{ fontSize: 20, color: "black" }}
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <footer className=" px-6 bg-slate-900 flex flex-col md:px-12 lg:px-24  justify-between text-white">
-      <div className=" py-4 flex justify-evenly ">
+      <div className=" py-4 flex justify-between sm:justify-evenly ">
         <div className=" flex flex-col items-center justify-center">
           <img src={logo} alt="" className=" size-20" />
           <h1 className="  text-3xl font-bold">XYZ TEAM</h1>
         </div>
-        <div className="   flex  items-start flex-col gap-y-2 px-1">
-          <h1 className=" text-xs sm:text-sm lg:text-lg font-bold">
-            Bạn cần hỗ trợ
-          </h1>
-          <div className=" flex flex-col items-start gap-y-1">
-            <div className=" text-left">
-              <h1 className=" text-xs sm:text-md lg:text-lg font-bold">
-                0939.600.338 (Mr. Luân)
-              </h1>
-              <h1 className=" text-xs sm:text-md lg:text-lg font-bold">
-                0936.842.309 (Mr. Phú)
-              </h1>
-            </div>
-            <h1 className=" text-xs sm:text-sm lg:text-md text-start">
-              <span className=" font-bold">Email: </span>
-              support@chungkhoanxyz.com
-            </h1>
-            <h1 className=" text-xs sm:text-sm lg:text-md text-start">
-              <span className=" font-bold">Địa chỉ: </span>
-              P2 Vinhomes Central Park, Phường 22, Quận Bình Thạnh, Thành phố Hồ
-              Chí Minh
-            </h1>
-            <div className=" flex gap-x-4 py-2">
-              <a
-                href={tiktokLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faTiktok}
-                  style={{ fontSize: 20, color: "black" }}
-                />
-              </a>
-              <a
-                href={youtubeLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faFacebookF}
-                  style={{ fontSize: 20, color: "black" }}
-                />
-              </a>
-              <a
-                href="URL_CỦA_BẠN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faYoutube}
-                  style={{ fontSize: 20, color: "black" }}
-                />
-              </a>
-              <a
-                href={mailLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
-              >
-                <FontAwesomeIcon
-                  icon={faEnvelope}
-                  style={{ fontSize: 20, color: "black" }}
-                />
-              </a>
-            </div>
-          </div>
-        </div>
 
+        <div className=" hidden sm:block">
+          <MiddleFooter />
+        </div>
         <div className="    flex flex-col  items-start gap-y-2  min-w-fit">
           <h1 className=" text-xs sm:text-sm lg:text-lg font-bold">
             Giói thiệu
@@ -116,6 +122,9 @@ const Footer = () => {
             </a>
           </div>
         </div>
+      </div>
+      <div className=" sm:hidden">
+        <MiddleFooter />
       </div>
 
       <div className=" flex justify-center items-center gap-x-4 border-t border-slate-700 py-4">

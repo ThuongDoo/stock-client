@@ -95,7 +95,7 @@ function BangDienStockBoard({ tabs, categories, onReload = () => {} }) {
 
   return (
     <div className="flex flex-col h-full gap-y-2">
-      <div className=" flex items-center gap-x-2 overflow-x-scroll">
+      <div className=" flex items-center gap-x-2 overflow-x-scrol overflow-y-visible">
         <button onClick={() => setIsAsc(!isAsc)} className=" ">
           <SortIcon
             sx={{
