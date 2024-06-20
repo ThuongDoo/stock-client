@@ -175,7 +175,7 @@ export const SignalChart = (props) => {
         type: "volume",
       },
       priceScaleId: "", // set as an overlay by setting a blank priceScaleId
-      color: "#4167f0",
+      color: "#686D76",
     });
     volumeSeries.priceScale().applyOptions({
       // set the positioning of the volume series

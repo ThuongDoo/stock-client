@@ -6,16 +6,20 @@ import {
 } from "lightweight-charts";
 import React, { useEffect, useRef, useState } from "react";
 import api, { endpoints } from "../../utils/api";
-import { format, getTime, parseISO } from "date-fns";
+import { addHours, format, getTime, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../slices/themeSlice";
+import { getLocalTimezoneOffset } from "../../utils/getLocalTimezoneOffset";
 
 const formatData = async (data, type) => {
   const tempData = await data.map((item) => {
     const inputDate = item.time;
     let formattedDate;
     if (type === "1m") {
-      formattedDate = getTime(parseISO(inputDate)) / 1000;
+      const parsedDate = parseISO(inputDate);
+      const timeZoneOffset = getLocalTimezoneOffset();
+      const newDate = addHours(parsedDate, timeZoneOffset);
+      formattedDate = getTime(newDate) / 1000;
     } else {
       formattedDate = format(inputDate, "yyyy-MM-dd");
     }

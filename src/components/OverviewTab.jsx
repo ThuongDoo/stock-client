@@ -35,11 +35,11 @@ function OverviewTab({ symbol }) {
     setActiveTab(value.name);
   };
   return (
-    <div className=" h-full flex border border-gray-500 divide-x divide-white">
+    <div className=" h-full flex border border-gray-500">
       <div className=" w-9/12 h-full ">
         <OhlcChart ticker={symbol} />
       </div>
-      <div className=" w-3/12 bg-slate-600">
+      <div className=" w-3/12 bg-slate-800">
         <div className=" flex flex-col p-2 gap-y-2 h-full">
           <div>
             <TabBar
@@ -60,7 +60,7 @@ function OverviewTab({ symbol }) {
             {activeTab === 0 ? (
               <TongQuan xData={xData} />
             ) : (
-              <MucGia xData={xData} />
+              <MucGia symbol={symbol} />
             )}
           </div>
         </div>
@@ -102,6 +102,7 @@ function TongQuan({ xData }) {
       socket.off(EVENTS.SSI_R_UPDATE);
     };
   }, [symbol]);
+  console.log(rData);
   return (
     <div className=" flex flex-col text-sm">
       {data?.map((item, index) => (
@@ -139,44 +140,76 @@ function TongQuan({ xData }) {
   );
 }
 
-function MucGia({ xData }) {
-  const data = [];
-  if (xData) {
-    for (let i = 1; i <= 10; i++) {
-      let object = {};
-      // object.AskPrice = xData[`AskPrice${i}`];
-      object.AskVol = xData[`AskVol${i}`];
-      // object.BidPrice = xData[`BidPrice${i}`];
-      object.BidVol = xData[`BidVol${i}`];
-      object.label = xData[`AskPrice${i}`];
-      if (object.label !== 0) {
-        data.push(object);
+function MucGia({ symbol }) {
+  const [orderBook, setOrderBook] = useState([]);
+  const formatOrderBook = (data) => {
+    console.log(data);
+    const priceMap = {};
+    for (const item of data) {
+      if (!priceMap[item.lastPrice]) {
+        priceMap[item.lastPrice] = {
+          price: formatNumber(item.lastPrice / 1000, 2),
+          sd: 0,
+          bu: 0,
+          uk: 0,
+        };
+      }
+      switch (item.side) {
+        case "BU":
+          priceMap[item.lastPrice].bu += item.lastVol;
+          break;
+        case "SD":
+          priceMap[item.lastPrice].sd += item.lastVol;
+          break;
+        default:
+          priceMap[item.lastPrice].uk += item.lastVol;
+          break;
       }
     }
-  }
-  console.log(xData);
+    return Object.values(priceMap);
+  };
+  useEffect(() => {
+    socket.on(EVENTS.SSI_ORDER_BOOK_UPDATE, (tradeData) => {
+      try {
+        const formattedData = formatOrderBook(JSON.parse(tradeData.data));
+        setOrderBook(formattedData);
+      } catch (error) {}
+    });
+
+    // Function to emit the socket event
+    const emitTradeRequest = () => {
+      socket.emit(EVENTS.SSI_ORDER_BOOK_REQUEST, symbol);
+    };
+    emitTradeRequest();
+
+    // Start the interval for emitting the request
+    return () => {
+      socket.off(EVENTS.SSI_ORDER_BOOK_UPDATE);
+    };
+  }, [symbol]);
   return (
     <div className=" h-full w-full">
-      <MucGiaChart data={data} />
+      <MucGiaChart data={orderBook} />
     </div>
   );
 }
 
 function NuocNgoaiTable({ h1, h2, h3, d1, d2, d3 }) {
+  console.log(d1, d2, d3);
   return (
     <table className="w-full">
       <thead>
         <tr className=" text-sm">
-          <th className="w-1/4">{h1}</th>
-          <th className="w-1/4">{h2}</th>
-          <th className="w-2/4">{h3}</th>
+          <th className="w-1/3">{h1}</th>
+          <th className="w-1/3">{h2}</th>
+          <th className="w-1/3">{h3}</th>
         </tr>
       </thead>
       <tbody>
         <tr className=" text-sm">
-          <td className="w-1/4">{formatNumber(d1, 2)}</td>
-          <td className="w-1/4">{formatNumber(d2, 2)}</td>
-          <td className="w-2/4">{formatNumber(d3, 2)}</td>
+          <td className="w-1/3">{d1 ? formatNumber(d1, 2) : 0}</td>
+          <td className="w-1/3">{d2 ? formatNumber(d2, 2) : 0}</td>
+          <td className="w-1/3">{d3 ? formatNumber(d3, 2) : 0}</td>
         </tr>
       </tbody>
     </table>

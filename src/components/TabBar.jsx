@@ -80,7 +80,7 @@ function TabBar({
                   />
                 )}
                 {hideDisplayName === false && (
-                  <h1 className=" text-nowrap">{tab?.displayName}</h1>
+                  <h1 className=" text-nowrap px-1">{tab?.displayName}</h1>
                 )}
               </div>
             }

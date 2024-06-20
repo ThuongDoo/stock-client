@@ -45,7 +45,7 @@ const TimelineSlider = ({ onChange }) => {
         styles={{
           handle: {
             height: 21, // Chiều cao của handle
-            width: 30, // Chiều rộng của handle
+            width: 10, // Chiều rộng của handle
             borderRadius: "4px", // Độ cong của góc handle để tạo thành hình chữ nhật
             backgroundColor: "grey",
             accentColor: "grey",

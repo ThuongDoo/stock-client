@@ -8,10 +8,10 @@ import SearchBar from "../../../../components/SearchBar";
 import { useSelector } from "react-redux";
 import { getUser } from "../../../../slices/userSlice";
 
-function Favorite() {
-  const [isAsc, setIsAsc] = useState(false);
+function Favorite({ isParentReload }) {
+  const [isAsc, setIsAsc] = useState(true);
   const [mySecurities, setMySecurities] = useState([]);
-  const [isReload, setIsReload] = useState(false);
+  const [isReload, setIsReload] = useState(isParentReload);
   const [stockBoardData, setStockBoardData] = useState([]);
   const user = useSelector(getUser);
   const emitInterval = useRef(null);
@@ -60,7 +60,6 @@ function Favorite() {
   }, [mySecurities]);
 
   const handleSearch = async (value) => {
-    console.log("hihi");
     await api
       .post(endpoints.USER_SECURITY + `/${user.phone}/${value}`)
       .then((res) => {

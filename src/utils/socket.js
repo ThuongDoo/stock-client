@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
-const SOCKET_SERVER_URL = "https://chungkhoanxyz.com";
-// const SOCKET_SERVER_URL = "http://localhost:3000";
+// const SOCKET_SERVER_URL = "https://chungkhoanxyz.com";
+const SOCKET_SERVER_URL = "http://localhost:3000";
 
 export const socket = io(SOCKET_SERVER_URL);
 
@@ -22,4 +22,6 @@ export const EVENTS = {
   SSI_X_UPDATE: "ssi_x_update",
   SSI_R_REQUEST: "ssi_r_request",
   SSI_R_UPDATE: "ssi_r_update",
+  SSI_ORDER_BOOK_REQUEST: "ssi_order_book_request",
+  SSI_ORDER_BOOK_UPDATE: "ssi_order_book_update",
 };

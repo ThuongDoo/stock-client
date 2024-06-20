@@ -6,7 +6,6 @@ import Favorite from "./components/Favorite";
 import api, { endpoints } from "../../../utils/api";
 
 function BangDien() {
-  const [categories, setCategories] = useState([]);
   const [isReload, setisReload] = useState(false);
 
   const indexList = [
@@ -17,32 +16,6 @@ function BangDien() {
     { name: "HNX30", displayName: "HNX30" },
     { name: "HNXUpcomIndex", displayName: "UPCOM" },
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await api
-        .get(endpoints.CATEGORY)
-        .then((res) => {
-          const data = res.data.map((categoryItem) => {
-            const securityData = categoryItem.Securities.map((securityItem) => {
-              return securityItem.Symbol;
-            }).join(",");
-            return {
-              id: categoryItem.id,
-              name: categoryItem.name,
-              securities: securityData,
-            };
-          });
-          data.unshift({ id: "", name: "TẤT CẢ" });
-          setCategories(data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
-
-    fetchData();
-  }, [isReload]);
 
   const handleReload = () => {
     setisReload(!isReload);
@@ -55,14 +28,10 @@ function BangDien() {
       </div>
       <div className=" flex w-full flex-grow h-0 gap-x-4">
         <div className=" w-1/2 md:w-1/3 lg:w-1/5 bg-slate-800 p-2 rounded-lg">
-          <Favorite />
+          <Favorite isParentReload={isReload} />
         </div>
         <div className=" w-1/2 md:w-2/3 lg:w-4/5 bg-slate-800 p-2 rounded-lg">
-          <BangDienStockBoard
-            tabs={indexList}
-            categories={categories}
-            onReload={handleReload}
-          />
+          <BangDienStockBoard tabs={indexList} onReload={handleReload} />
         </div>
       </div>
     </div>

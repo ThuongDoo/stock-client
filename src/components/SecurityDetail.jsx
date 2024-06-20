@@ -16,7 +16,7 @@ function SecurityDetail({ onClose, symbol, onReload = () => {} }) {
   const [isFavorite, setIsFavorite] = useState(null);
   const [isReload, setIsReload] = useState(false);
   const tabs = [
-    { name: "tong-quan", displayName: "Tổng quan" },
+    { name: "tong-quan", displayName: "Biến động thị trường" },
     { name: "tin-hieu", displayName: "Tín hiệu" },
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].name);
@@ -110,13 +110,18 @@ function SecurityDetail({ onClose, symbol, onReload = () => {} }) {
       <div className=" dark:bg-slate-900 bg-neutral-200 text-black dark:text-white p-4 absolute w-3/4  h-3/4 flex flex-col rounded-xl  drop-shadow-glow gap-y-2">
         <div className=" flex justify-between border-b border-white">
           <div className=" pb-3">
-            <div className=" flex">
-              <h1>{symbol}</h1>
-              <div className=" bg-white w-0.5"></div>
-              <h1>{securityInfo?.Exchange}</h1>
+            <div className=" flex gap-x-3">
+              <div className=" flex">
+                <h1 className=" text-lg font-bold">{symbol}: </h1>
+                {/* <div className=" bg-white w-0.5"></div> */}
+                <h1 className=" text-lg font-bold">
+                  {" "}
+                  {securityInfo?.Exchange}
+                </h1>
+              </div>
               {isFavorite ? (
                 <button
-                  className=" flex items-center bg-red-500 hover:bg-red-700 font-bold py-0.5 px-2 rounded"
+                  className=" flex items-center bg-red-500 hover:bg-red-700 font-semibold py-0.5 px-2 rounded"
                   onClick={() => {
                     handleUnFavorite(symbol);
                   }}
@@ -126,7 +131,7 @@ function SecurityDetail({ onClose, symbol, onReload = () => {} }) {
                 </button>
               ) : (
                 <button
-                  className=" flex items-center bg-blue-500 hover:bg-blue-700 font-bold py-0.5 px-2 rounded"
+                  className=" flex items-center bg-blue-500 hover:bg-blue-700 font-semibold py-0.5 px-2 rounded"
                   onClick={() => {
                     handleFavorite(symbol);
                   }}
@@ -140,12 +145,12 @@ function SecurityDetail({ onClose, symbol, onReload = () => {} }) {
           </div>
           <div className=" flex flex-col items-end justify-between">
             <div
-              className=" bg-red-500 cursor-pointer flex items-center"
+              className=" bg-red-500 cursor-pointer flex items-center justify-center"
               onClick={() => onClose(true)}
             >
               <CloseIcon sx={{ color: "white", fontSize: 20 }} />
             </div>
-            <div className=" w-48">
+            <div className="">
               <TabBar
                 tabs={tabs}
                 isHorizontal

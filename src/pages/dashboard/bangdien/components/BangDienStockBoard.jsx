@@ -17,12 +17,13 @@ const formatIndexSecurities = (data) => {
   return formattedData;
 };
 
-function BangDienStockBoard({ tabs, categories, onReload = () => {} }) {
+function BangDienStockBoard({ tabs, onReload = () => {} }) {
   const [indexSecurities, setIndexSecurities] = useState({});
   const [chosenSecurities, setChosenSecurities] = useState(null);
   const [stockBoardData, setStockBoardData] = useState([]);
-  const [isAsc, setIsAsc] = useState(false);
+  const [isAsc, setIsAsc] = useState(true);
   const [isReload, setIsReload] = useState(false);
+  const [categories, setCategories] = useState([]);
   const indexIds = tabs
     .slice(1)
     .map((item) => {
@@ -31,6 +32,32 @@ function BangDienStockBoard({ tabs, categories, onReload = () => {} }) {
     .join(",");
 
   const emitInterval = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await api
+        .get(endpoints.CATEGORY)
+        .then((res) => {
+          const data = res.data.map((categoryItem) => {
+            const securityData = categoryItem.Securities.map((securityItem) => {
+              return securityItem.Symbol;
+            }).join(",");
+            return {
+              id: categoryItem.id,
+              name: categoryItem.name,
+              securities: securityData,
+            };
+          });
+          data.unshift({ id: "", name: "Nhóm ngành" });
+          setCategories(data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

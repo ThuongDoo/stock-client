@@ -22,18 +22,26 @@ ChartJS.register(
 
 const MucGiaChart = ({ data }) => {
   const chartData = {
-    labels: data.map((item) => item.label),
+    labels: data.map((item) => item.price),
     datasets: [
       {
-        label: "Mua",
-        data: data.map((item) => item.BidVol),
-        backgroundColor: "#22c55e", // Màu xanh
+        label: "Bán",
+        data: data.map((item) => item.sd),
+        backgroundColor: "#22c55e", // Màu đỏ22c55e
+        borderRadius: 200,
         barThickness: 20,
       },
       {
-        label: "Bán",
-        data: data.map((item) => item.AskVol),
-        backgroundColor: "#ef4444", // Màu đỏ
+        label: "Mua",
+        data: data.map((item) => item.bu),
+        backgroundColor: "#ef4444", // Màu xanh
+        barThickness: 20,
+      },
+
+      {
+        label: "Không xác định",
+        data: data.map((item) => item.uk),
+        backgroundColor: "grey", // Màu đỏ
         borderRadius: 200,
         barThickness: 20,
       },
