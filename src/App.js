@@ -27,8 +27,9 @@ import Roc from "./pages/dashboard/roc/Roc";
 import { useEffect } from "react";
 import { socket } from "./utils/socket";
 import CategoryManager from "./pages/admin/category/CategoryManager";
-import Academic from "./pages/academic/Academic";
 import Signup from "./pages/signup/Signup";
+import Academic from "./pages/dashboard/academic/Academic";
+import Article from "./pages/admin/article/Article";
 
 function App() {
   useEffect(() => {
@@ -58,10 +59,10 @@ function App() {
             <Route element={<ImportBuysell />} path="buysell" />
           </Route>
           <Route element={<CategoryManager />} path="category" />
+          <Route element={<Article />} path="article" />
         </Route>
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
-        <Route element={<Academic />} path="/academic" />
         <Route path="*" element={<Navigate to="/" replace />}></Route>
       </Route>
     )

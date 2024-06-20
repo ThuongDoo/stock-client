@@ -35,12 +35,12 @@ function OverviewTab({ symbol }) {
     setActiveTab(value.name);
   };
   return (
-    <div className=" h-full flex border border-gray-500">
+    <div className=" h-full flex gap-x-1">
       <div className=" w-9/12 h-full ">
         <OhlcChart ticker={symbol} />
       </div>
-      <div className=" w-3/12 bg-slate-800">
-        <div className=" flex flex-col p-2 gap-y-2 h-full">
+      <div className=" w-3/12 bg-slate-900">
+        <div className=" flex flex-col gap-y-2 h-full">
           <div>
             <TabBar
               tabs={tabs}
@@ -109,7 +109,7 @@ function TongQuan({ xData }) {
         <div
           key={index}
           className={` py-2 px-1 flex justify-between ${
-            index % 2 === 0 ? " bg-slate-700" : "bg-slate-600"
+            index % 2 === 0 ? " bg-slate-800" : "bg-slate-900"
           }`}
         >
           <h1>{item.name}</h1>

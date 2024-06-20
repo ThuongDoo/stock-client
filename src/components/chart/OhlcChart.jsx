@@ -91,7 +91,7 @@ export const OhlcChart = (props) => {
       layout: {
         background: {
           type: ColorType.Solid,
-          color: darkMode ? "#0F172A" : backgroundColor,
+          color: darkMode ? "black" : backgroundColor,
         },
         textColor: darkMode ? "white" : textColor,
       },

@@ -166,7 +166,7 @@ function SecurityDetail({ onClose, symbol, onReload = () => {} }) {
             </div>
           </div>
         </div>
-        <div className=" h-full ">
+        <div className=" h-full">
           {activeTab === tabs[0].name ? (
             <OverviewTab symbol={symbol} />
           ) : (

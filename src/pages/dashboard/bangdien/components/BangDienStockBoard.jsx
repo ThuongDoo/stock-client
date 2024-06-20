@@ -48,6 +48,40 @@ function BangDienStockBoard({ tabs, onReload = () => {} }) {
               securities: securityData,
             };
           });
+          const specialCategory = [
+            "NGAN_HANG",
+            "CHUNG_KHOAN",
+            "THEP",
+            "BDS",
+            "BDS_KCN",
+            "DAU_TU_CONG",
+            "BAN_LE",
+            "HOACHAT_PHANBON",
+            "DAU_KHI",
+            "VANTAI_CANG",
+            "DET_MAY",
+            "CONG_NGHE",
+          ];
+          data.sort((a, b) => {
+            let indexA = specialCategory.indexOf(a.id);
+            let indexB = specialCategory.indexOf(b.id);
+
+            // Nếu cả hai phần tử đều có trong specialOrder
+            if (indexA !== -1 && indexB !== -1) {
+              return indexA - indexB;
+            }
+            // Nếu chỉ có phần tử a có trong specialOrder
+            if (indexA !== -1) {
+              return -1;
+            }
+            // Nếu chỉ có phần tử b có trong specialOrder
+            if (indexB !== -1) {
+              return 1;
+            }
+            // Nếu cả hai phần tử đều không có trong specialOrder
+            return a.id.localeCompare(b.id);
+          });
+          console.log(data);
           data.unshift({ id: "", name: "Nhóm ngành" });
           setCategories(data);
         })
