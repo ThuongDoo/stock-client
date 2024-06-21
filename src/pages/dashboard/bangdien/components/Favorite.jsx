@@ -34,7 +34,7 @@ function Favorite({ isParentReload }) {
     };
     fetchData();
     return () => {};
-  }, [isReload]);
+  }, [isReload, isParentReload]);
 
   useEffect(() => {
     socket.on(EVENTS.SSI_FAVORITE_UPDATE, (tradeData) => {

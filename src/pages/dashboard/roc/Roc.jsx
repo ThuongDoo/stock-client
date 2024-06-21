@@ -4,7 +4,6 @@ import { RocChart } from "./RocChart";
 import { format } from "date-fns";
 import { STRINGS } from "../../../constants/strings";
 import Loading from "../../../skeletons/Loading";
-import sizeof from "object-sizeof";
 import TimelineSlider from "../../../components/TimelineSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, setCategory } from "../../../slices/categorySlice";

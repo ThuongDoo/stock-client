@@ -21,7 +21,6 @@ import BuySell from "./pages/dashboard/buysell/BuySell";
 import LocCoPhieu from "./pages/dashboard/locCoPhieu/LocCoPhieu";
 import UserManager from "./pages/admin/UserManager";
 import RequestManager from "./pages/admin/requestManager/RequestManager";
-import ImportFile from "./pages/admin/importFile/ImportFile";
 import ImportBuysell from "./pages/admin/importFile/ImportBuysell";
 import Roc from "./pages/dashboard/roc/Roc";
 import { useEffect } from "react";
@@ -55,9 +54,7 @@ function App() {
         <Route element={<Admin />} path="/admin">
           <Route element={<UserManager />} path="user-manager" />
           <Route element={<RequestManager />} path="request-manager" />
-          <Route element={<ImportFile />} path="import">
-            <Route element={<ImportBuysell />} path="buysell" />
-          </Route>
+          <Route element={<ImportBuysell />} path="buysell" />
           <Route element={<CategoryManager />} path="category" />
           <Route element={<Article />} path="article" />
         </Route>
