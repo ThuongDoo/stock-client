@@ -19,3 +19,10 @@ code {
 body .MuiDataGrid-columnsManagement {
   max-height: 200px !important;
 }
+
+* {
+  scrollbar-width:none;
+  /* scrollbar-color: #888 #f1f1f1;  */
+}
+
+/* Chỉnh sửa các trình duyệt sử dụng WebKit, như Chrome và Safari */
