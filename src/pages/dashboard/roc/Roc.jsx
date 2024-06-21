@@ -9,17 +9,31 @@ import TimelineSlider from "../../../components/TimelineSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, setCategory } from "../../../slices/categorySlice";
 
-const lineColors = [
-  "#F16889",
-  "#D2294D",
-  "#D3B6F4",
-  "#1DDAE4",
-  "#0906DE",
-  "#B0FDF5",
-  "#6542DC",
-  "#B40ADB",
-  "#49C75F",
-  "#FEAFA0",
+const colors = [
+  "#FF0000", // Màu đỏ
+  "#00FF00", // Màu xanh lá cây
+  "#0000FF", // Màu xanh da trời
+  "#00FFFF", // Màu xanh da trời nhạt
+  "#FFA500", // Màu cam
+  "#FFC0CB", // Màu hồng
+  "#FFFF00", // Màu vàng
+  "#EE82EE", // Màu violet
+  "#800080", // Màu tím
+  "#808080", // Màu xám
+  "#008000", // Màu xanh lục
+  "#000080", // Màu xanh dương đậm
+  "#A52A2A", // Màu nâu
+  "#000000", // Màu đen
+  "#FFFFFF", // Màu trắng
+  "#8B0000", // Màu đỏ đậm
+  "#FF8C00", // Màu cam đậm
+  "#FFFFE0", // Màu vàng nhạt
+  "#ADD8E6", // Màu xanh dương nhạt
+  "#D8BFD8", // Màu tím nhạt
+  "#2E8B57", // Màu xanh ngọc bích
+  "#006400", // Màu xanh lục đậm
+  "#B87333", // Màu đồng
+  "#D3D3D3", // Màu xám nhạt
 ];
 
 const buttonArray = ["6m", "1y", "2y", "5y"];
@@ -45,14 +59,13 @@ const formatData = async (stocks) => {
   const groupedData = {};
 
   // Lặp qua từng đối tượng trong mảng data
-  stocks.forEach((obj) => {
+  stocks.forEach((obj, index) => {
     // Kiểm tra xem đã có đối tượng cho category này chưa
     if (!groupedData[obj.category]) {
       // Nếu chưa có, tạo một mảng mới để lưu trữ các đối tượng
       groupedData[obj.category] = {
         category: obj.category,
         displayName: obj.displayName,
-        color: getRandomColorHex(),
         data: [],
         isChosen: true,
       };
@@ -76,16 +89,15 @@ const formatData = async (stocks) => {
   });
   const resultArray = Object.entries(groupedData)
     .map((item, index) => {
-      // console.log(item);
       item[1].data[0].value = 0;
       return {
         ...item[1],
+        color: colors[index],
       };
     })
     .sort((a, b) => {
       const nameA = a.category.toUpperCase(); // Chuyển tên thành chữ hoa để so sánh
       const nameB = b.category.toUpperCase(); // Chuyển tên thành chữ hoa để so sánh
-      console.log(nameA);
       return (nameA ?? "") < (nameB ?? "")
         ? -1
         : (nameA ?? "") > (nameB ?? "")
@@ -102,9 +114,7 @@ function Roc() {
   const [timeRange, setTimeRange] = useState([]);
   const chosenCategories = useSelector(getCategory);
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(timeRange);
-  }, [timeRange]);
+  useEffect(() => {}, [timeRange]);
 
   const updateData = (startTime, endTime) => {
     setIsLoading(true);
@@ -112,7 +122,6 @@ function Roc() {
       await api
         .get(endpoints.ROC + `/?startDate=${startTime}&endDate=${endTime}`)
         .then(async (res) => {
-          console.log(res.data);
           const formattedData = await formatData(res.data);
 
           setIsLoading(false);
@@ -167,7 +176,7 @@ function Roc() {
           </div>
         </div>
       )}
-      <div className=" ">
+      <div className="">
         <TimelineSlider onChange={handleTimeline} />
       </div>
     </div>

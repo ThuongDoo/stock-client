@@ -10,7 +10,7 @@ function BangDien() {
 
   const indexList = [
     { name: "ALL", displayName: "TẤT CẢ" },
-    { name: "VNIndex", displayName: "VNINDEX" },
+    { name: "VNINDEX", displayName: "VNINDEX" },
     { name: "VN30", displayName: "VN30" },
     { name: "HNXIndex", displayName: "HNX" },
     { name: "HNX30", displayName: "HNX30" },

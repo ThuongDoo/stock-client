@@ -4,6 +4,7 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { addMonths, differenceInMonths, format, subYears } from "date-fns";
 import { vi } from "date-fns/locale";
+import "./TimelineSlider.css";
 
 const TimelineSlider = ({ onChange }) => {
   const now = new Date();
@@ -40,27 +41,33 @@ const TimelineSlider = ({ onChange }) => {
   }, []);
 
   return (
-    <div className="max-w-lg mx-auto ">
+    <div className=" max-w-3xl mx-auto">
       <Slider
         styles={{
           handle: {
-            height: 21, // Chiều cao của handle
+            height: 16, // Chiều cao của handle
             width: 10, // Chiều rộng của handle
-            borderRadius: "4px", // Độ cong của góc handle để tạo thành hình chữ nhật
+            borderRadius: 0, // Độ cong của góc handle để tạo thành hình chữ nhật
             backgroundColor: "grey",
-            accentColor: "grey",
-            color: "grey",
+            // accentColor: "grey",
+            // color: "grey",
             borderColor: "grey",
-            outlineColor: "grey",
+            // outlineColor: "grey",
             opacity: 100,
+            top: 12,
+
+            // marginTop: 0,
+            // marginBottom: 0,
           },
-          rail: { height: 10 },
-          track: { height: 10 },
+
+          rail: { height: 20, opacity: 50, borderRadius: 0 },
+          track: { height: 20, borderRadius: 0 },
         }}
-        style={{ height: 10 }}
+        // style={{ height: 20 }}
         range
         min={0}
         pushable
+        dotStyle={{ display: "none" }}
         max={totalMonths}
         value={range}
         onChange={handleSliderChange}
@@ -68,16 +75,16 @@ const TimelineSlider = ({ onChange }) => {
         tipFormatter={(index) =>
           format(indexToDate(index), "MMM yyyy", { locale: vi })
         }
-        // marks={Array.from({ length: 6 }, (_, i) => {
-        //   const date = addMonths(fiveYearsAgo, i * 12);
-        //   return { [i * 12]: format(date, "yyyy", { locale: vi }) };
-        // }).reduce((acc, curr) => ({ ...acc, ...curr }), {})}
+        marks={Array.from({ length: 6 }, (_, i) => {
+          const date = addMonths(fiveYearsAgo, i * 12);
+          return { [i * 12]: format(date, "yyyy", { locale: vi }) };
+        }).reduce((acc, curr) => ({ ...acc, ...curr }), {})}
       />
       <div className="mt-4 text-center">
-        <p className="text-lg font-semibold">
+        {/* <p className="text-lg font-semibold">
           {format(indexToDate(range[0]), "dd/MM/yyyy", { locale: vi })} -{" "}
           {format(indexToDate(range[1]), "dd/MM/yyyy", { locale: vi })}
-        </p>
+        </p> */}
       </div>
     </div>
   );

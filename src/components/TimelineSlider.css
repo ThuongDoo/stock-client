@@ -1,0 +1,12 @@
+/* TimelineSlider.css */
+.rc-slider-mark-text {
+  /* Custom mark text styles */
+  color: gray;
+  /* Màu chữ */
+  font-size: 12px;
+  /* Kích thước font chữ */
+  /* font-weight: bold; */
+  /* Độ đậm của font chữ */
+  top:-15px
+}
+
