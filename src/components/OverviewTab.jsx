@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TabBar from "./TabBar";
 import { EVENTS, socket } from "../utils/socket";
 import formatNumber from "../utils/formatNumber";
@@ -7,6 +7,8 @@ import { OhlcChart } from "./chart/OhlcChart";
 
 function OverviewTab({ symbol }) {
   const [xData, setXData] = useState({});
+  const emitInterval = useRef(null);
+
   useEffect(() => {
     socket.on(EVENTS.SSI_X_UPDATE, (tradeData) => {
       try {
@@ -19,10 +21,14 @@ function OverviewTab({ symbol }) {
       socket.emit(EVENTS.SSI_X_REQUEST, symbol);
     };
     emitTradeRequest();
+    emitInterval.current = setInterval(emitTradeRequest, 2000);
 
     // Start the interval for emitting the request
     return () => {
       socket.off(EVENTS.SSI_X_UPDATE);
+      if (emitInterval.current) {
+        clearInterval(emitInterval.current);
+      }
     };
   }, [symbol]);
 
@@ -73,6 +79,8 @@ export default OverviewTab;
 
 function TongQuan({ xData }) {
   const symbol = xData.Symbol;
+  const emitInterval = useRef(null);
+
   const data = [
     { name: "Tham chiếu", data: xData?.RefPrice / 1000 },
     { name: "Mở cửa", data: xData?.Open / 1000 },
@@ -96,13 +104,16 @@ function TongQuan({ xData }) {
       socket.emit(EVENTS.SSI_R_REQUEST, symbol);
     };
     emitTradeRequest();
+    emitInterval.current = setInterval(emitTradeRequest, 2000);
 
     // Start the interval for emitting the request
     return () => {
       socket.off(EVENTS.SSI_R_UPDATE);
+      if (emitInterval.current) {
+        clearInterval(emitInterval.current);
+      }
     };
   }, [symbol]);
-  console.log(rData);
   return (
     <div className=" flex flex-col text-sm">
       {data?.map((item, index) => (
@@ -142,8 +153,9 @@ function TongQuan({ xData }) {
 
 function MucGia({ symbol }) {
   const [orderBook, setOrderBook] = useState([]);
+  const emitInterval = useRef(null);
+
   const formatOrderBook = (data) => {
-    console.log(data);
     const priceMap = {};
     for (const item of data) {
       if (!priceMap[item.lastPrice]) {
@@ -181,10 +193,14 @@ function MucGia({ symbol }) {
       socket.emit(EVENTS.SSI_ORDER_BOOK_REQUEST, symbol);
     };
     emitTradeRequest();
+    emitInterval.current = setInterval(emitTradeRequest, 2000);
 
     // Start the interval for emitting the request
     return () => {
       socket.off(EVENTS.SSI_ORDER_BOOK_UPDATE);
+      if (emitInterval.current) {
+        clearInterval(emitInterval.current);
+      }
     };
   }, [symbol]);
   return (
@@ -195,7 +211,6 @@ function MucGia({ symbol }) {
 }
 
 function NuocNgoaiTable({ h1, h2, h3, d1, d2, d3 }) {
-  console.log(d1, d2, d3);
   return (
     <table className="w-full">
       <thead>

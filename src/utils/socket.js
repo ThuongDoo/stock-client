@@ -23,6 +23,8 @@ export const EVENTS = {
   SSI_X_UPDATE: "ssi_x_update",
   SSI_R_REQUEST: "ssi_r_request",
   SSI_R_UPDATE: "ssi_r_update",
+  SSI_B_REQUEST: "ssi_b_request",
+  SSI_B_UPDATE: "ssi_b_update",
   SSI_ORDER_BOOK_REQUEST: "ssi_order_book_request",
   SSI_ORDER_BOOK_UPDATE: "ssi_order_book_update",
 };

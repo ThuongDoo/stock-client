@@ -6,10 +6,18 @@ import {
 } from "lightweight-charts";
 import React, { useEffect, useRef, useState } from "react";
 import api, { endpoints } from "../../utils/api";
-import { addHours, format, getTime, parseISO } from "date-fns";
+import {
+  addHours,
+  format,
+  formatISO,
+  getTime,
+  parse,
+  parseISO,
+} from "date-fns";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../slices/themeSlice";
 import { getLocalTimezoneOffset } from "../../utils/getLocalTimezoneOffset";
+import { EVENTS, socket } from "../../utils/socket";
 
 const formatData = async (data, type) => {
   const tempData = await data.map((item) => {
@@ -53,6 +61,7 @@ export const OhlcChart = (props) => {
 
   const [data, setData] = useState([]);
   const [smallestTimeFrame, setSetsmallestTimeFrame] = useState("1d");
+  const emitInterval = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +85,69 @@ export const OhlcChart = (props) => {
     };
 
     fetchData();
-  }, [smallestTimeFrame]);
+
+    // Function to emit the socket event
+  }, [smallestTimeFrame, ticker]);
+
+  useEffect(() => {
+    socket.on(EVENTS.SSI_B_UPDATE, async (bData) => {
+      try {
+        const tempData = JSON.parse(bData.data);
+
+        let formattedData = {
+          symbol: tempData.Symbol,
+          open: tempData.Open,
+          high: tempData.High,
+          close: tempData.Close,
+          low: tempData.Low,
+          value: tempData.Value,
+          volume: tempData.Volume,
+        };
+        if (smallestTimeFrame === "1m") {
+          const dateTimeString = tempData.TradingDate + " " + tempData.Time;
+          const parsedDate = parse(
+            dateTimeString,
+            "dd/MM/yyyy HH:mm:ss",
+            new Date()
+          );
+          const isoDate = formatISO(parsedDate);
+
+          formattedData.time = isoDate;
+        } else {
+          const parsedDate = parse(
+            tempData.TradingDate,
+            "dd/MM/yyyy",
+            new Date()
+          );
+          const isoDate = formatISO(parsedDate, { representation: "date" });
+          formattedData.time = isoDate;
+        }
+
+        const x = await formatData([formattedData], smallestTimeFrame);
+        const lastItem = data[data.length - 1];
+        const newData = data;
+        if (lastItem.time === x[0].time) {
+          newData.pop();
+        }
+        newData.push(x[0]);
+        setData(newData);
+      } catch (error) {}
+    });
+    const emitTradeRequest = () => {
+      socket.emit(EVENTS.SSI_B_REQUEST, ticker);
+    };
+
+    emitTradeRequest();
+    emitInterval.current = setInterval(emitTradeRequest, 2000);
+
+    // Start the interval for emitting the request
+    return () => {
+      socket.off(EVENTS.SSI_B_UPDATE);
+      if (emitInterval.current) {
+        clearInterval(emitInterval.current);
+      }
+    };
+  }, [smallestTimeFrame, ticker, data]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -150,12 +221,12 @@ export const OhlcChart = (props) => {
 
   return (
     <div className=" h-full relative">
-      <div className=" flex justify-between items-center absolute top-0 left-0 z-50 space-x-3">
+      <div className=" flex justify-between items-center absolute top-2 left-2 z-50 space-x-3">
         <button
           onClick={() => handleChangeTimeframe("1m")}
           disabled={smallestTimeFrame === "1m"}
-          className={` p-1 w-12 rounded-md text-white ${
-            smallestTimeFrame === "1m" ? "bg-blue-700 " : "bg-blue-500 "
+          className={` p-1 w-12 rounded-md text-white border ${
+            smallestTimeFrame === "1m" ? " bg-blue-500 " : " "
           }`}
         >
           1m
@@ -163,8 +234,8 @@ export const OhlcChart = (props) => {
         <button
           onClick={() => handleChangeTimeframe("1d")}
           disabled={smallestTimeFrame === "1d"}
-          className={` p-1 w-12 rounded-md text-white ${
-            smallestTimeFrame === "1d" ? "bg-blue-700 " : "bg-blue-500 "
+          className={` p-1 w-12 rounded-md text-white border ${
+            smallestTimeFrame === "1d" ? " bg-blue-500 " : " "
           }`}
         >
           1d
