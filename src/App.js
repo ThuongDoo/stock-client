@@ -28,7 +28,9 @@ import { socket } from "./utils/socket";
 import CategoryManager from "./pages/admin/category/CategoryManager";
 import Signup from "./pages/signup/Signup";
 import Academic from "./pages/dashboard/academic/Academic";
-import Article from "./pages/admin/article/Article";
+import ArticleManager from "./pages/admin/article/ArticleManager";
+import ArticleCategory from "./pages/admin/article/category/ArticleCategory";
+import Article from "./pages/admin/article/article/Article";
 
 function App() {
   useEffect(() => {
@@ -56,11 +58,14 @@ function App() {
           <Route element={<RequestManager />} path="request-manager" />
           <Route element={<ImportBuysell />} path="buysell" />
           <Route element={<CategoryManager />} path="category" />
-          <Route element={<Article />} path="article" />
+          <Route element={<ArticleManager />} path="article-manager">
+            <Route element={<Article />} path="article" />
+            <Route element={<ArticleCategory />} path="category" />
+          </Route>
         </Route>
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
-        <Route path="*" element={<Navigate to="/" replace />}></Route>
+        {/* <Route path="*" element={<Navigate to="/" replace />}></Route> */}
       </Route>
     )
   );

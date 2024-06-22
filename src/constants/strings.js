@@ -2,6 +2,7 @@ export const STRINGS = {
   CREATE: "Thêm",
   DELETE: "Xoá",
   EDIT: "Sửa",
+  UPDATE: "Cập nhật",
   USER_CREATE: "Tạo người dùng mới",
   USER_CREATED: "Tạo user thành công",
   USER_CREATED_FAILED: "Tạo user không thành công",

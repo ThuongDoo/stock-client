@@ -14,7 +14,7 @@ function Dashboard() {
     { name: "buy-sell", displayName: "Tín hiệu", icon: ContrastIcon },
     { name: "loc-co-phieu", displayName: "Lọc cổ phiếu", icon: FilterAltIcon },
     { name: "roc", displayName: "ROC", icon: SsidChartIcon },
-    { name: "academic", displayName: "Academic", icon: ContrastIcon },
+    // { name: "academic", displayName: "Academic", icon: ContrastIcon },
   ];
   return (
     <div className=" dark:bg-black bg-white ">
