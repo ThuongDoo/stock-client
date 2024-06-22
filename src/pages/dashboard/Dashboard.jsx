@@ -5,7 +5,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ContrastIcon from "@mui/icons-material/Contrast";
 import SsidChartIcon from "@mui/icons-material/SsidChart";
-import ListIcon from "@mui/icons-material/List";
+import { useSwipeable } from "react-swipeable";
 
 function Dashboard() {
   const [isHidden, setIsHidden] = useState(true);
@@ -16,18 +16,19 @@ function Dashboard() {
     { name: "roc", displayName: "ROC", icon: SsidChartIcon },
     // { name: "academic", displayName: "Academic", icon: ContrastIcon },
   ];
+  const handlers = useSwipeable({
+    // onSwipedLeft: () => console.log("Swiped left"),
+    onSwipedRight: () => {
+      setIsHidden(!isHidden);
+    },
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true, // It tracks mouse input as well, useful for testing on desktop
+  });
+
   return (
-    <div className=" dark:bg-black bg-white ">
-      <div
-        className={` ${!isHidden && "hidden"} absolute md:hidden rounded-full `}
-        onClick={() => {
-          setIsHidden(false);
-        }}
-      >
-        <ListIcon sx={{ color: "white", fontSize: 30 }} />
-      </div>
+    <div className=" dark:bg-black bg-white " {...handlers}>
       {!isHidden && (
-        <div className=" bg-gray-800 bg-opacity-30 flex fixed h-full w-full ">
+        <div className=" bg-gray-800 bg-opacity-30 flex fixed h-full w-full md:hidden">
           <div
             className=" w-full h-full absolute"
             onClick={() => setIsHidden(true)}

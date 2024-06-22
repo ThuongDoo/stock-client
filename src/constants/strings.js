@@ -51,4 +51,11 @@ export const STRINGS = {
 
   FAVORITE_ADD: "Thêm cổ phiếu thành công",
   FAVORITE_DELETE: "Bỏ theo dõi thành công",
+
+  FORGOT_PASSWORD: "Quên mật khẩu?",
+  DONT_HAVE_ACCOUNT: "Bạn chưa có tài khoản?",
+  HAVE_ACCOUNT: "Đã có tài khoản?",
+
+  REGISTER: "Đăng ký",
+  LOGIN: "Đăng nhập",
 };

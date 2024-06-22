@@ -14,7 +14,7 @@ function Login() {
         <Header hidden={true} />
       </div>
       <div className="  flex items-center justify-center z-40">
-        <div className=" ">
+        <div className="">
           <LoginForm />
         </div>
       </div>

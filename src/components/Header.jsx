@@ -92,7 +92,12 @@ function Header({ hidden = false }) {
               >
                 Đăng nhập
               </button>
-              <button className=" text-nowrap">Đăng ký</button>
+              <button
+                className=" text-nowrap"
+                onClick={() => navigate("/login")}
+              >
+                Đăng ký
+              </button>
             </div>
           </div>
           <div
