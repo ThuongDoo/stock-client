@@ -112,8 +112,6 @@ function UserManager() {
   const handleEdit = async (value) => {
     // onEdit(value);
     if (value.password === "") delete value.password;
-    value.date = Number(value.date);
-    console.log(value);
     await api
       .patch(endpoints.USER_UPDATE, value)
       .then((res) => {

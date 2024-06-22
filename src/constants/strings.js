@@ -23,10 +23,10 @@ export const STRINGS = {
   PHONE: "Số điện thoại",
   ROLE: "Vai trò",
 
-  STOCK1_DATE: 15,
-  STOCK2_DATE: 30,
-  STOCK3_DATE: 178,
-  STOCK4_DATE: 365,
+  STOCK1_DATE: "15d",
+  STOCK2_DATE: "3m",
+  STOCK3_DATE: "6m",
+  STOCK4_DATE: "1y",
 
   CONTACT: "Bạn có muốn gửi yêu cầu?",
 

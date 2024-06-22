@@ -94,7 +94,7 @@ function Header({ hidden = false }) {
               </button>
               <button
                 className=" text-nowrap"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/signup")}
               >
                 Đăng ký
               </button>

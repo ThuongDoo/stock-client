@@ -35,19 +35,20 @@ const SignupForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async (values, actions) => {
+  const handleSignup = async (values, actions) => {
     // Xử lý đăng nhập ở đây
-    console.log("Đăng nhập với:", values);
     await api
-      .post(endpoints.LOGIN, { phone: values.phone, password: values.password })
+      .post(endpoints.SIGNUP, values)
       .then((res) => {
-        console.log(res.data);
+        console.log("success");
+        setError(null);
 
-        // dispatch(login({username:}));
         navigate("/login");
       })
-      .catch((err) => setError("Sai thông tin đăng nhập"));
-    dispatch(login());
+      .catch((err) => {
+        console.log(err);
+        setError("Số điện thoại hoặc email đã tồn tại");
+      });
     actions.setSubmitting(false);
   };
 
@@ -59,7 +60,7 @@ const SignupForm = () => {
           password: "",
         }}
         validationSchema={LoginSchema}
-        onSubmit={handleLogin}
+        onSubmit={handleSignup}
       >
         {({ isSubmitting }) => (
           <Form className="bg-white shadow-md rounded-3xl px-8 py-12 text-black flex flex-col gap-y-5 w-96">

@@ -7,16 +7,20 @@ const initialValues = {
   name: "",
   email: "",
   phone: "",
-  roles: "STOCK1",
-  date: STRINGS.STOCK1_DATE,
 };
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("*Vui lòng nhập họ và tên"),
+  phone: Yup.string()
+    .required("Vui lòng nhập số điện thoại")
+    .matches(/^[0-9]+$/, "Số điện thoại không hợp lệ")
+    .min(10, "Số điện thoại phải có ít nhất 10 chữ số")
+    .max(11, "Số điện thoại không vượt quá 11 chữ số"),
   email: Yup.string()
-    .email("*Email không hợp lệ")
-    .required("*Vui lòng nhập email"),
-  phone: Yup.string().required("*Vui lòng nhâp số điện thoại"),
+    .email("Email không hợp lệ")
+    .required("Vui lòng nhập email"),
+  name: Yup.string()
+    .required("Vui lòng nhập tên")
+    .min(2, "Tên phải có ít nhất 2 ký tự"),
 });
 
 const CreateUserForm = ({ userData, onSubmit }) => {
@@ -87,25 +91,6 @@ const CreateUserForm = ({ userData, onSubmit }) => {
               name="phone"
               component="div"
               className=" text-red-500 font-extrabold"
-            />
-          </div>
-          <div className=" flex flex-col items-start">
-            <label htmlFor="date" className=" text-white font-bold mb-1">
-              {STRINGS.ROLE}
-            </label>
-            <Field as="select" id="date" name="date">
-              <option value="" disabled>
-                Role
-              </option>
-              <option value={STRINGS.STOCK1_DATE}>Stock1</option>
-              <option value={STRINGS.STOCK2_DATE}>Stock2</option>
-              <option value={STRINGS.STOCK3_DATE}>Stock3</option>
-              <option value={STRINGS.STOCK4_DATE}>Stock4</option>
-            </Field>
-            <ErrorMessage
-              name="date"
-              component="div"
-              className="text-red-500"
             />
           </div>
           <button
