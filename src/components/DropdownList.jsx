@@ -12,7 +12,7 @@ const DropdownList = ({ list, onClick, isReset }) => {
   return (
     <div className=" relative w-full h-full">
       <select
-        className=" block w-full bg-white border hover:border-black border-black px-4 h-full rounded-lg   dark:text-white dark:bg-slate-900 dark:border-slate-700 text-black"
+        className=" block w-full bg-white border hover:border-black border-black px-1 h-full rounded-lg   dark:text-white dark:bg-slate-900 dark:border-slate-700 text-black"
         value={selectedItem ? selectedItem.id : ""}
         onChange={handleSelectItem}
       >

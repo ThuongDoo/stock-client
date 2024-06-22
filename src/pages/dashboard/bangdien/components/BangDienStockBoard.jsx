@@ -156,7 +156,7 @@ function BangDienStockBoard({ tabs, onReload = () => {} }) {
 
   return (
     <div className="flex flex-col h-full gap-y-2">
-      <div className=" flex items-center gap-x-2 overflow-x-scroll overflow-y-visible">
+      <div className=" flex items-center gap-x-2">
         <button onClick={() => setIsAsc(!isAsc)} className=" ">
           <SortIcon
             sx={{
@@ -167,7 +167,7 @@ function BangDienStockBoard({ tabs, onReload = () => {} }) {
             }}
           />
         </button>
-        <div className=" lg:w-3/5">
+        <div className=" min-w-20 lg:w-3/5 overflow-x-scroll">
           <TabBar
             tabs={tabs}
             isHorizontal
@@ -181,7 +181,7 @@ function BangDienStockBoard({ tabs, onReload = () => {} }) {
             }}
           />
         </div>
-        <div className=" flex h-full lg:gap-x-5 min-w-56">
+        <div className=" flex h-full gap-x-1 lg:gap-x-5 min-w-20">
           <DropdownList list={categories} onClick={handleCategoryChange} />
           <SearchBar onSelect={handleSearch} />
         </div>

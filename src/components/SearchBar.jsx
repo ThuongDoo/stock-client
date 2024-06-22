@@ -28,6 +28,7 @@ function SearchBar({ onSelect, placeholder = "Tìm kiểm" }) {
         .catch((e) => console.log(e));
     };
     fetchSecurities();
+    console.log("securities");
   }, []);
 
   const handleClickOutside = (event) => {
@@ -39,24 +40,12 @@ function SearchBar({ onSelect, placeholder = "Tìm kiểm" }) {
   const handleChange = (event) => {
     const value = event.target.value;
     setSearchTerm(value);
-
-    // Filter and sort suggestions
-    const suggestions = securities
-      .filter((item) => item.toLowerCase().includes(value.toLowerCase()))
-      .sort((a, b) => {
-        const lowerCaseValue = value.toLowerCase();
-        const indexA = a.toLowerCase().indexOf(lowerCaseValue);
-        const indexB = b.toLowerCase().indexOf(lowerCaseValue);
-
-        if (indexA === 0 && indexB !== 0) {
-          return -1;
-        } else if (indexA !== 0 && indexB === 0) {
-          return 1;
-        } else {
-          return indexA - indexB;
-        }
-      });
-
+    // onSelect(value);
+    // Tính toán các gợi ý dựa trên giá trị tìm kiếm
+    // Ở đây, bạn có thể lấy dữ liệu từ API hoặc từ một danh sách dữ liệu cố định
+    const suggestions = securities.filter((item) =>
+      item.toLowerCase().includes(value.toLowerCase())
+    );
     setSuggestions(suggestions);
   };
 
