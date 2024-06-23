@@ -83,20 +83,19 @@ function BuySell() {
     setIsOpenModal(true);
     setSelectedSecurity(value);
   };
-
   return (
-    <div className=" flex flex-col px-4 py-4 gap-y-4">
-      <div className=" flex justify-between">
-        <BuysellSearch
-          onSubmit={handleSearch}
-          onReset={() => setIsReset(true)}
-        />
-      </div>
-      {isLoading === true ? (
-        <BuySellSkeleton />
-      ) : (
-        <div className=" max-h-[40rem]  overflow-y-auto block ">
-          {data.length > 0 ? (
+    <div className=" w-full h-full">
+      <div className=" flex flex-col px-4 py-4 gap-y-4">
+        <div className=" flex justify-between">
+          <BuysellSearch
+            onSubmit={handleSearch}
+            onReset={() => setIsReset(true)}
+          />
+        </div>
+        {isLoading === true && error !== 401 ? (
+          <BuySellSkeleton />
+        ) : (
+          <div className=" max-h-[40rem]  overflow-y-auto block ">
             <table className=" dark:text-white table-auto overflow-scroll w-full ">
               <thead>
                 <tr className="">
@@ -112,67 +111,75 @@ function BuySell() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="  ">
-                {data?.map((stock, index) => (
-                  <tr
-                    key={index}
-                    className={` ${
-                      index % 2 === 1 ? "dark:bg-slate-900 bg-neutral-200" : ""
-                    }  border border-slate-700 cursor-pointer `}
-                    onClick={() => handleSelect(stock.ticker)}
-                  >
-                    <td>{index + 1}</td>
-                    <td>{stock?.ticker}</td>
-                    <td>{format(stock?.knTime, "dd-MM-yyyy")}</td>
-                    <td>{stock?.buyPrice.toFixed(2)}</td>
-                    <td
+              {error !== 401 && data.length > 0 && (
+                <tbody className="  ">
+                  {data?.map((stock, index) => (
+                    <tr
+                      key={index}
                       className={` ${
-                        stock.profit > 0
-                          ? "text-green-500"
-                          : stock.profit < 0
-                          ? "text-red-500"
-                          : "text-yellow-500"
-                      }`}
+                        index % 2 === 1
+                          ? "dark:bg-slate-900 bg-neutral-200"
+                          : ""
+                      }  border border-slate-700 cursor-pointer `}
+                      onClick={() => handleSelect(stock.ticker)}
                     >
-                      {stock?.profit + "%"}
-                    </td>
-                    <td>T + {stock?.holdingDuration}</td>
-                    <td>
-                      {stock?.status === 0
-                        ? "Bán"
-                        : stock?.status === 1
-                        ? "Mua"
-                        : stock?.status === 2
-                        ? "Nắm giữ"
-                        : "Mua mới"}
-                    </td>
-                    <td>
-                      {stock?.sellTime !== null
-                        ? format(stock?.sellTime, "dd-MM-yyyy")
-                        : ""}
-                    </td>
-                    <td>
-                      {stock?.sellPrice !== null
-                        ? stock?.sellPrice.toFixed(2)
-                        : ""}
-                    </td>
-                    <td>{stock?.risk ? stock?.risk : ""}</td>
-                  </tr>
-                ))}
-              </tbody>
+                      <td>{index + 1}</td>
+                      <td>{stock?.ticker}</td>
+                      <td>{format(stock?.knTime, "dd-MM-yyyy")}</td>
+                      <td>{stock?.buyPrice.toFixed(2)}</td>
+                      <td
+                        className={` ${
+                          stock.profit > 0
+                            ? "text-green-500"
+                            : stock.profit < 0
+                            ? "text-red-500"
+                            : "text-yellow-500"
+                        }`}
+                      >
+                        {stock?.profit + "%"}
+                      </td>
+                      <td>T + {stock?.holdingDuration}</td>
+                      <td>
+                        {stock?.status === 0
+                          ? "Bán"
+                          : stock?.status === 1
+                          ? "Mua"
+                          : stock?.status === 2
+                          ? "Nắm giữ"
+                          : "Mua mới"}
+                      </td>
+                      <td>
+                        {stock?.sellTime !== null
+                          ? format(stock?.sellTime, "dd-MM-yyyy")
+                          : ""}
+                      </td>
+                      <td>
+                        {stock?.sellPrice !== null
+                          ? stock?.sellPrice.toFixed(2)
+                          : ""}
+                      </td>
+                      <td>{stock?.risk ? stock?.risk : ""}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
             </table>
-          ) : (
-            <div>Không tìm thấy dữ liệu</div>
-          )}
-        </div>
-      )}
-      {error === 401 && <UnauthorizedException />}
-      {isOpenModal && (
-        <SecurityDetail
-          symbol={selectedSecurity}
-          onClose={() => setIsOpenModal(false)}
-        />
-      )}
+            {error === 401 ? (
+              <div className=" flex justify-center items-center h-full w-full">
+                <UnauthorizedException />
+              </div>
+            ) : (
+              data.length === 0 && <div>Không tìm thấy dữ liệu</div>
+            )}
+          </div>
+        )}
+        {isOpenModal && (
+          <SecurityDetail
+            symbol={selectedSecurity}
+            onClose={() => setIsOpenModal(false)}
+          />
+        )}
+      </div>
     </div>
   );
 }

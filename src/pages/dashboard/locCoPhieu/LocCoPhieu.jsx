@@ -741,13 +741,16 @@ function LocCoPhieu() {
         <DieuKieuLocForm />
       </div>
       <div className=" h-2/3 ">
-        {isLoading === true ? (
+        {error === 401 ? (
+          <div className=" flex justify-center items-center h-full w-full">
+            <UnauthorizedException />
+          </div>
+        ) : isLoading === true ? (
           <Loading />
         ) : (
           <CustomTable rows={result} columns={columns} />
         )}
       </div>
-      {error === 401 && <UnauthorizedException />}
     </div>
   );
 }

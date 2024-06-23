@@ -93,9 +93,9 @@ const LoginForm = () => {
                   className="text-red-500 text-xs italic text-left"
                 />
               </div>
-              <h1 className=" cursor-pointer text-blue-500 hover:text-blue-700 text-sm text-left">
+              {/* <h1 className=" cursor-pointer text-blue-500 hover:text-blue-700 text-sm text-left">
                 {STRINGS.FORGOT_PASSWORD}
-              </h1>
+              </h1> */}
             </div>
 
             {error && <h1 className="text-red-500 text-xs italic">{error}</h1>}

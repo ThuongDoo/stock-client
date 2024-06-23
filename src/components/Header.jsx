@@ -4,6 +4,7 @@ import { getTheme } from "../slices/themeSlice";
 import { getUser, login, logout } from "../slices/userSlice";
 import api, { endpoints } from "../utils/api";
 import ListIcon from "@mui/icons-material/List";
+import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../images/logo.png";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -44,7 +45,10 @@ function Header({ hidden = false }) {
       dispatch(logout());
       await api
         .get(endpoints.LOGOUT)
-        .then((res) => console.log(res.data))
+        .then((res) => {
+          console.log(res.data);
+          console.log("logout");
+        })
         .catch((err) => console.log(err));
       navigate("/");
     } else if (value === "settings") {
@@ -53,6 +57,15 @@ function Header({ hidden = false }) {
       navigate("/admin");
       console.log("admin");
     }
+  };
+
+  const handleLogout = async () => {
+    dispatch(logout());
+    await api
+      .get(endpoints.LOGOUT)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+    navigate("/");
   };
   return (
     <header className=" text-white  bg-slate-900 dark:bg-slate-900 border border-slate-700 drop-shadow-glow flex px-10 justify-between py-2 items-center rounded-full">
@@ -85,20 +98,37 @@ function Header({ hidden = false }) {
                 X Products
               </Link>
             </div>
-            <div className=" flex gap-x-3">
-              <button
-                className="  dark:hover:text-slate-500 text-nowrap"
-                onClick={() => navigate("/login")}
-              >
-                Đăng nhập
-              </button>
-              <button
-                className=" text-nowrap"
-                onClick={() => navigate("/signup")}
-              >
-                Đăng ký
-              </button>
-            </div>
+            {isLoggedIn ? (
+              <div className=" flex gap-x-3 items-center ">
+                <button
+                  className=" cursor-pointer text-nowrap"
+                  onClick={() => navigate("/settings")}
+                >
+                  {username}
+                </button>
+                <button
+                  className=" cursor-pointer"
+                  onClick={() => handleLogout()}
+                >
+                  <LogoutIcon sx={{ color: "white", fontSize: 25 }} />
+                </button>
+              </div>
+            ) : (
+              <div className=" flex gap-x-3 items-center ">
+                <button
+                  className="  dark:hover:text-slate-500 text-nowrap cursor-pointer"
+                  onClick={() => navigate("/login")}
+                >
+                  Đăng nhập
+                </button>
+                <button
+                  className=" text-nowrap cursor-pointer"
+                  onClick={() => navigate("/signup")}
+                >
+                  Đăng ký
+                </button>
+              </div>
+            )}
           </div>
           <div
             className=" block lg:hidden"
@@ -136,15 +166,34 @@ function Header({ hidden = false }) {
                   X Products
                 </Link>
               </button>
-              <button
-                className=" hover:bg-white hover:text-black p-2"
-                onClick={() => navigate("/login")}
-              >
-                Đăng nhập
-              </button>
-              <button className=" hover:bg-white hover:text-black p-2">
-                Đăng ký
-              </button>
+              {isLoggedIn ? (
+                <>
+                  <button
+                    className=" hover:bg-white hover:text-black p-2"
+                    onClick={() => navigate("/settings")}
+                  >
+                    Cài đặt
+                  </button>
+                  <button
+                    className=" hover:bg-white hover:text-black p-2"
+                    onClick={() => handleLogout()}
+                  >
+                    Đăng xuất
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className=" hover:bg-white hover:text-black p-2"
+                    onClick={() => navigate("/login")}
+                  >
+                    Đăng nhập
+                  </button>
+                  <button className=" hover:bg-white hover:text-black p-2">
+                    Đăng ký
+                  </button>
+                </>
+              )}
             </div>
           )}
         </>

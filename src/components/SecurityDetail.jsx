@@ -69,7 +69,9 @@ function SecurityDetail({ onClose, symbol, onReload = () => {} }) {
         setIsReload(!isReload);
       })
       .catch((e) => {
-        console.log(e);
+        if (e?.response?.status === 401) {
+          toast.error("Bạn cần đăng nhập để thực hiện chức năng này.");
+        }
       });
   };
 
@@ -82,7 +84,9 @@ function SecurityDetail({ onClose, symbol, onReload = () => {} }) {
         setIsReload(!isReload);
       })
       .catch((e) => {
-        console.log(e);
+        if (e?.response?.status === 401) {
+          toast.error("Bạn cần đăng nhập để thực hiện chức năng này.");
+        }
       });
   };
 

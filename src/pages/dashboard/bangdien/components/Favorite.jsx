@@ -7,12 +7,14 @@ import SortIcon from "@mui/icons-material/Sort";
 import SearchBar from "../../../../components/SearchBar";
 import { useSelector } from "react-redux";
 import { getUser } from "../../../../slices/userSlice";
+import UnauthorizedException from "../../../../components/UnauthorizedException";
 
 function Favorite({ isParentReload }) {
   const [isAsc, setIsAsc] = useState(true);
   const [mySecurities, setMySecurities] = useState([]);
   const [isReload, setIsReload] = useState(isParentReload);
   const [stockBoardData, setStockBoardData] = useState([]);
+  const [error, setError] = useState(null);
   const user = useSelector(getUser);
   const emitInterval = useRef(null);
 
@@ -29,7 +31,7 @@ function Favorite({ isParentReload }) {
           setMySecurities(myData);
         })
         .catch((e) => {
-          console.log(e);
+          setError(e?.response?.status);
         });
     };
     fetchData();
@@ -66,7 +68,7 @@ function Favorite({ isParentReload }) {
         setIsReload(!isReload);
       })
       .catch((e) => {
-        console.log(e);
+        setError(e?.response?.status);
       });
   };
 
@@ -92,12 +94,18 @@ function Favorite({ isParentReload }) {
         </div>
       </div>
       <div className=" flex-grow h-0">
-        <StockBD
-          data={stockBoardData}
-          isAsc={isAsc}
-          cols={1}
-          onReload={handleReload}
-        />
+        {error === 401 ? (
+          <div className=" flex justify-center items-center w-full">
+            <UnauthorizedException />
+          </div>
+        ) : (
+          <StockBD
+            data={stockBoardData}
+            isAsc={isAsc}
+            cols={1}
+            onReload={handleReload}
+          />
+        )}
       </div>
     </div>
   );

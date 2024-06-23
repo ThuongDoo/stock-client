@@ -7,6 +7,7 @@ import Loading from "../../../skeletons/Loading";
 import TimelineSlider from "../../../components/TimelineSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, setCategory } from "../../../slices/categorySlice";
+import UnauthorizedException from "../../../components/UnauthorizedException";
 
 const colors = [
   "#FF0000", // Màu đỏ
@@ -111,6 +112,7 @@ function Roc() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [timeRange, setTimeRange] = useState([]);
+  const [error, setError] = useState(null);
   const chosenCategories = useSelector(getCategory);
   const dispatch = useDispatch();
   useEffect(() => {}, [timeRange]);
@@ -126,7 +128,7 @@ function Roc() {
           setIsLoading(false);
           setData(formattedData);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => setError(e?.response?.status));
     };
     fetchData();
   };
@@ -145,39 +147,47 @@ function Roc() {
 
   return (
     <div className=" p-2 h-full flex flex-col gap-y-2">
-      {isLoading === true ? (
-        <div className=" flex-1">
-          <Loading />
+      {error === 401 ? (
+        <div className=" flex justify-center items-center h-full w-full">
+          <UnauthorizedException />
         </div>
       ) : (
-        <div className=" flex flex-1 gap-x-2">
-          <div className=" flex-1 ">
-            <RocChart data={data} chosenData={chosenCategories} />
+        <>
+          {isLoading === true ? (
+            <div className=" flex-1">
+              <Loading />
+            </div>
+          ) : (
+            <div className=" flex flex-1 gap-x-2">
+              <div className=" flex-1 ">
+                <RocChart data={data} chosenData={chosenCategories} />
+              </div>
+              <div className=" flex flex-col ">
+                {data.map((item, index) => (
+                  <label
+                    className="flex items-center gap-x-2 hover:bg-white hover:text-black flex-1 px-2"
+                    key={index}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={chosenCategories[index]}
+                      onChange={() => handleCheckboxChange(index)}
+                    ></input>
+                    <div
+                      style={{ backgroundColor: item.color }}
+                      className=" w-2 h-2 rounded-full"
+                    ></div>
+                    <h1 className=" text-xs text-left">{item.displayName}</h1>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="">
+            <TimelineSlider onChange={handleTimeline} />
           </div>
-          <div className=" flex flex-col ">
-            {data.map((item, index) => (
-              <label
-                className="flex items-center gap-x-2 hover:bg-white hover:text-black flex-1 px-2"
-                key={index}
-              >
-                <input
-                  type="checkbox"
-                  checked={chosenCategories[index]}
-                  onChange={() => handleCheckboxChange(index)}
-                ></input>
-                <div
-                  style={{ backgroundColor: item.color }}
-                  className=" w-2 h-2 rounded-full"
-                ></div>
-                <h1 className=" text-xs text-left">{item.displayName}</h1>
-              </label>
-            ))}
-          </div>
-        </div>
+        </>
       )}
-      <div className="">
-        <TimelineSlider onChange={handleTimeline} />
-      </div>
     </div>
   );
 }

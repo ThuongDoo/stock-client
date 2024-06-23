@@ -1,10 +1,12 @@
 import React from "react";
 import Header from "../../components/Header";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ContrastIcon from "@mui/icons-material/Contrast";
+import { useSelector } from "react-redux";
+import { getUser } from "../../slices/userSlice";
 
 function Admin() {
   const sideList = [
@@ -14,6 +16,12 @@ function Admin() {
     { name: "category", displayName: "Category", icon: ContrastIcon },
     { name: "article-manager", displayName: "Article", icon: ContrastIcon },
   ];
+  const { isLoggedIn, roles } = useSelector(getUser);
+  const navigate = useNavigate();
+  if (roles !== "admin") {
+    navigate("/");
+  }
+
   return (
     <div className=" bg-black flex flex-col min-h-screen w-screen gap-y-2">
       <div className=" px-8 w-full">
