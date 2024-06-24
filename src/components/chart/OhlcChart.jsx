@@ -26,7 +26,7 @@ const formatData = async (data, type) => {
     if (type === "1m") {
       const parsedDate = parseISO(inputDate);
       const timeZoneOffset = getLocalTimezoneOffset();
-      const newDate = addHours(parsedDate, 0);
+      const newDate = addHours(parsedDate, -7);
       formattedDate = getTime(newDate) / 1000;
     } else {
       formattedDate = format(inputDate, "yyyy-MM-dd");
@@ -128,9 +128,9 @@ export const OhlcChart = (props) => {
         const x = await formatData([formattedData], smallestTimeFrame);
         const lastItem = updatedOhlc[updatedOhlc.length - 1];
         if (lastItem.time === x[0].time) {
-          updatedOhlc.pop();
+          // updatedOhlc.pop();
         }
-        updatedOhlc.push(x[0]);
+        // updatedOhlc.push(x[0]);
         setData(updatedOhlc);
       } catch (error) {}
     });
@@ -149,6 +149,7 @@ export const OhlcChart = (props) => {
       }
     };
   }, [smallestTimeFrame, ticker, historyData]);
+  console.log(data);
 
   useEffect(() => {
     const handleResize = () => {

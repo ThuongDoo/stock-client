@@ -34,14 +34,14 @@ const MucGiaChart = ({ data }) => {
         label: "Bán",
         data: data.map((item) => item.sd),
         backgroundColor: "#ef4444", // Màu đỏ22c55e
-        borderRadius: 200,
+        // borderRadius: 200,
         barThickness: 20,
       },
       {
         label: "Không xác định",
         data: data.map((item) => item.uk),
         backgroundColor: "grey", // Màu đỏ
-        borderRadius: 200,
+        // borderRadius: 200,
         barThickness: 20,
       },
     ],
