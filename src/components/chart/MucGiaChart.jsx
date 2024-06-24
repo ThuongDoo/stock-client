@@ -72,7 +72,7 @@ const MucGiaChart = ({ data }) => {
       },
     },
   };
-  // console.log("hih");
+  console.log("hih");
   return <Bar data={chartData} options={options} />;
 };
 
