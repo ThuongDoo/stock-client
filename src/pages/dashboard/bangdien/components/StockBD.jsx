@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import SecurityDetail from "../../../../components/SecurityDetail";
 import formatNumber from "../../../../utils/formatNumber";
 
+const arrayToObject = (data) => {
+  const objectData = {};
+  data.forEach((element) => {
+    objectData[element.Symbol] = element;
+  });
+  return objectData;
+};
+
 function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedSecurity, setSelectedSecurity] = useState({});
   const [isReload, setIsReload] = useState(false);
+  const [newData, setNewData] = useState({});
+  const [oldData, setOldData] = useState({});
+
   const getColorClass = (value) => {
     if (value >= 6.7) {
       return "bg-customeStock17";
@@ -57,6 +68,12 @@ function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
     onReload(true);
   }, [isReload]);
 
+  useEffect(() => {
+    const object = arrayToObject(data);
+    setOldData(newData);
+    setNewData(object);
+  }, [data]);
+
   return (
     <div className="  w-full h-full  ">
       {data.length > 0 ? (
@@ -67,7 +84,7 @@ function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
               : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
           }  h-full overflow-y-scroll gap-2 auto-rows-min`}
         >
-          {data?.map((stock, index) => (
+          {Object.values(newData)?.map((stock, index) => (
             <div
               key={index}
               className={` cursor-pointer flex-col justify-between text-black h-fit  rounded-lg px-2 ${getColorClass(
@@ -80,18 +97,52 @@ function StockBD({ data, isAsc = 0, cols, onReload = () => {} }) {
             >
               <div className=" flex justify-between">
                 <p className=" text-base md:text-lg ">{stock?.Symbol}</p>
-                <p className=" text-base md:text-lg ">
+                <p
+                  className={` text-base md:text-lg 
+                  ${
+                    oldData[stock.Symbol] !== undefined &&
+                    oldData[stock.Symbol].LastPrice !== stock.LastPrice &&
+                    "stockBD"
+                  }
+                  `}
+                >
                   {formatNumber(stock?.LastPrice / 1000, 2)}
                 </p>
-                <p className=" text-base md:text-lg ">{stock?.RatioChange}%</p>
+                <p
+                  className={` text-base md:text-lg 
+                  ${
+                    oldData[stock.Symbol] !== undefined &&
+                    oldData[stock.Symbol].RatioChange !== stock.RatioChange &&
+                    "stockBD"
+                  }
+                  `}
+                >
+                  {stock?.RatioChange}%
+                </p>
               </div>
               <div className=" flex justify-between">
                 <div className=" flex w-full justify-between">
-                  <p className=" text-sm ">
+                  <p
+                    className={` text-sm 
+                    ${
+                      oldData[stock.Symbol] !== undefined &&
+                      oldData[stock.Symbol].TotalVol !== stock.TotalVol &&
+                      "stockBD"
+                    }
+                    `}
+                  >
                     KL: {formatNumber(stock?.TotalVol, 1)}
                   </p>
 
-                  <p className=" text-sm ">
+                  <p
+                    className={` text-sm 
+                    ${
+                      oldData[stock.Symbol] !== undefined &&
+                      oldData[stock.Symbol].TotalVal !== stock.TotalVal &&
+                      "stockBD"
+                    }
+                    `}
+                  >
                     GT: {formatNumber(stock?.TotalVal, 1)}
                   </p>
                 </div>

@@ -38,3 +38,22 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes colorChange {
+  0% {
+    background-color: yellow;
+  }
+
+  80% {
+    background-color: yellow;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* Áp dụng animation cho phần tử */
+.stockBD {
+  animation: colorChange 0.5s forwards;
+}
