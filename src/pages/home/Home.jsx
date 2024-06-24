@@ -9,6 +9,7 @@ import Feature from "./components/Feature";
 import Pricing from "./components/pricing/Pricing";
 import Contact from "./components/contact/Contact";
 import AboutUs from "./components/aboutUs/AboutUs";
+import { TVChartContainer } from "../../components/chart/TVChartContainer";
 
 function Home() {
   return (
@@ -42,6 +43,9 @@ function Home() {
       </div>
       <div id="feature">
         <Feature />
+      </div>
+      <div>
+        <TVChartContainer />
       </div>
 
       <div id="about-us" className=" w-full">
