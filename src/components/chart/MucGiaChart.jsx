@@ -28,21 +28,21 @@ const MucGiaChart = ({ data }) => {
         label: "Mua",
         data: data.map((item) => item.bu),
         backgroundColor: "#22c55e", // Màu xanh22c55e
-        barThickness: 20,
+        barThickness: 10,
       },
       {
         label: "Bán",
         data: data.map((item) => item.sd),
         backgroundColor: "#ef4444", // Màu đỏ22c55e
         // borderRadius: 200,
-        barThickness: 20,
+        barThickness: 10,
       },
       {
         label: "Không xác định",
         data: data.map((item) => item.uk),
         backgroundColor: "grey", // Màu đỏ
         // borderRadius: 200,
-        barThickness: 20,
+        barThickness: 10,
       },
     ],
   };
