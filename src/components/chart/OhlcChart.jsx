@@ -26,7 +26,7 @@ const formatData = async (data, type) => {
     if (type === "1m") {
       const parsedDate = parseISO(inputDate);
       const timeZoneOffset = getLocalTimezoneOffset();
-      const newDate = addHours(parsedDate, timeZoneOffset);
+      const newDate = addHours(parsedDate, 0);
       formattedDate = getTime(newDate) / 1000;
     } else {
       formattedDate = format(inputDate, "yyyy-MM-dd");
@@ -60,6 +60,7 @@ export const OhlcChart = (props) => {
   const chartContainerRef = useRef();
 
   const [data, setData] = useState([]);
+  const [historyData, setHistoryData] = useState([]);
   const [smallestTimeFrame, setSetsmallestTimeFrame] = useState("1d");
   const emitInterval = useRef(null);
 
@@ -70,7 +71,7 @@ export const OhlcChart = (props) => {
           .get(endpoints.OHLC_DAILY + `?ticker=${ticker}`)
           .then(async (res) => {
             const tempData = await formatData(res.data.data, "1d");
-            setData(tempData);
+            setHistoryData(tempData);
           })
           .catch((e) => console.log(e));
       } else {
@@ -78,7 +79,7 @@ export const OhlcChart = (props) => {
           .get(endpoints.OHLC_INTRADAY + `?ticker=${ticker}`)
           .then(async (res) => {
             const tempData = await formatData(res.data.data, "1m");
-            setData(tempData);
+            setHistoryData(tempData);
           })
           .catch((e) => console.log(e));
       }
@@ -90,6 +91,7 @@ export const OhlcChart = (props) => {
   }, [smallestTimeFrame, ticker]);
 
   useEffect(() => {
+    const updatedOhlc = historyData;
     socket.on(EVENTS.SSI_B_UPDATE, async (bData) => {
       try {
         const tempData = JSON.parse(bData.data);
@@ -124,13 +126,12 @@ export const OhlcChart = (props) => {
         }
 
         const x = await formatData([formattedData], smallestTimeFrame);
-        const lastItem = data[data.length - 1];
-        const newData = data;
+        const lastItem = updatedOhlc[updatedOhlc.length - 1];
         if (lastItem.time === x[0].time) {
-          newData.pop();
+          updatedOhlc.pop();
         }
-        newData.push(x[0]);
-        setData(newData);
+        updatedOhlc.push(x[0]);
+        setData(updatedOhlc);
       } catch (error) {}
     });
     const emitTradeRequest = () => {
@@ -147,7 +148,7 @@ export const OhlcChart = (props) => {
         clearInterval(emitInterval.current);
       }
     };
-  }, [smallestTimeFrame, ticker, data]);
+  }, [smallestTimeFrame, ticker, historyData]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -213,7 +214,7 @@ export const OhlcChart = (props) => {
 
       chart.remove();
     };
-  }, [data]);
+  }, [data, backgroundColor, darkMode, textColor]);
 
   const handleChangeTimeframe = (timeFrame) => {
     setSetsmallestTimeFrame(timeFrame);

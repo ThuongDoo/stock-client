@@ -53,7 +53,6 @@ function BangDienHeader() {
       }
     };
   }, []);
-  console.log(indexIds);
   return (
     <div className="flex items-center justify-evenly w-full h-full overflow-x-scroll">
       {indexData?.map((item, index) => (

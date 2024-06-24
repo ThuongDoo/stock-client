@@ -25,19 +25,18 @@ const MucGiaChart = ({ data }) => {
     labels: data.map((item) => item.price),
     datasets: [
       {
-        label: "Bán",
-        data: data.map((item) => item.sd),
-        backgroundColor: "#22c55e", // Màu đỏ22c55e
-        borderRadius: 200,
+        label: "Mua",
+        data: data.map((item) => item.bu),
+        backgroundColor: "#22c55e", // Màu xanh22c55e
         barThickness: 20,
       },
       {
-        label: "Mua",
-        data: data.map((item) => item.bu),
-        backgroundColor: "#ef4444", // Màu xanh
+        label: "Bán",
+        data: data.map((item) => item.sd),
+        backgroundColor: "#ef4444", // Màu đỏ22c55e
+        borderRadius: 200,
         barThickness: 20,
       },
-
       {
         label: "Không xác định",
         data: data.map((item) => item.uk),
@@ -53,13 +52,9 @@ const MucGiaChart = ({ data }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "top",
+        position: "bottom",
         display: false,
       },
-      // title: {
-      //   display: true,
-      //   text: "Buy and Sell Chart",
-      // },
     },
     scales: {
       x: {
@@ -72,7 +67,7 @@ const MucGiaChart = ({ data }) => {
       y: {
         stacked: true,
         ticks: {
-          color: "white", // Màu chữ của nhãn trục x
+          color: "white", // Màu chữ của nhãn trục y
         },
       },
     },
