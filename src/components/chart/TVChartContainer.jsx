@@ -23,7 +23,7 @@ export const TVChartContainer = () => {
     chartsStorageApiVersion: "1.1",
     clientId: "tradingview.com",
     userId: "public_user_id",
-    fullscreen: false,
+    fullscreen: true,
     autosize: true,
     studiesOverrides: {},
   };
@@ -39,7 +39,7 @@ export const TVChartContainer = () => {
       container: chartContainerRef.current,
       library_path: defaultProps.libraryPath,
 
-      locale: getLanguageFromURL() || "en",
+      locale: "vi_VN",
       disabled_features: ["use_localstorage_for_settings"],
       enabled_features: ["study_templates"],
       charts_storage_url: defaultProps.chartsStorageUrl,

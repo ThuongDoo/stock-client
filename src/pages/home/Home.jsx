@@ -44,9 +44,9 @@ function Home() {
       <div id="feature">
         <Feature />
       </div>
-      <div>
+      {/* <div>
         <TVChartContainer />
-      </div>
+      </div> */}
 
       <div id="about-us" className=" w-full">
         <AboutUs />
