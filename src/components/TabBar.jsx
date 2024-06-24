@@ -9,6 +9,7 @@ function TabBar({
   isHorizontal = false,
   hideDisplayName = false,
   style: userStyle,
+  defaultTab = 0,
 }) {
   const defaultStyle = {
     // fontSize: "1.25rem",
@@ -39,7 +40,7 @@ function TabBar({
     ...userStyle,
     button: { ...defaultStyle.button, ...deepClone(userStyle?.button) },
   };
-  const [activeTab, setActiveTab] = useState(tabs[0]?.name);
+  const [activeTab, setActiveTab] = useState(tabs[defaultTab]?.name);
   const handleTabChange = (tab) => {
     setActiveTab(tab.name);
     onTabClick(tab);

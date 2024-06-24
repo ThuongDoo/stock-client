@@ -100,6 +100,7 @@ function BangDienStockBoard({ tabs, onReload = () => {} }) {
         .then((res) => {
           const formattedData = formatIndexSecurities(res.data.data);
           setIndexSecurities(formattedData);
+          setChosenSecurities(formattedData["VN30"]);
         })
         .catch((e) => {
           console.log(e);
@@ -179,6 +180,7 @@ function BangDienStockBoard({ tabs, onReload = () => {} }) {
                 onActive: { boxShadow: "inset 0 -4px 0 0 white" },
               },
             }}
+            defaultTab={2}
           />
         </div>
         <div className=" flex h-full gap-x-1 lg:gap-x-5 min-w-20">
