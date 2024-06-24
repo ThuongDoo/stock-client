@@ -47,6 +47,7 @@ const MucGiaChart = ({ data }) => {
     ],
   };
 
+  console.log();
   const options = {
     indexAxis: "y",
     maintainAspectRatio: false,
