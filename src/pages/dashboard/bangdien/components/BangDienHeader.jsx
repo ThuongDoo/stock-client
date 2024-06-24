@@ -13,8 +13,16 @@ const changeIndexName = (data, nameList) => {
   return result;
 };
 
-function BangDienHeader({ data }) {
+function BangDienHeader() {
   const [indexData, setIndexData] = useState([]);
+  const data = [
+    { name: "ALL", displayName: "TẤT CẢ" },
+    { name: "VNIndex", displayName: "VNINDEX" },
+    { name: "VN30", displayName: "VN30" },
+    { name: "HNXIndex", displayName: "HNX" },
+    { name: "HNX30", displayName: "HNX30" },
+    { name: "HNXUpcomIndex", displayName: "UPCOM" },
+  ];
   const indexIds = data
     .slice(1)
     .map((item) => {
@@ -45,6 +53,7 @@ function BangDienHeader({ data }) {
       }
     };
   }, []);
+  console.log(indexIds);
   return (
     <div className="flex items-center justify-evenly w-full h-full overflow-x-scroll">
       {indexData?.map((item, index) => (

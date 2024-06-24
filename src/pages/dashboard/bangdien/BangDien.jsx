@@ -24,7 +24,7 @@ function BangDien() {
   return (
     <div className=" flex flex-col h-screen p-4 gap-y-4 w-full">
       <div className=" ">
-        <BangDienHeader data={indexList} />
+        <BangDienHeader />
       </div>
       <div className=" flex w-full flex-grow h-0 gap-x-4">
         <div className=" w-1/2 md:w-1/3 lg:w-1/5 bg-slate-800 p-2 rounded-lg">
