@@ -60,9 +60,7 @@ export const OhlcChart = (props) => {
   const chartContainerRef = useRef();
 
   const [data, setData] = useState([]);
-  const [historyData, setHistoryData] = useState([]);
   const [smallestTimeFrame, setSetsmallestTimeFrame] = useState("1d");
-  const emitInterval = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +69,7 @@ export const OhlcChart = (props) => {
           .get(endpoints.OHLC_DAILY + `?ticker=${ticker}`)
           .then(async (res) => {
             const tempData = await formatData(res.data.data, "1d");
-            setHistoryData(tempData);
+            setData(tempData);
           })
           .catch((e) => console.log(e));
       } else {
@@ -79,7 +77,7 @@ export const OhlcChart = (props) => {
           .get(endpoints.OHLC_INTRADAY + `?ticker=${ticker}`)
           .then(async (res) => {
             const tempData = await formatData(res.data.data, "1m");
-            setHistoryData(tempData);
+            setData(tempData);
           })
           .catch((e) => console.log(e));
       }
@@ -89,67 +87,6 @@ export const OhlcChart = (props) => {
 
     // Function to emit the socket event
   }, [smallestTimeFrame, ticker]);
-
-  useEffect(() => {
-    const updatedOhlc = historyData;
-    socket.on(EVENTS.SSI_B_UPDATE, async (bData) => {
-      try {
-        const tempData = JSON.parse(bData.data);
-
-        let formattedData = {
-          symbol: tempData.Symbol,
-          open: tempData.Open,
-          high: tempData.High,
-          close: tempData.Close,
-          low: tempData.Low,
-          value: tempData.Value,
-          volume: tempData.Volume,
-        };
-        if (smallestTimeFrame === "1m") {
-          const dateTimeString = tempData.TradingDate + " " + tempData.Time;
-          const parsedDate = parse(
-            dateTimeString,
-            "dd/MM/yyyy HH:mm:ss",
-            new Date()
-          );
-          const isoDate = formatISO(parsedDate);
-
-          formattedData.time = isoDate;
-        } else {
-          const parsedDate = parse(
-            tempData.TradingDate,
-            "dd/MM/yyyy",
-            new Date()
-          );
-          const isoDate = formatISO(parsedDate, { representation: "date" });
-          formattedData.time = isoDate;
-        }
-
-        const x = await formatData([formattedData], smallestTimeFrame);
-        const lastItem = updatedOhlc[updatedOhlc.length - 1];
-        if (lastItem.time === x[0].time) {
-          // updatedOhlc.pop();
-        }
-        // updatedOhlc.push(x[0]);
-        setData(updatedOhlc);
-      } catch (error) {}
-    });
-    const emitTradeRequest = () => {
-      socket.emit(EVENTS.SSI_B_REQUEST, ticker);
-    };
-
-    emitTradeRequest();
-    emitInterval.current = setInterval(emitTradeRequest, 2000);
-
-    // Start the interval for emitting the request
-    return () => {
-      socket.off(EVENTS.SSI_B_UPDATE);
-      if (emitInterval.current) {
-        clearInterval(emitInterval.current);
-      }
-    };
-  }, [smallestTimeFrame, ticker, historyData]);
-  console.log(data);
 
   useEffect(() => {
     const handleResize = () => {
@@ -210,17 +147,41 @@ export const OhlcChart = (props) => {
 
     window.addEventListener("resize", handleResize);
 
+    socket.on(EVENTS.SSI_B_UPDATE, async (bData) => {
+      console.log("update");
+      try {
+        const tempData = JSON.parse(bData.data);
+        const { dailyData, intradayData } = tempData;
+        let newData;
+        if (smallestTimeFrame === "1m") {
+          newData = intradayData;
+        } else {
+          newData = dailyData;
+        }
+        const x = await formatData([newData], smallestTimeFrame);
+        newSeries.update(x[0]);
+      } catch (error) {}
+    });
+    socket.on(EVENTS.OHLC_UPDATE, () => {
+      emitTradeRequest();
+    });
+    const emitTradeRequest = () => {
+      socket.emit(EVENTS.SSI_B_REQUEST, ticker);
+    };
+
+    emitTradeRequest();
     return () => {
       window.removeEventListener("resize", handleResize);
+      socket.off(EVENTS.SSI_B_UPDATE);
+      socket.off(EVENTS.OHLC_UPDATE);
 
       chart.remove();
     };
-  }, [data, backgroundColor, darkMode, textColor]);
+  }, [data, backgroundColor, darkMode, textColor, smallestTimeFrame, ticker]);
 
   const handleChangeTimeframe = (timeFrame) => {
     setSetsmallestTimeFrame(timeFrame);
   };
-
   return (
     <div className=" h-full relative">
       <div className=" flex justify-between items-center absolute top-2 left-2 z-50 space-x-3">

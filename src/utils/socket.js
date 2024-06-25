@@ -13,6 +13,7 @@ export const EVENTS = {
   UPDATE_STOCK_DATA: "update_stock_data",
   UPDATE_FILTERED_STOCK_DATA: "update_filtered_stock_data",
   FILTERD_STOCK_REQUEST: "filterd_stock_request",
+  OHLC_UPDATE: "update_ohlc_data",
   SSI_MI_REQUEST: "ssi_mi_request",
   SSI_MI_UPDATE: "ssi_mi_update",
   SSI_TRADE_REQUEST: "ssi_trade_request",
