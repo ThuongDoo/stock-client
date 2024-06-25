@@ -6,7 +6,7 @@ import zalo_icon from "../../images/zalo-icon.png";
 import { zaloLink } from "../../constants/url";
 import Introduction from "./components/Introduction";
 import Feature from "./components/Feature";
-// import Pricing from "./components/pricing/Pricing";
+import Pricing from "./components/pricing/Pricing";
 import Contact from "./components/contact/Contact";
 import AboutUs from "./components/aboutUs/AboutUs";
 import { TVChartContainer } from "../../components/chart/TVChartContainer";
