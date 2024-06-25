@@ -31,6 +31,7 @@ import Academic from "./pages/dashboard/academic/Academic";
 import ArticleManager from "./pages/admin/article/ArticleManager";
 import ArticleCategory from "./pages/admin/article/category/ArticleCategory";
 import Article from "./pages/admin/article/article/Article";
+import Chart from "./pages/dashboard/chart/Chart";
 
 function App() {
   useEffect(() => {
@@ -52,6 +53,7 @@ function App() {
           <Route element={<LocCoPhieu />} path="loc-co-phieu" />
           <Route element={<Roc />} path="roc" />
           <Route element={<Academic />} path="academic" />
+          <Route element={<Chart />} path="chart" />
         </Route>
         <Route element={<Admin />} path="/admin">
           <Route element={<UserManager />} path="user-manager" />
