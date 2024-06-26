@@ -49,9 +49,9 @@ function Home() {
         <TVChartContainer />
       </div> */}
 
-      <div id="about-us" className=" w-full">
+      {/* <div id="about-us" className=" w-full">
         <AboutUs />
-      </div>
+      </div> */}
       {/* <div id="pricing" className=" w-full">
         <Pricing />
       </div> */}
