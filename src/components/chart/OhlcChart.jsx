@@ -26,7 +26,7 @@ const formatData = async (data, type) => {
     if (type === "1m") {
       const parsedDate = parseISO(inputDate);
       const timeZoneOffset = getLocalTimezoneOffset();
-      const newDate = addHours(parsedDate, -7);
+      const newDate = addHours(parsedDate, 0);
       formattedDate = getTime(newDate) / 1000;
     } else {
       formattedDate = format(inputDate, "yyyy-MM-dd");
