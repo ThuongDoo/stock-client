@@ -9,7 +9,6 @@ function Contact() {
     await api
       .post(endpoints.USER_REQUEST, values)
       .then((res) => {
-        console.log(res.data);
         toast.success(STRINGS.REQUEST_CREATED);
       })
       .catch((err) => {

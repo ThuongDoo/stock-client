@@ -38,14 +38,13 @@ function Sidebar({
       dispatch(logout());
       await api
         .get(endpoints.LOGOUT)
-        .then((res) => console.log(res.data))
+        .then((res) => {})
         .catch((err) => console.log(err));
       navigate("/");
     } else if (value === "settings") {
       navigate("/settings");
     } else if (value === "admin") {
       navigate("/admin");
-      console.log("admin");
     }
   };
   return (

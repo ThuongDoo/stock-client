@@ -202,7 +202,6 @@ export const SignalChart = (props) => {
     barSeries.setData(data);
     barSeries.setMarkers(signalData);
     volumeSeries.setData(volumeData);
-    console.log(volumeData);
 
     window.addEventListener("resize", handleResize);
 

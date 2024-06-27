@@ -63,12 +63,10 @@ function BuySell() {
     if (value.date === null && (value.ticker === null || value.ticker === "")) {
       url += "limit=20&";
     }
-    console.log(url);
     const fetchData = async () => {
       await api
         .get(url)
         .then((res) => {
-          console.log(res.data);
           setIsLoading(false);
           setData(res.data.data);
         })

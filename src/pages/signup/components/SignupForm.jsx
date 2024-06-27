@@ -40,7 +40,6 @@ const SignupForm = () => {
     await api
       .post(endpoints.SIGNUP, values)
       .then((res) => {
-        console.log("success");
         setError(null);
 
         navigate("/login");

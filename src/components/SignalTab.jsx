@@ -43,7 +43,6 @@ function SignalTab({ symbol }) {
       socket.off(EVENTS.STOCK_UPDATE);
     };
   }, [symbol]);
-  console.log(signalInfo);
   return (
     <div className=" h-full flex gap-x-1 ">
       <div className=" w-9/12">

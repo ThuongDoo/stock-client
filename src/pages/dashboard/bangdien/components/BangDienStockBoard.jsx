@@ -81,7 +81,6 @@ function BangDienStockBoard({ tabs, onReload = () => {} }) {
             // Nếu cả hai phần tử đều không có trong specialOrder
             return a.id.localeCompare(b.id);
           });
-          console.log(data);
           data.unshift({ id: "", name: "Nhóm ngành" });
           setCategories(data);
         })

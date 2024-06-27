@@ -9,7 +9,6 @@ function DateFilter({ onChange }) {
   const today = moment(new Date()).format("dddd, DD/MM/YYYY");
 
   const handleDateChange = (date) => {
-    // console.log(date);
     if (date) {
       date.setHours(7);
     }

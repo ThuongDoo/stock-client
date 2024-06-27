@@ -12,7 +12,6 @@ function BuysellSearch({ onSubmit, onReset }) {
   const [tickerName, setTickerName] = useState([]);
   useEffect(() => {
     const fetchTickerName = async () => {
-      console.log("reload");
       await api
         .get(endpoints.STOCK_GET_ALL)
         .then((res) => {

@@ -27,9 +27,7 @@ function CategoryManager() {
     const fetchData = async () => {
       await api
         .post(endpoints.CATEGORY_UPDATE, data)
-        .then((res) => {
-          console.log(data);
-        })
+        .then((res) => {})
         .catch((e) => console.log(e));
     };
     fetchData();

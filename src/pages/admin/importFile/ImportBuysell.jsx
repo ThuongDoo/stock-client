@@ -68,7 +68,6 @@ const filterArrayByRule = async (arr) => {
     // Nếu thuộc tính "Mua-Ban" của object là 1 hoặc 0
     if (arr[i]["Mua-Ban"] !== prevValue) {
       // Kiểm tra nếu giá trị "Mua-Ban" khác với giá trị của object trước đó
-      console.log("push");
       filteredArray.push(arr[i]); // Thêm object vào mảng lọc
     }
     filteredArray.pop();
@@ -178,9 +177,7 @@ const ImportBuysell = () => {
 
       await api
         .post(endpoints.BUYSELL_IMPORT, sendData)
-        .then((res) => {
-          console.log(res.data);
-        })
+        .then((res) => {})
         .catch((err) => console.log(err));
     }
   };

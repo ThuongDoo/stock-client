@@ -376,7 +376,6 @@ function LocCoPhieu() {
       }
     }
     setFilters(newFilter);
-    console.log("setfire");
   }, [checkedFilter]);
 
   useEffect(() => {
@@ -388,12 +387,10 @@ function LocCoPhieu() {
     });
 
     const fetchData = async () => {
-      console.log("fetch");
       setIsLoading(true);
       await api
         .post(`/stock/filter`, filters)
         .then((res) => {
-          console.log("load");
           updateResult(res.data);
         })
         .catch((err) => {
@@ -463,7 +460,6 @@ function LocCoPhieu() {
       const newCheckedFilter = checkedFilter.filter(
         (item) => item != deletedItem
       );
-      // console.log(newCheckedFilter);
       setCheckedFilter(newCheckedFilter);
     };
 

@@ -23,7 +23,6 @@ function Header({ hidden = false }) {
       await api
         .get(endpoints.USER_SHOW_ME)
         .then((res) => {
-          console.log(res.data);
           dispatch(
             login({
               username: res.data.name,
@@ -37,7 +36,6 @@ function Header({ hidden = false }) {
         .catch((err) => console.log(err));
     };
     fetchData();
-    console.log("haha");
   }, []);
 
   const handleMenuClick = async (value) => {
@@ -45,17 +43,13 @@ function Header({ hidden = false }) {
       dispatch(logout());
       await api
         .get(endpoints.LOGOUT)
-        .then((res) => {
-          console.log(res.data);
-          console.log("logout");
-        })
+        .then((res) => {})
         .catch((err) => console.log(err));
       navigate("/");
     } else if (value === "settings") {
       navigate("/settings");
     } else if (value === "admin") {
       navigate("/admin");
-      console.log("admin");
     }
   };
 
@@ -63,7 +57,7 @@ function Header({ hidden = false }) {
     dispatch(logout());
     await api
       .get(endpoints.LOGOUT)
-      .then((res) => console.log(res.data))
+      .then((res) => {})
       .catch((err) => console.log(err));
     navigate("/");
   };
@@ -84,16 +78,16 @@ function Header({ hidden = false }) {
               <a className=" cursor-pointer" href="/#feature">
                 Tính năng
               </a>
-              <a className=" cursor-pointer" href="/#about-us">
+              {/* <a className=" cursor-pointer" href="/#about-us">
                 Về chúng tôi
-              </a>
+              </a> */}
               <a className=" cursor-pointer" href="#contact">
                 Liên hệ
               </a>
 
-              <a className=" cursor-pointer" href="/#pricing">
+              {/* <a className=" cursor-pointer" href="/#pricing">
                 Bảng giá
-              </a>
+              </a> */}
               <Link to={"/dashboard"} className=" font-bold">
                 X Products
               </Link>
@@ -146,9 +140,9 @@ function Header({ hidden = false }) {
                 </a>
               </button>
               <button className=" hover:bg-white hover:text-black flex">
-                <a className=" w-full  p-2" href="/#about-us">
+                {/* <a className=" w-full  p-2" href="/#about-us">
                   Về chúng tôi
-                </a>
+                </a> */}
               </button>
               <button className=" hover:bg-white hover:text-black flex">
                 <a className=" w-full  p-2" href="#contact">
@@ -157,9 +151,9 @@ function Header({ hidden = false }) {
               </button>
 
               <button className=" hover:bg-white hover:text-black flex">
-                <a className=" w-full  p-2" href="/#pricing">
+                {/* <a className=" w-full  p-2" href="/#pricing">
                   Bảng giá
-                </a>
+                </a> */}
               </button>
               <button className=" hover:bg-white hover:text-black flex">
                 <Link className=" w-full p-2" to={"/dashboard"}>

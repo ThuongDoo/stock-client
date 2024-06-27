@@ -19,7 +19,6 @@ export const RocChart = (props) => {
   const chartContainerRef = useRef();
   const darkMode = useSelector(getTheme);
 
-  // console.log(data[0].roc);
   useEffect(() => {
     const handleResize = () => {
       chart.applyOptions({

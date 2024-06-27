@@ -148,7 +148,6 @@ export const OhlcChart = (props) => {
     window.addEventListener("resize", handleResize);
 
     socket.on(EVENTS.SSI_B_UPDATE, async (bData) => {
-      console.log("update");
       try {
         const tempData = JSON.parse(bData.data);
         const { dailyData, intradayData } = tempData;

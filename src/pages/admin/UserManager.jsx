@@ -20,7 +20,6 @@ function UserManager() {
   const [isOpenCreateModal, setIsOpenCreateModal] = useState(false);
 
   const handleCheckboxes = (value) => {
-    console.log(value);
     const chosenIndex = value
       .map((value, index) => (value ? index : undefined))
       .filter((index) => index !== undefined);
@@ -96,8 +95,6 @@ function UserManager() {
         .get(endpoints.USER)
         .then((res) => {
           const data = formatData(res.data);
-          console.log(data);
-          console.log(res.data);
           setUsers(data);
         })
         .catch((e) => {
@@ -106,8 +103,6 @@ function UserManager() {
     };
     fetchData();
   }, [isReload]);
-  console.log("reload");
-  console.log(error);
 
   const handleEdit = async (value) => {
     // onEdit(value);
@@ -129,7 +124,6 @@ function UserManager() {
     await api
       .delete(endpoints.USER_DELETE + `/${idsString}`)
       .then((res) => {
-        console.log(res);
         //TODO: fetch success
         setIsReload(!isReload);
         setChosenIds([]);
@@ -141,7 +135,6 @@ function UserManager() {
   };
 
   const handleReset = async (value) => {
-    console.log(value);
     await api
       .patch(`user/resetPassword/${value}`)
       .then((res) => console.log(res.data))
@@ -150,7 +143,6 @@ function UserManager() {
 
   const handleCreate = async (values) => {
     values.date = Number(values.date);
-    console.log(values);
     await api
       .post(endpoints.SIGNUP, values)
       .then((res) => {

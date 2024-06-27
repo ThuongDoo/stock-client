@@ -18,7 +18,6 @@ function ArticleCategory() {
     await api
       .post(endpoints.ARTICLE_CATEGORY, { name: newCategory })
       .then((res) => {
-        console.log(res.data);
         setIsReload(!isReload);
       })
       .catch((e) => {

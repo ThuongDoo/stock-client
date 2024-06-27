@@ -28,12 +28,9 @@ const LoginForm = () => {
 
   const handleLogin = async (values, actions) => {
     // Xử lý đăng nhập ở đây
-    console.log("Đăng nhập với:", values);
     await api
       .post(endpoints.LOGIN, { phone: values.phone, password: values.password })
       .then((res) => {
-        console.log(res.data);
-
         // dispatch(login({username:}));
         navigate("/");
       })

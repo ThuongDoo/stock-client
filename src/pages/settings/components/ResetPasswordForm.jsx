@@ -25,7 +25,6 @@ const ResetPasswordForm = ({ phone }) => {
   initialValues.phone = phone;
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
-    console.log(values);
     await api
       .patch("/user/changePassword", {
         phone: values.phone,
@@ -33,7 +32,6 @@ const ResetPasswordForm = ({ phone }) => {
         newPassword: values.newPassword,
       })
       .then((res) => {
-        console.log(res.data);
         setErr(false);
         alert("thay doi mat khau thanh cong");
       })

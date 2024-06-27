@@ -56,7 +56,6 @@ function RequestManager() {
   }, [isReload]);
 
   const handleCheckboxes = (value) => {
-    console.log(value);
     const chosenIndex = value
       .map((value, index) => (value ? index : undefined))
       .filter((index) => index !== undefined);
@@ -67,7 +66,6 @@ function RequestManager() {
 
   const handleCreate = async (values) => {
     values.date = Number(values.date);
-    console.log(values);
     await api
       .post(endpoints.SIGNUP, values)
       .then((res) => {
@@ -82,11 +80,9 @@ function RequestManager() {
 
   const handleDelete = async () => {
     const idsString = chosenIds.join(",");
-    console.log(idsString);
     await api
       .delete(endpoints.USER_REQUEST + `/${idsString}`)
       .then((res) => {
-        console.log(res);
         //TODO: fetch success
         setIsReload(!isReload);
         setChosenIds([]);
@@ -133,8 +129,6 @@ function RequestManager() {
       flex: 1,
     },
   ];
-
-  console.log(requests);
 
   return (
     <div className=" p-2">

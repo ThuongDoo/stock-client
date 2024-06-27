@@ -14,7 +14,6 @@ const LocCoPhieuForm = ({ data, onSubmit, checkedValues }) => {
   const handleSubmit = (values, { setSubmitting }) => {
     // Xử lý dữ liệu khi biểu mẫu được gửi đi
     // setFormInitialValues(values);
-    console.log(values);
     onSubmit(values);
     setSubmitting(false);
     // resetForm();
