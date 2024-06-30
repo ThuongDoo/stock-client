@@ -28,5 +28,6 @@ export default function formatNumber(num, fixNum = 3, excludeThreshold = 0) {
   const parts = result.split(".");
   parts[0] = parseInt(parts[0], 10).toLocaleString("en-US");
 
-  return parts.join(".");
+  result = parts.join(".");
+  return num < 0 ? "-" + result : result;
 }

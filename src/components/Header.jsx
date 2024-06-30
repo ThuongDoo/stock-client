@@ -33,7 +33,7 @@ function Header({ hidden = false }) {
             })
           );
         })
-        .catch((err) => console.log(err));
+        .catch((err) => dispatch(logout()));
     };
     fetchData();
   }, []);
