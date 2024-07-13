@@ -47,7 +47,7 @@ function OverviewTab({ symbol }) {
       </div>
       <div className=" w-3/12 bg-slate-900">
         <div className=" flex flex-col gap-y-2 h-full">
-          <div>
+          {/* <div>
             <TabBar
               tabs={tabs}
               isHorizontal
@@ -61,7 +61,7 @@ function OverviewTab({ symbol }) {
                 },
               }}
             />
-          </div>
+          </div> */}
           <div className=" h-full">
             {activeTab === 0 ? (
               <TongQuan xData={xData} />

@@ -104,9 +104,8 @@ function BuySell() {
                   <th className=" px-4 py-2">Lãi/lỗ</th>
                   <th className=" px-4 py-2">Thời gian nắm giữ</th>
                   <th className=" px-4 py-2">Vị thế</th>
-                  <th className=" px-4 py-2" colSpan={3}>
-                    Ghi chú
-                  </th>
+                  <th className=" px-4 py-2">Ngày bán</th>
+                  <th className=" px-4 py-2">Giá bán</th>
                 </tr>
               </thead>
               {error !== 401 && data.length > 0 && (
@@ -146,7 +145,7 @@ function BuySell() {
                           ? "Nắm giữ"
                           : "Mua mới"}
                       </td>
-                      <td>
+                      <td className=" min-w-14">
                         {stock?.sellTime !== null
                           ? format(stock?.sellTime, "dd-MM-yyyy")
                           : ""}

@@ -63,10 +63,10 @@ const Footer = () => {
               />
             </a>
             <a
-              href="URL_CỦA_BẠN"
+              // href="URL_CỦA_BẠN"
               target="_blank"
               rel="noopener noreferrer"
-              className=" rounded-full size-8 bg-blue-500 flex items-center justify-center"
+              className=" rounded-full size-8 bg-blue-500 flex items-center justify-center cursor-pointer"
             >
               <FontAwesomeIcon
                 icon={faYoutube}

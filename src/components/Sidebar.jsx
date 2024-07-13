@@ -21,31 +21,8 @@ function Sidebar({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userLogout = async () => {
-    await api
-      .get("/user/logout")
-      .then((res) => {
-        dispatch(logout());
-        navigate("/login");
-      })
-      .catch((err) => console.log(err));
-  };
   const handleSideBar = (tab) => {
     navigate(tab.name);
-  };
-  const handleMenuClick = async (value) => {
-    if (value === "logout") {
-      dispatch(logout());
-      await api
-        .get(endpoints.LOGOUT)
-        .then((res) => {})
-        .catch((err) => console.log(err));
-      navigate("/");
-    } else if (value === "settings") {
-      navigate("/settings");
-    } else if (value === "admin") {
-      navigate("/admin");
-    }
   };
   return (
     <div className=" flex flex-col justify-between h-full border-r border-slate-700">

@@ -40,7 +40,7 @@ function BuysellSearch({ onSubmit, onReset }) {
 
   return (
     <div className=" flex flex-col gap-y-3 lg:flex-row gap-x-3">
-      <div className=" flex flex-col sm:flex-row gap-x-3 gap-y-3 sm:items-center ">
+      <div className=" flex  gap-x-3 gap-y-3 sm:items-center">
         <SearchBar suggestionData={tickerName} onSelect={handleSearchBar} />
         <DateFilter onChange={handleDateFilter} />
       </div>
