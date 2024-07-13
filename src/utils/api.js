@@ -11,6 +11,8 @@ export const endpoints = {
   LOGOUT: "/auth/logout",
   LOGIN: "/auth/login",
   SIGNUP: "/auth/signup",
+  VERIFY_CHANGE_PASSWORD: "/auth/verify-change-password",
+  VERIFY: "auth/verify-email",
 
   STOCK_GET_ALL: "/stock",
   STOCK_GET_SAN: "/stock/san",

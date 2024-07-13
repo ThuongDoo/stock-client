@@ -32,6 +32,10 @@ import ArticleManager from "./pages/admin/article/ArticleManager";
 import ArticleCategory from "./pages/admin/article/category/ArticleCategory";
 import Article from "./pages/admin/article/article/Article";
 import Chart from "./pages/dashboard/chart/Chart";
+import Verify from "./pages/signup/Verify";
+import Verifying from "./pages/signup/Verifying";
+import PasswordVerifying from "./pages/settings/PasswordVerifying";
+import ChangePassword from "./pages/settings/ChangePassword";
 
 function App() {
   useEffect(() => {
@@ -67,6 +71,15 @@ function App() {
         </Route>
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
+        <Route element={<Verify />} path="/verify" />
+        <Route element={<Verifying />} path="/verifying" />
+        <Route element={<ChangePassword />} path="/change-password" />
+
+        <Route
+          element={<PasswordVerifying />}
+          path="/change-password-verifying"
+        />
+
         {/* <Route path="*" element={<Navigate to="/" replace />}></Route> */}
       </Route>
     )

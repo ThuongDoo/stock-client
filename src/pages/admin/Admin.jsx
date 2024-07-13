@@ -14,7 +14,7 @@ function Admin() {
     { name: "request-manager", displayName: "Requests", icon: FilterAltIcon },
     { name: "buysell", displayName: "Import Buysell", icon: ContrastIcon },
     { name: "category", displayName: "Category", icon: ContrastIcon },
-    { name: "article-manager", displayName: "Article", icon: ContrastIcon },
+    // { name: "article-manager", displayName: "Article", icon: ContrastIcon },
   ];
   const { isLoggedIn, roles } = useSelector(getUser);
   const navigate = useNavigate();

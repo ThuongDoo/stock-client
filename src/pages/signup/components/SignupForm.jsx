@@ -42,7 +42,7 @@ const SignupForm = () => {
       .then((res) => {
         setError(null);
 
-        navigate("/login");
+        navigate("/verify");
       })
       .catch((err) => {
         console.log(err);
