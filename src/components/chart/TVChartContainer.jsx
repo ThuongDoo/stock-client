@@ -15,9 +15,9 @@ export const TVChartContainer = () => {
   const chartContainerRef = useRef();
 
   const defaultProps = {
-    symbol: "AAPL",
+    symbol: "BTCUSDT",
     interval: "D",
-    datafeedUrl: "https://demo_feed.tradingview.com",
+    datafeedUrl: "https://testserverxyz.onrender.com",
     libraryPath: "/charting_library/",
     chartsStorageUrl: "https://saveload.tradingview.com",
     chartsStorageApiVersion: "1.1",
